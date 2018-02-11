@@ -8,6 +8,8 @@ import { MainInformationComponent } from './main-information/main-information.co
 import { SettingsComponent } from './settings/settings.component';
 import { EncomingAndSpendingComponent } from './encoming-and-spending/encoming-and-spending.component';
 import { AppRoutingModule } from './/app-routing.module';
+import { LoansComponent } from './loans/loans.component';
+import { EntranceComponent } from './entrance/entrance.component';
 
 
 @NgModule({
@@ -16,7 +18,9 @@ import { AppRoutingModule } from './/app-routing.module';
     NavigationComponent,
     MainInformationComponent,
     SettingsComponent,
-    EncomingAndSpendingComponent
+    EncomingAndSpendingComponent,
+    LoansComponent,
+    EntranceComponent
   ],
   imports: [
     BrowserModule,
