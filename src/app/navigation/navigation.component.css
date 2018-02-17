@@ -1,0 +1,12 @@
+nav a{
+  display: block;
+  width: 100%;
+  height: 5vh;
+  border: 1px solid white;
+  color: white;
+}
+
+nav {
+  background-color: #999;
+  width: 100%;
+}

@@ -1,3 +1,28 @@
-<p>
-  main-information works!
-</p>
+<h2>{{user}}</h2>
+<h3>Balance information</h3>
+<div class="information">
+  <div class="sum">
+    <p>
+      Your total amount is{{total}}
+    </p>
+  </div>
+  <div class="free-mony">
+    <p>
+      Free mony {{freeMony}}
+    </p>
+  </div>
+  <div class="cells">
+    <h4>Accumulation cells</h4>
+    <ul>
+      <li>
+        <label>Investigetion</label> {{cells.investigetion}}
+      </li>
+      <li>
+        <label>for buying a house</label> {{cells.house}}
+      </li>
+    </ul>
+  </div>
+  <div class="income scale">
+    <canvas width="200" height="100" style="border:1px solid #000000"></canvas>
+  </div>
+</div>

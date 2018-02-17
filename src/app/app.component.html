@@ -1,5 +1,9 @@
-  <app-navigation></app-navigation>
-  <h1>
-    {{ title }}!
-  </h1>
-  <router-outlet></router-outlet>
+<div class="app-wrapper">
+  <aside class="navigation">
+      <app-short-information></app-short-information>
+      <app-navigation></app-navigation>
+  </aside>
+  <main>
+        <router-outlet></router-outlet>
+  </main>
+</div>

@@ -7,7 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EncomingAndSpendingComponent implements OnInit {
 
+
   constructor() { }
+
+  getDate(){
+    let now = new Date;
+    let dd = now.getDate();
+    let mm = now.getMonth() + 1;
+    let yy = now.getFullYear();
+    return `${dd}.${mm}.${yy}`
+  }
 
   ngOnInit() {
   }

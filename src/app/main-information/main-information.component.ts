@@ -7,6 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainInformationComponent implements OnInit {
 
+  total: number = 500;
+  freeMony: number = 112;
+  cells = {
+    investigetion : 45,
+    house: 60
+  }
+
   constructor() { }
 
   ngOnInit() {

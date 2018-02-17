@@ -10,6 +10,7 @@ import { EncomingAndSpendingComponent } from './encoming-and-spending/encoming-a
 import { AppRoutingModule } from './/app-routing.module';
 import { LoansComponent } from './loans/loans.component';
 import { EntranceComponent } from './entrance/entrance.component';
+import { ShortInformationComponent } from './short-information/short-information.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { EntranceComponent } from './entrance/entrance.component';
     SettingsComponent,
     EncomingAndSpendingComponent,
     LoansComponent,
-    EntranceComponent
+    EntranceComponent,
+    ShortInformationComponent
   ],
   imports: [
     BrowserModule,

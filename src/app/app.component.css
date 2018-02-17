@@ -1,0 +1,21 @@
+*{
+  margin: 0px;
+  padding: 0px;
+}
+div.app-wrapper{
+  display: flex;
+}
+div.app-wrapper aside.navigation{
+  display: flex;
+  flex-direction: row;
+  width: 25%;
+}
+
+div.app-wrapper main{
+    width: 75%;
+}
+aside{
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+}
