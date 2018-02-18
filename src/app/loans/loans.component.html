@@ -1,3 +1,19 @@
-<p>
-  loans works!
-</p>
+<div class="loans">
+  <label>All loans: </label>{{loans}}
+  <div *ngIf="loans>0" class="loans-list">
+    <ul>
+      <li>Gave {{loans.amount}} to {{loans.massage}} from {{loans.cell}} mony cell</li>
+    </ul>
+  </div>
+  <form class="create-loans">
+    <h4>Create new loans</h4>
+    <input type="number" />
+    <input type="text" placeholer="Loans description"/>
+    <select>
+      <option value="Free mony">Free mony</option>
+      <option value="Investigastions">Investigastions</option>
+      <option value="Home">Home</option>
+    </select>
+    <input type="submit" name="post-loans" value="Confirm">
+  </form>
+</div>

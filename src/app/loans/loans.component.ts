@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoansComponent implements OnInit {
 
+  loans: number = 20;
+
   constructor() { }
 
   ngOnInit() {
