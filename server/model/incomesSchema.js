@@ -4,7 +4,9 @@ var Schema = mongoose.Schema;
 var IncomesSchema = new Schema({
   date: Number,
   type: String,
-  amount: Number
+  amount: Number,
+  currency : String,
+  description: String
 });
 
 module.exports = mongoose.model('Income',IncomesSchema);

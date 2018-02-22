@@ -16,16 +16,22 @@ module.exports.createIncome = function createIncome(data) {
       var income = new Income({
         date: data.date,
         type: data.type,
-        amount: data.amount
+        amount: data.amount,
+        currency: data.currency,
+        description: data.description
       });
 
     return income.save();
 }
-//
-// export function deleteCoctail(id) {
-//     return Coctail.findById(id).remove();
-// }
-//
+
+module.exports.deliteIncome = function deleteIncome(id) {
+    return Income.findById(id).remove();
+}
+
+module.exports.changeIncome = function changeIncome(id,param){
+  
+}
+
 // export function getCoctailByName(name) {
 //     return Coctail.find({name: new RegExp('^' + name, 'i')})
 //     .exec(function(err, coctail) {

@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 
 import { AppComponent } from './app.component';
@@ -11,6 +12,7 @@ import { AppRoutingModule } from './/app-routing.module';
 import { LoansComponent } from './loans/loans.component';
 import { EntranceComponent } from './entrance/entrance.component';
 import { ShortInformationComponent } from './short-information/short-information.component';
+import { CommonService } from './common.service'
 
 
 @NgModule({
@@ -26,9 +28,10 @@ import { ShortInformationComponent } from './short-information/short-information
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [CommonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
