@@ -29,7 +29,14 @@ module.exports.deliteIncome = function deleteIncome(id) {
 }
 
 module.exports.changeIncome = function changeIncome(id,param){
+    return Income.findById(id)
+}
 
+module.exports.getIncomesByType = function getIncomesByType(param){
+    return Income.find({
+      type : param
+    }).
+  limit(10)
 }
 
 // export function getCoctailByName(name) {

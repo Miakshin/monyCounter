@@ -9,6 +9,8 @@ import { CommonService } from '../common.service'
 })
 export class EncomingAndSpendingComponent implements OnInit {
 
+  spendingReports = [];
+  encomingReports = [];
 
   constructor(private commonService: CommonService) { }
 
@@ -20,7 +22,9 @@ export class EncomingAndSpendingComponent implements OnInit {
     return `${dd}.${mm}.${yy}`
   }
 
-  ngOnInit() {
+  ngOnInit():void{
+    this.getSpendingReports();
+    this.getEncomingReports();
   }
 
   sendReport(type) :void{
@@ -38,5 +42,18 @@ export class EncomingAndSpendingComponent implements OnInit {
     this.commonService.postData(data)
       .subscribe(()=>clearForm())
 
+  }
+
+  getSpendingReports(){
+    this.commonService.getReportsByType("spending")
+    .subscribe((data)=>{
+      this.spendingReports = data;
+      });
+  }
+  getEncomingReports(){
+    this.commonService.getReportsByType("encoming")
+    .subscribe((data)=>{
+      this.encomingReports = data;
+      });
   }
 }
