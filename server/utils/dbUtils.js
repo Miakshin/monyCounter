@@ -29,7 +29,7 @@ module.exports.deliteIncome = function deleteIncome(id) {
 }
 
 module.exports.changeIncome = function changeIncome(id,param){
-  
+
 }
 
 // export function getCoctailByName(name) {

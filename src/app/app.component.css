@@ -15,7 +15,5 @@ div.app-wrapper main{
     width: 75%;
 }
 aside{
-  display: flex;
-  flex-flow: row;
-  flex-wrap: wrap;
+  min-height: 100vh;
 }

@@ -1,16 +1,20 @@
 var express = require('express');
 var monguse = require('mongoose');
 var bodyParser = require('body-parser');
+var cors = require('cors');
 
 var app = express();
 
-var server = 3041;
+
+var server = 3040;
 var dbUtils = require('./utils/dbUtils');
 
 dbUtils.setUpConnection();
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
+
+app.use(cors({ origin: '*' }));
 
 
 app.get('/', function (req, res) {

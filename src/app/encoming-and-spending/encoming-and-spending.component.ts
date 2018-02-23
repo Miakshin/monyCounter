@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { CommonService } from '../common.service'
+
 @Component({
   selector: 'app-encoming-and-spending',
   templateUrl: './encoming-and-spending.component.html',
@@ -8,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class EncomingAndSpendingComponent implements OnInit {
 
 
-  constructor() { }
+  constructor(private commonService: CommonService) { }
 
   getDate(){
     let now = new Date;
@@ -21,4 +23,20 @@ export class EncomingAndSpendingComponent implements OnInit {
   ngOnInit() {
   }
 
+  sendReport(type) :void{
+    let form = eval(`document.forms.${type}`);
+    let data = {
+      date: Date.now(),
+      type: type,
+      amount: form.elements.amount.value,
+      description : form.elements.description.value,
+      currency : form.elements.currency.value
+    };
+    let clearForm =()=>{
+      form.reset()
+    }
+    this.commonService.postData(data)
+      .subscribe(()=>clearForm())
+
+  }
 }

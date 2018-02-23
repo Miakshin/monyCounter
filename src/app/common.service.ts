@@ -13,33 +13,13 @@ export class CommonService {
     // let mony = mongoose.model()
   }
 
-  getData() :  Observable<any> {
-    return this.http.get<any>("http://localhost:3041/incomes");
+  getData() {
+    return this.http.get<any>("http://localhost:3040/incomes");
+    }
+
+  postData(incomesData) {
+    console.log(incomesData);
+    return this.http.post("http://localhost:3040/incomes", incomesData);
   }
 
-  // getData(){
-  //   return new Promise(function(resolve, reject) {
-  //
-  //   var xhr = new XMLHttpRequest();
-  //   xhr.open('GET', "http://localhost:3041/incomes" , true);
-  //   xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-  //   xhr.setRequestHeader('Access-Control-Allow-Credentials', 'true');
-  //   xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-  //
-  //   xhr.onload = function() {
-  //     if (xhr.status == 200) {
-  //       resolve(xhr.response);
-  //     } else {
-  //       var error = new Error(xhr.statusText);
-  //       reject(error);
-  //     }
-  //   };
-  //
-  //   xhr.onerror = function() {
-  //     reject(new Error("Network Error"));
-  //   };
-  //
-  //   xhr.send();
-  // });
-  // }
 }

@@ -28,10 +28,11 @@ export class MainInformationComponent implements OnInit {
     this.getData();
   }
 
-  getData() :void {
-    this.commonService.getData().subscribe(data=> this.data = data)
-    console.log(this.data);
+  getData(){
+    this.commonService.getData().subscribe(data => console.log("it is data:" + data),
+      error => console.log("it is error:" + error));
   }
+
 
 
 }

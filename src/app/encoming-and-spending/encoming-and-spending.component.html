@@ -1,14 +1,64 @@
 <header>
   <label>Now:</label>{{getDate()}}
 </header>
-<div class="encoming">
-  <input type="text" placeholder="encoming"/>
-  <input type="number" />
-  <button>Add encoming</button>
-  <button>Add and distribute</button>
-</div>
-<div class="spending">
-  <input type="text" placeholder="spending"/>
-  <input type="number" />
-  <button>Add spending</button>
+<div class="row">
+  <form name="encoming" class="encoming col-6 no-gutters ">
+    <h3 class="border-bottom h5"> Add new incomings </h3>
+    <ul class="list-group">
+      <li class=" row col-12">
+        <input type="text" name="description"
+          placeholder="encoming" class="col-6"/>
+        <input name="amount"
+          type="number" class="col-3"/>
+        <select name="currency"
+          class="form-control form-control-sm col-3">
+          <option value="UAH">
+            UAH
+          </option>
+          <option value="USD">
+            USD
+          </option>
+          <option value="RUB">
+            RUB
+          </option>
+          <option value="EUR">
+            EUR
+          </option>
+        </select>
+        <input type="button" value="+" class="btn btn-succes col-1"/>
+      </li>
+    </ul>
+    <div class="row col-12 no-gutters btn-group">
+      <input type="button" (click)="sendReport('encoming')" class="col-6 btn btn-secondary"  value="Send an incoming report"/>
+      <input type="button" class="col-6 btn btn-succes" value="Add and distribute" />
+    </div>
+  </form>
+  <form name="spending" class="spending col-6 no-gutters ">
+    <h3 class="border-bottom h5"> Add new spendings </h3>
+    <ul class="list-group">
+      <li class=" row col-12">
+        <input type="text" name="description"
+          placeholder="encoming" class="col-6"/>
+        <input name="amount"
+          type="number" class="col-3"/>
+        <select name="currency"
+          class="form-control form-control-sm col-3">
+          <option value="UAH">
+            UAH
+          </option>
+          <option value="USD">
+            USD
+          </option>
+          <option value="RUB">
+            RUB
+          </option>
+          <option value="EUR">
+            EUR
+          </option>
+        </select>
+        <input type="button" value="+" class="btn btn-succes col-1"/>
+      </li>
+    </ul>
+    <input type="button" (click)="sendReport('spending')" class="col-6 btn btn-secondary"  value="Send a spend report"/>
+  </form>
 </div>
