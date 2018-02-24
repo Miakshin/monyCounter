@@ -14,15 +14,19 @@ export class CommonService {
   }
 
   getData() {
-    return this.http.get<any>("http://localhost:3041/incomes");
+    return this.http.get<any>("http://localhost:3045/incomes");
     }
 
   getReportsByType(type){
-      return this.http.get<any>(`http://localhost:3041/incomes/${type}`);
+      return this.http.get<any>(`http://localhost:3045/incomes/${type}`);
     }
 
+  getReportSum(param){
+    return this.http.get<any>(`http://localhost:3045/incomesSum/${param}`);
+  }
+
   postData(incomesData) {
-    return this.http.post("http://localhost:3041/incomes", incomesData);
+    return this.http.post("http://localhost:3045/incomes", incomesData);
   }
 
 }

@@ -12,6 +12,9 @@ export class EncomingAndSpendingComponent implements OnInit {
   spendingReports = [];
   encomingReports = [];
 
+  encomingSum:number;
+  spendingSum:number;
+
   constructor(private commonService: CommonService) { }
 
   getDate(){
@@ -25,6 +28,8 @@ export class EncomingAndSpendingComponent implements OnInit {
   ngOnInit():void{
     this.getSpendingReports();
     this.getEncomingReports();
+    this.getSpendingSum();
+    this.getEncomingSum();
   }
 
   sendReport(type) :void{
@@ -54,6 +59,20 @@ export class EncomingAndSpendingComponent implements OnInit {
     this.commonService.getReportsByType("encoming")
     .subscribe((data)=>{
       this.encomingReports = data;
+      });
+  }
+
+  getSpendingSum(){
+    this.commonService.getReportSum("spending")
+    .subscribe((data)=>{
+      this.spendingSum = Number(data);
+      });
+  }
+
+  getEncomingSum(){
+    this.commonService.getReportSum("encoming")
+    .subscribe((data)=>{
+      this.encomingSum = Number(data);
       });
   }
 }

@@ -6,7 +6,7 @@ var cors = require('cors');
 var app = express();
 
 
-var server = 3041;
+var server = 3045;
 var dbUtils = require('./utils/dbUtils');
 
 dbUtils.setUpConnection();
@@ -28,6 +28,17 @@ app.get('/incomes', function (req, res) {
 
 app.get('/incomes/:type', function (req, res) {
   dbUtils.getIncomesByType(req.params.type).then(data => res.send(data))
+});
+
+app.get('/incomesSum/:type', function (req, res) {
+  dbUtils.getIncomesSum(req.params.type)
+  .then((incomes) => {
+    let sum = 0;
+    incomes.forEach(function(incom){
+      return sum +=incom.amount
+    })
+    res.send(sum.toString())
+  })
 });
 
 app.post('/incomes', function(req, res) {

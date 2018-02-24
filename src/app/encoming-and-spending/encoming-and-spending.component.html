@@ -65,7 +65,7 @@
     <h4 class="h5 text-center border-bottom" >Last reports</h4>
     <aside class="col-6">
       <h5 class="h6 text-center">Encoming</h5>
-      <table class="col-12">
+      <table *ngIf="encomingReports" class="col-12">
         <thead>
           <tr class="text-muted border-bottom">
             <td class="col-4 text-center">
@@ -91,10 +91,13 @@
           </td>
         </tr>
       </table>
+      <p>
+        {{encomingSum}}
+      </p>
     </aside>
     <aside class="col-6">
       <h5 class="h6 text-center">Spendings</h5>
-      <table class="col-12 ">
+      <table *ngIf="spendingReports" class="col-12 ">
         <thead>
           <tr class="text-muted border-bottom">
             <td class="col-4 text-center">
@@ -120,6 +123,9 @@
           </td>
         </tr>
       </table>
+      <p>
+        {{spendingSum}}
+      </p>
     </aside>
   </section>
 

@@ -39,6 +39,12 @@ module.exports.getIncomesByType = function getIncomesByType(param){
   limit(10)
 }
 
+module.exports.getIncomesSum = function getIncomesSum(type){
+  return Income.find({
+    type : type
+  })
+}
+
 // export function getCoctailByName(name) {
 //     return Coctail.find({name: new RegExp('^' + name, 'i')})
 //     .exec(function(err, coctail) {
