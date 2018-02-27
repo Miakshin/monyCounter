@@ -6,7 +6,8 @@ var IncomesSchema = new Schema({
   type: String,
   amount: Number,
   currency : String,
-  description: String
+  description: String,
+  from: String
 });
 
 module.exports = mongoose.model('Income',IncomesSchema);

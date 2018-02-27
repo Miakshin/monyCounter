@@ -6,7 +6,7 @@ var cors = require('cors');
 var app = express();
 
 
-var server = 3045;
+var server = 3040;
 var dbUtils = require('./utils/dbUtils');
 
 dbUtils.setUpConnection();

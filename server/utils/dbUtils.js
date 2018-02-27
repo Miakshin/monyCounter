@@ -18,7 +18,8 @@ module.exports.createIncome = function createIncome(data) {
         type: data.type,
         amount: data.amount,
         currency: data.currency,
-        description: data.description
+        description: data.description,
+        from: data.from
       });
 
     return income.save();
