@@ -18,7 +18,6 @@ export class LoansComponent implements OnInit {
     let form = eval("document.forms.loan")
     let data = {
       date: Date.now(),
-      type: "loan",
       amount: form.elements.amount.value,
       description : form.elements.description.value,
       currency : form.elements.currency.value,
@@ -27,7 +26,7 @@ export class LoansComponent implements OnInit {
     let clearForm =()=>{
       form.reset()
     }
-    this.commonService.postData(data)
+    this.commonService.postData(data, "loan")
       .subscribe(()=>clearForm())
 
   }

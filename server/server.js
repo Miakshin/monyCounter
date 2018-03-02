@@ -6,7 +6,7 @@ var cors = require('cors');
 var app = express();
 
 
-var server = 3040;
+var server = 3043;
 var dbUtils = require('./utils/dbUtils');
 
 dbUtils.setUpConnection();
@@ -26,25 +26,54 @@ app.get('/incomes', function (req, res) {
   dbUtils.getAllIncomes().then(data => res.send(data))
 });
 
-app.get('/incomes/:type', function (req, res) {
-  dbUtils.getIncomesByType(req.params.type).then(data => res.send(data))
+app.get('/reports/:type', function (req, res) {
+  switch (req.params.type) {
+  case "encoming":
+    dbUtils.getAllIncomes()
+    .then(function(data){
+        res.send(data);
+      })
+    break;
+  case "spending":
+    dbUtils.getAllSpendings()
+    .then(function(data){
+        res.send(data);
+      })
+    break;
+  case "loan":
+    dbUtils.getAllLoans()
+    .then(function(data){
+        res.send(data);
+      })
+    break;
+  default:
+    res.send("error")
+}
 });
 
-app.get('/incomesSum/:type', function (req, res) {
-  dbUtils.getIncomesSum(req.params.type)
-  .then((incomes) => {
-    let sum = 0;
-    incomes.forEach(function(incom){
-      return sum +=incom.amount
-    })
-    res.send(sum.toString())
-  })
-});
-
-app.post('/incomes', function(req, res) {
-  dbUtils.createIncome(req.body).then(function(data){
-    res.send(data);
-  })
+app.post('/report/:type', function(req, res) {
+  switch (req.params.type) {
+  case "encoming":
+    dbUtils.createIncome(req.body)
+    .then(function(data){
+        res.send(data);
+      })
+    break;
+  case "spending":
+    dbUtils.createSpending(req.body)
+    .then(function(data){
+        res.send(data);
+      })
+    break;
+  case "loan":
+    dbUtils.createLoan(req.body)
+    .then(function(data){
+        res.send(data);
+      })
+    break;
+  default:
+    res.send("error")
+}
  })
 
  app.delete('/incomes/:id', (req, res)=>{

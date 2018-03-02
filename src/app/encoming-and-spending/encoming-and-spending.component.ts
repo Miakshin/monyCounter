@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 import { CommonService } from '../common.service'
 
@@ -19,32 +20,38 @@ export class EncomingAndSpendingComponent implements OnInit {
 
   getDate(){
     let now = new Date;
-    let dd = now.getDate();
-    let mm = now.getMonth() + 1;
-    let yy = now.getFullYear();
-    return `${dd}.${mm}.${yy}`
+    return now
   }
 
   ngOnInit():void{
     this.getSpendingReports();
     this.getEncomingReports();
-    this.getSpendingSum();
-    this.getEncomingSum();
   }
 
   sendReport(type) :void{
     let form = eval(`document.forms.${type}`);
-    let data = {
-      date: Date.now(),
-      type: type,
-      amount: form.elements.amount.value,
-      description : form.elements.description.value,
-      currency : form.elements.currency.value
-    };
+    let data
+    if(type === "spending"){
+      data = {
+        date: Date.now(),
+        amount: form.elements.amount.value,
+        description : form.elements.description.value,
+        currency : form.elements.currency.value
+      };
+    }else if(type === "encoming"){
+      data = {
+        date: Date.now(),
+        amount: form.elements.amount.value,
+        description : form.elements.description.value,
+        currency : form.elements.currency.value,
+        isTax: false
+      };
+    }
+
     let clearForm =()=>{
       form.reset()
     }
-    this.commonService.postData(data)
+    this.commonService.postData(data, type)
       .subscribe(()=>clearForm())
 
   }
@@ -53,26 +60,23 @@ export class EncomingAndSpendingComponent implements OnInit {
     this.commonService.getReportsByType("spending")
     .subscribe((data)=>{
       this.spendingReports = data;
+      this.getSum(data, "spendingSum")
       });
   }
   getEncomingReports(){
     this.commonService.getReportsByType("encoming")
     .subscribe((data)=>{
       this.encomingReports = data;
+      this.getSum(data, "encomingSum")
       });
   }
 
-  getSpendingSum(){
-    this.commonService.getReportSum("spending")
-    .subscribe((data)=>{
-      this.spendingSum = Number(data);
-      });
+  getSum(data, ref):void{
+    let sum = 0;
+    for(let report of data){
+      console.log(report);
+      sum +=report.amount;
+    }
+    console.log(sum)
+    eval(`this.${ref} = sum`);
   }
-
-  getEncomingSum(){
-    this.commonService.getReportSum("encoming")
-    .subscribe((data)=>{
-      this.encomingSum = Number(data);
-      });
-  }
-}

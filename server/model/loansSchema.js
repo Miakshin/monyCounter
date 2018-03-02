@@ -1,14 +1,12 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var IncomesSchema = new Schema({
+var LoansSchema = new Schema({
   date: Number,
   amount: Number,
   currency : String,
   description: String,
-  isTaxed: Boolean,
-  taxTo: Array,
-  taxed: Number
+  from: String
 });
 
-module.exports = mongoose.model('Income',IncomesSchema);
+module.exports = mongoose.model('Loan',LoansSchema);
