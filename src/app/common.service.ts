@@ -25,4 +25,8 @@ export class CommonService {
     return this.http.post(`http://localhost:3043/report/${dataType}`, data);
   }
 
+  getUserByLogin(login){
+    return this.http.get(`http://localhost:3043/user/${login}`);
+  }
+
 }

@@ -87,7 +87,7 @@ app.post('/report/:type', function(req, res) {
     res.send("error")
 }
  })
- app.post('/user/:login',function(req, res){
+ app.get('/user/:login',function(req, res){
    dbUtils.getUserByLogin(req.params.login).then((data)=>res.send(data))
  })
 

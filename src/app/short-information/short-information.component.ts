@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-short-information',
@@ -6,8 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./short-information.component.css']
 })
 export class ShortInformationComponent implements OnInit {
-
-  user: string = "User Name";
+  @Input() user: string;
   freeMony: number = 112;
   curancy: string = "usd";
 
