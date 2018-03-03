@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
-import { CommonService } from '../common.service'
+import { CommonService } from '../common.service';
 
 @Component({
   selector: 'app-encoming-and-spending',
@@ -80,3 +80,5 @@ export class EncomingAndSpendingComponent implements OnInit {
     console.log(sum)
     eval(`this.${ref} = sum`);
   }
+
+}

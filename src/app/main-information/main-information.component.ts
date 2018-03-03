@@ -25,7 +25,7 @@ export class MainInformationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getFreeMony();
+    // this.getFreeMony();
   }
 
   getData(){
@@ -33,20 +33,20 @@ export class MainInformationComponent implements OnInit {
       error => console.log("it is error:" + error));
   }
 
-  getFreeMony():void{
-    let spendingsSum;
-    let encomingSum;
-
-    this.commonService.getReportSum('spending')
-    .subscribe((data)=>{
-      spendingsSum = Number(data);
-      this.commonService.getReportSum('encoming')
-      .subscribe((data)=>{
-        encomingSum = Number(data);
-        this.freeMony = encomingSum - spendingsSum;
-      })
-    })
-  }
+  // getFreeMony():void{
+  //   let spendingsSum;
+  //   let encomingSum;
+  //
+  //   this.commonService.getReportSum('spending')
+  //   .subscribe((data)=>{
+  //     spendingsSum = Number(data);
+  //     this.commonService.getReportSum('encoming')
+  //     .subscribe((data)=>{
+  //       encomingSum = Number(data);
+  //       this.freeMony = encomingSum - spendingsSum;
+  //     })
+  //   })
+  // }
 
 
 
