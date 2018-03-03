@@ -1,8 +1,9 @@
 var mongoose = require('mongoose');
 var Income = require('../model/incomesSchema');
-var Loan = require('../model/loansSchema')
-var Spending = require('../model/spendingsSchema')
-var Cell = require('../model/cellsSchema')
+var Loan = require('../model/loansSchema');
+var Spending = require('../model/spendingsSchema');
+var Cell = require('../model/cellsSchema');
+var User = require('../model/userSchema');
 
 var url = "mongodb://admin:admin@ds125198.mlab.com:25198/mony";
 
@@ -73,14 +74,30 @@ module.exports.createLoan = function (data) {
 }
 
 module.exports.createCell = function (data) {
-      var income = new Cell({
-        name: data,name,
+      var cell = new Cell({
+        name: data.name,
         createAt: data.createAt,
-        amount: data.amount,
-        currency: data.currency,
+        tax: data.tax
       });
 
-    return income.save();
+    return cell.save();
+}
+
+module.exports.createUser = function(data){
+  var user = new User({
+    login: data.login,
+    password: data.password,
+    name: data.name,
+    createAt: data.createAt,
+  });
+
+return user.save();
+}
+
+module.exports.getUserByLogin = function(login){
+  return User.find({
+    login : login
+  }).limit(1)
 }
 
 // module.exports.addReportToCell = function(data) {

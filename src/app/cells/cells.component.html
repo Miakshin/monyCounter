@@ -1,15 +1,29 @@
-<article class="row col-12">
-  <h2 class="h5 row text-center border-bottom">Cells</h2>
-  <h3 class="h6">Using cells</h3>
-  <table>
+<article class="col-12">
+  <h2 class="h5 text-center border-bottom">Cells</h2>
+  <table class="table col-12">
     <thead>
       <tr>
-        <td>NAME</td>
-        <td>CREATED</td>
-        <td>TAX</td>
-        <td>ACCUMELATED</td>
+        <td class="col-3">NAME</td>
+        <td class="col-3">CREATED</td>
+        <td class="col-2">TAX</td>
+        <td class="col-3">ACCUMELATED</td>
+        <td class="col-1">ACTIVE</td>
+      </tr>
+      <tr *ngFor="let cell of cells" class="border-bottom">
+        <td class="col-3">{{cell.name}}</td>
+        <td class="col-2">{{cell.createAt | date}}</td>
+        <td class="col-3">{{cell.tax}}</td>
+        <td class="col-3">{{cell.acamulated}}</td>
+        <td class="col-1 text-center"><input type="checkbox" /></td>
       </tr>
     </thead>
   </table>
+  <h2 class="h5 text-center"> Create new cell</h2>
+  <form name="createCell" class="row col-12">
+    <input type="text" name="name" placeholder="cell name" class="col-3"/>
+    <input type="number" name="tax" class="col-3"/>
+    <input type="text" class="col-3" name="acamulated" placeholder="initial saving">
+    <input type="button" value="create cell" class="button col-3" (click)="createCell()">
+  </form>
 
 </article>
