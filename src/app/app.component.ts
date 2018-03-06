@@ -17,7 +17,7 @@ export class AppComponent implements OnInit{
 
   getUserData(){
     this.commonService.getUserByLogin("admin")
-    .subscribe((users)=>{this.currentUser = users[0];
-    console.log(users[0])})
+    .subscribe((user)=>{this.currentUser = user;
+    console.log(user)})
   }
 }

@@ -6,7 +6,7 @@ var cors = require('cors');
 var app = express();
 
 
-var server = 3043;
+var server = 3042;
 var dbUtils = require('./utils/dbUtils');
 
 dbUtils.setUpConnection();
@@ -89,6 +89,15 @@ app.post('/report/:type', function(req, res) {
  })
  app.get('/user/:login',function(req, res){
    dbUtils.getUserByLogin(req.params.login).then((data)=>res.send(data))
+ })
+
+ app.get('/cells/:id',function(req, res){
+   dbUtils.getCellById(req.params.id).then((data)=>res.send(data))
+ })
+
+ app.post('/cells/:id',function(req, res){
+   console.log(req.body);
+   dbUtils.addReportToCell(req.params.id, req.body).then((data)=>res.send(data))
  })
 
  app.post('/createUser/', function(req, res){

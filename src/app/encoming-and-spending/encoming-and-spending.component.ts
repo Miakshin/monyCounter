@@ -12,6 +12,7 @@ export class EncomingAndSpendingComponent implements OnInit {
 
   spendingReports = [];
   encomingReports = [];
+  activeTax = [];
 
   encomingSum:number;
   spendingSum:number;
@@ -26,11 +27,13 @@ export class EncomingAndSpendingComponent implements OnInit {
   ngOnInit():void{
     this.getSpendingReports();
     this.getEncomingReports();
+    this.getCurrentTax();
   }
 
   sendReport(type) :void{
     let form = eval(`document.forms.${type}`);
-    let data
+    let data;
+    let writedTax = [];
     if(type === "spending"){
       data = {
         date: Date.now(),
@@ -39,20 +42,45 @@ export class EncomingAndSpendingComponent implements OnInit {
         currency : form.elements.currency.value
       };
     }else if(type === "encoming"){
+
       data = {
         date: Date.now(),
         amount: form.elements.amount.value,
         description : form.elements.description.value,
         currency : form.elements.currency.value,
-        isTax: false
       };
+      console.log(this.activeTax.length > 0)
+        if(this.activeTax.length > 0){data.isTax = true; data.taxedTo=this.activeTax; data.taxed = 0;
+        this.activeTax.forEach((item)=>{
+          this.commonService.getCellById(item).subscribe((cell)=>{
+            data.taxed = data.taxed + cell.tax * data.amount /100;
+            let report ={
+              'id': cell.id,
+              'tax': (cell.tax * data.amount /100)
+            }
+            writedTax.push(report)
+          })
+        })}
+        else{ data.isTax = false}
+
+
     }
 
     let clearForm =()=>{
       form.reset()
     }
+
+    console.log(data);
     this.commonService.postData(data, type)
-      .subscribe(()=>clearForm())
+      .subscribe((res)=>{
+        clearForm();
+        if(writedTax.length > 0){
+        let _id = res._id;
+        writedTax.forEach((report)=>{
+          this.commonService.addRepotrToCell(report,_id)
+        })
+        }
+      })
 
   }
 
@@ -74,11 +102,16 @@ export class EncomingAndSpendingComponent implements OnInit {
   getSum(data, ref):void{
     let sum = 0;
     for(let report of data){
-      console.log(report);
+      // console.log(report);
       sum +=report.amount;
     }
-    console.log(sum)
+    // console.log(sum)
     eval(`this.${ref} = sum`);
+  }
+
+  getCurrentTax(){
+    this.commonService.getUserByLogin("admin")
+    .subscribe((user)=>{this.activeTax = user.setings.activCells;})
   }
 
 }

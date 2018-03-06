@@ -95,23 +95,10 @@ return user.save();
 }
 
 module.exports.getUserByLogin = function(login){
-  return User.find({
+  return User.findOne({
     login : login
-  }).limit(1)
+  })
 }
-
-// module.exports.addReportToCell = function(data) {
-//       var income = new Cell({
-//         name: data,name,
-//         createAt: data.createAt,
-//         amount: data.amount,
-//         currency: data.currency,
-//       });
-//
-//     return income.save();
-// }
-
-
 
 module.exports.deliteIncome = function deleteIncome(id) {
     return Income.findById(id).remove();
@@ -134,9 +121,14 @@ module.exports.getIncomesSum = function getIncomesSum(type){
   })
 }
 
-// export function getCoctailByName(name) {
-//     return Coctail.find({name: new RegExp('^' + name, 'i')})
-//     .exec(function(err, coctail) {
-//         if (err) throw err;
-//     });
-// }
+module.exports.getCellById = function(id) {
+    return Cell.findById(id)
+}
+
+module.exports.addReportToCell = function(id, data){
+  return Cell.findById(id, function(err, cell){
+    newCellData = cell.incomesForm;
+    nweCellData.push(data);
+    cell.save()
+  })
+}
