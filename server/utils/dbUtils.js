@@ -26,23 +26,24 @@ module.exports.getAllCells =  function() {
 }
 
 module.exports.createIncome = function (data) {
-  if(data.isTaxed){
+  console.log(data);
+  if(data.isTax){
       var income = new Income({
         date: data.date,
         amount: data.amount,
         currency: data.currency,
         description: data.description,
-        isTaxed: data.isTaxed,
+        isTaxed: data.isTax,
         taxTo: data.taxTo,
         taxed: data.taxed
       });
-    }else if(!data.isTaxed){
+    }else if(!data.isTax){
       var income = new Income({
         date: data.date,
         amount: data.amount,
         currency: data.currency,
         description: data.description,
-        isTaxed: data.isTaxed,
+        isTaxed: data.isTax,
 
       });
     }

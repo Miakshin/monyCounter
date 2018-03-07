@@ -29,7 +29,7 @@
       </li>
     </ul>
     <div class="row col-12 no-gutters btn-group">
-      <input type="button" (click)="sendReport('encoming')" class="col-6 btn btn-secondary"  value="Send an incoming report"/>
+      <input type="button" (click)="sendEncomingReport()" class="col-6 btn btn-secondary"  value="Send an incoming report"/>
       <input type="button" class="col-6 btn btn-succes" value="Add and distribute" />
     </div>
   </form>
@@ -59,7 +59,7 @@
         <input type="button" value="+" class="btn btn-succes col-1"/>
       </li>
     </ul>
-    <input type="button" (click)="sendReport('spending')" class="col-6 btn btn-secondary"  value="Send a spend report"/>
+    <input type="button" (click)="sendSpendingReport()" class="col-6 btn btn-secondary"  value="Send a spend report"/>
   </form>
   <section class="container-fluid col-12 no-gutters">
     <h4 class="h5 text-center border-bottom" >Last reports</h4>
