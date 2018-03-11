@@ -1,15 +1,20 @@
-<div class="settings">
   <h3  class="border-bottom">Settings</h3>
-  <div class="cells settings">
+  <nav class="row col-12 navigation">
+    <a routerLink="/settings" class="nav-link" name="account" (click)="pick($event)">account settings</a>
+    <a routerLink="/settings" class="nav-link" name="cells" (click)="pick($event)">cells settings</a>
+    <a routerLink="/settings" class="nav-link" name="loans" (click)="pick($event)">loans settings</a>
+    <a routerLink="/settings" class="nav-link" name="curancy" (click)="pick($event)">curancy settings</a>
+  </nav>
+  <div id="cells" class="setting-hiden">
     Cell settings
   </div>
-  <div class="loans-settings">
+  <div id="loans" class="setting-hiden">
     Loans settings
   </div>
-  <div class="Account settings">
+  <div id="account" class="setting-hiden">
     Account settings
   </div>
-  <div class="">
+  <div id="curancy" class="setting-hiden">
     <h3 class="h5">common settings</h3>
     <h4 class="h6">Curancy</h4>
       <ul>
@@ -20,4 +25,3 @@
       </ul>
       <input type="button" value="add new"/>
   </div>
-</div>
