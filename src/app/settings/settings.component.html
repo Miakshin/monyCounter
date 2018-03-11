@@ -9,4 +9,15 @@
   <div class="Account settings">
     Account settings
   </div>
+  <div class="">
+    <h3 class="h5">common settings</h3>
+    <h4 class="h6">Curancy</h4>
+      <ul>
+        <li *ngFor="let curracy of settings.activeCurancy">
+          {{curracy.name | uppercase }}
+          <input type="checkbox" checked />
+        </li>
+      </ul>
+      <input type="button" value="add new"/>
+  </div>
 </div>

@@ -47,36 +47,52 @@ export class EncomingAndSpendingComponent implements OnInit {
     let form = eval(`document.forms.encoming`);
     let data;
     let writedTax = [];
+    let taxPromises = [];
       data = {
         date: Date.now(),
         amount: form.elements.amount.value,
         description : form.elements.description.value,
         currency : form.elements.currency.value,
       };
-      console.log(this.activeTax.length > 0)
         if(this.activeTax.length > 0){data.isTax = true; data.taxTo=this.activeTax; data.taxed = 0;
         this.activeTax.forEach((item)=>{
-          this.commonService.getCellById(item).subscribe((cell)=>{
-            data.taxed = data.taxed + cell.tax * data.amount /100;
-            let report ={
-              'id': cell.id,
-              'tax': (cell.tax * data.amount /100)
-            }
-            writedTax.push(report)
+          let promise = new Promise((res,rej)=>{
+            this.commonService.getCellById(item)
+              .then((cell)=>{
+              console.log(cell);
+              data.taxed = data.taxed + cell.tax * data.amount /100;
+               let report ={
+                 'id': cell._id,
+                 'tax': (cell.tax * data.amount /100)
+               }
+               res(report);
+            })
+          })
+          taxPromises.push(promise);
+        })
+
+        Promise.all([...taxPromises])
+        .then((cellArr)=>{
+          return cellArr
+        })
+        .then((reports)=>{
+          console.log(reports);
+          this.commonService.postData(data, "encoming")
+          .subscribe((res)=>{
+            console.log(res);
+            form.reset()
+            reports.forEach((report)=>{
+              let cellData = {
+                from: res._id,
+                amount: report.tax,
+                date: new Date()
+              }
+              this.commonService.addRepotrToCell(report.id, cellData)
+              .subscribe(console.log)
+            })
           })
         })
-        console.log(data);
-        this.commonService.postData(data, "encoming")
-        .subscribe((res)=>{
-          console.log(res);
-          form.reset()
-          writedTax.forEach((report)=>{
-            let _id = res._id;
-            this.commonService.addRepotrToCell(report,_id)
-          })
-        })
-      }
-        else{ data.isTax = false;
+      }else{ data.isTax = false;
           this.commonService.postData(data, "encoming")
           .subscribe(()=>form.reset())}
   }

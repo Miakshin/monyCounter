@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonService } from '../common.service';
 
 @Component({
   selector: 'app-settings',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsComponent implements OnInit {
 
-  constructor() { }
+  settings = {};
+
+  constructor(private commonService: CommonService) { }
 
   ngOnInit() {
+    this.getSettins()
   }
 
+  getSettins(){
+    this.commonService.getUserByLogin("admin")
+      .subscribe(user=>{
+        this.settings = user.setings;
+        console.log(this.settings);
+      })
+  }
 }

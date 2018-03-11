@@ -14,27 +14,28 @@ export class CommonService {
   }
 
   getData() {
-    return this.http.get<any>("http://localhost:3040/incomes");
+    return this.http.get<any>("http://localhost:3043/incomes");
     }
 
   getCellById(id){
-    return this.http.get<any>(`http://localhost:3040/cells/${id}`)
+    return this.http.get<any>(`http://localhost:3043/cells/${id}`)
+    .toPromise()
   }
 
   getReportsByType(type): Observable<any>{
-      return this.http.get<any>(`http://localhost:3040/reports/${type}`);
+      return this.http.get<any>(`http://localhost:3043/reports/${type}`);
     }
 
   postData(data, dataType) {
-    return this.http.post<any>(`http://localhost:3040/report/${dataType}`, data);
+    return this.http.post<any>(`http://localhost:3043/report/${dataType}`, data);
   }
 
   getUserByLogin(login): Observable<any>{
-      return this.http.get<any>(`http://localhost:3040/user/${login}`);
+      return this.http.get<any>(`http://localhost:3043/user/${login}`);
   }
 
   addRepotrToCell(id, repotr){
-    return this.http.post<any>(`http://localhost:3040/cells/${id}`, repotr)
+    return this.http.post<any>(`http://localhost:3043/cells/${id}`, repotr)
   }
 
 }

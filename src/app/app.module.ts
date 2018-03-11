@@ -13,7 +13,7 @@ import { LoansComponent } from './loans/loans.component';
 import { EntranceComponent } from './entrance/entrance.component';
 import { ShortInformationComponent } from './short-information/short-information.component';
 import { CommonService } from './common.service';
-import { CellsComponent } from './cells/cells.component'
+import { CellsComponent } from './cells/cells.component';
 
 
 @NgModule({

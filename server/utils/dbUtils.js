@@ -128,8 +128,13 @@ module.exports.getCellById = function(id) {
 
 module.exports.addReportToCell = function(id, data){
   return Cell.findById(id, function(err, cell){
-    newCellData = cell.incomesForm;
-    nweCellData.push(data);
+    if(err){console.log("err")}
+    var newData = cell.incomesForm;
+    var newAmount = Number(cell.acamulated);
+    newAmount +=data.amount;
+    newData.push(data);
+    cell.incomesForm = newData;
+    cell.acamulated = newAmount;
     cell.save()
   })
 }

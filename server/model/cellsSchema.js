@@ -7,7 +7,8 @@ var CellsSchema = new Schema({
   loansTo:Array,
   spendings: Array,
   createAt: Date,
-  tax: Number
+  tax: Number,
+  acamulated: Number
 
 });
 
