@@ -1,6 +1,9 @@
 <article class="col-12">
-  <h2 class="h5 text-center border-bottom">Cells</h2>
-  <table class="table col-12">
+  <h2 class="h5 text-center">Cells</h2>
+  <div *ngIf="!cells || !activeCells"class="loading text-center">
+    loading ...
+  </div>
+  <table *ngIf="cells && activeCells"class="table col-12">
     <thead>
       <tr>
         <td class="col-3">NAME</td>
@@ -9,14 +12,17 @@
         <td class="col-3">ACCUMELATED</td>
         <td class="col-1">ACTIVE</td>
       </tr>
+      </thead>
       <tr *ngFor="let cell of cells" class="border-bottom">
         <td class="col-3">{{cell.name}}</td>
         <td class="col-2">{{cell.createAt | date}}</td>
         <td class="col-3">{{cell.tax}}</td>
         <td class="col-3">{{cell.acamulated}}</td>
-        <td class="col-1 text-center"><input type="checkbox" /></td>
+        <td class="col-1 text-center">
+          <input *ngIf="isCellActive(cell._id) === true" type="checkbox" name="{{cell._id}}"(change)="onCheckedChange($event)" checked/>
+          <input *ngIf="isCellActive(cell._id) === false" type="checkbox" name="{{cell._id}}"(change)="onCheckedChange($event)" />
+        </td>
       </tr>
-    </thead>
   </table>
   <h2 class="h5 text-center"> Create new cell</h2>
   <form name="createCell" class="row col-12">

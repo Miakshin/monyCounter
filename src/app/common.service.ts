@@ -14,32 +14,32 @@ export class CommonService {
   }
 
   getData() {
-    return this.http.get<any>("http://localhost:3048/incomes");
+    return this.http.get<any>("http://localhost:3039/incomes");
     }
 
   getCellById(id){
-    return this.http.get<any>(`http://localhost:3048/cells/${id}`)
+    return this.http.get<any>(`http://localhost:3039/cells/${id}`)
     .toPromise()
   }
 
   getReportsByType(type): Observable<any>{
-      return this.http.get<any>(`http://localhost:3048/reports/${type}`);
+      return this.http.get<any>(`http://localhost:3039/reports/${type}`);
     }
 
   postData(data, dataType) {
-    return this.http.post<any>(`http://localhost:3048/report/${dataType}`, data);
+    return this.http.post<any>(`http://localhost:3039/report/${dataType}`, data);
   }
 
   getUserByLogin(login): Observable<any>{
-      return this.http.get<any>(`http://localhost:3048/user/${login}`);
+      return this.http.get<any>(`http://localhost:3039/user/${login}`);
   }
 
   addRepotrToCell(id, repotr){
-    return this.http.post<any>(`http://localhost:3048/cells/${id}`, repotr)
+    return this.http.post<any>(`http://localhost:3039/cells/${id}`, repotr)
   }
 
   changeSettings(user, type, params){
-    return this.http.post<any>(`http://localhost:3048/user/${user}/settings/${type}`, params)
+    return this.http.post<any>(`http://localhost:3039/user/${user}/settings/${type}`, params)
   }
 
 }

@@ -10,3 +10,7 @@ nav {
   background-color: #999;
   width: 100%;
 } */
+
+a.active{
+  background-color: white;
+}

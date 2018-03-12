@@ -13,6 +13,7 @@ export class EncomingAndSpendingComponent implements OnInit {
   spendingReports = [];
   encomingReports = [];
   activeTax = [];
+  activCells: any;
 
   encomingSum:number;
   spendingSum:number;
@@ -27,7 +28,7 @@ export class EncomingAndSpendingComponent implements OnInit {
   ngOnInit():void{
     this.getSpendingReports();
     this.getEncomingReports();
-    this.getCurrentTax();
+    this.getDataSettings();
   }
 
   sendSpendingReport(){
@@ -128,9 +129,11 @@ export class EncomingAndSpendingComponent implements OnInit {
     eval(`this.${ref} = sum`);
   }
 
-  getCurrentTax(){
+  getDataSettings(){
     this.commonService.getUserByLogin("admin")
-    .subscribe((user)=>{this.activeTax = user.setings.activCells;})
+    .subscribe((user)=>{
+      this.activeTax = user.setings.activCells;
+      this.activCells = user.setings.activCells})
   }
 
 }

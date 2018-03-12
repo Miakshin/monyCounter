@@ -8,7 +8,9 @@ import { CommonService } from '../common.service';
 })
 export class CellsComponent implements OnInit {
 
-  cells;
+  login: string = "admin";
+  cells: any;
+  activeCells: any;
 
   constructor(private commonService: CommonService) { }
 
@@ -18,7 +20,15 @@ export class CellsComponent implements OnInit {
 
   getAllCells(){
     this.commonService.getReportsByType("cell")
-    .subscribe((data)=>this.cells = data)
+    .subscribe((data)=>{this.cells = data;
+    this.getActiveCells();
+    })
+  }
+
+  getActiveCells(){
+    this.commonService.getUserByLogin("admin")
+    .subscribe((user)=>{
+      this.activeCells = user.setings.activCells;})
   }
 
   createCell(){
@@ -35,5 +45,16 @@ export class CellsComponent implements OnInit {
     }
     this.commonService.postData(data, "cell")
     .subscribe(()=>clearForm())
+  }
+
+  onCheckedChange(event){
+    let data={id: event.target.name}
+    this.commonService.changeSettings(this.login, "activCells", data).subscribe((user)=>{
+      this.activeCells = user.setings.activCells
+    })
+  }
+
+  isCellActive(id){
+     return(this.activeCells.indexOf(id) === -1 ? false : true)
   }
 }

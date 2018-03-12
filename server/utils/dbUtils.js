@@ -143,7 +143,14 @@ module.exports.changeSettingData = function(user, settingPart, data){
   return User.findOne({login : user} ,function(err, user){
     switch (settingPart) {
     case "activCells":
-      console.log("it is activeCells")
+      var cellItem = user.setings.activCells.findIndex(function(id){
+        return id === data.id
+      })
+      cellItem === -1?
+        user.setings.activCells.push(data.id):
+        user.setings.activCells.splice(cellItem, 1);
+      console.log(user.setings.cellItem);
+      user.save();
       break;
     case "activeCurancy":
         var curancyItem = user.setings.activeCurancy.findIndex(function(el){
@@ -154,9 +161,7 @@ module.exports.changeSettingData = function(user, settingPart, data){
         }else{
           newReport = user.setings.activeCurancy[curancyItem];
           newReport.checked = !newReport.checked;
-          console.log(newReport);
           user.setings.activeCurancy[curancyItem] = newReport;
-          console.log(user.setings.activeCurancy);
           user.save();
         }
 
