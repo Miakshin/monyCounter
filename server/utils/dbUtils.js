@@ -138,3 +138,31 @@ module.exports.addReportToCell = function(id, data){
     cell.save()
   })
 }
+
+module.exports.changeSettingData = function(user, settingPart, data){
+  return User.findOne({login : user} ,function(err, user){
+    switch (settingPart) {
+    case "activCells":
+      console.log("it is activeCells")
+      break;
+    case "activeCurancy":
+        var curancyItem = user.setings.activeCurancy.findIndex(function(el){
+          return el.name === data.value ? true : false
+        });
+        if(curancyItem === undefined){
+          res.send("item isn`t find");
+        }else{
+          newReport = user.setings.activeCurancy[curancyItem];
+          newReport.checked = !newReport.checked;
+          console.log(newReport);
+          user.setings.activeCurancy[curancyItem] = newReport;
+          console.log(user.setings.activeCurancy);
+          user.save();
+        }
+
+      break;
+    default:
+      res.send("it setting is undefined")
+  }
+})
+}

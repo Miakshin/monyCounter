@@ -1,26 +1,29 @@
   <h3  class="border-bottom">Settings</h3>
   <nav class="row col-12 navigation">
-    <a routerLink="/settings" class="nav-link" name="account" (click)="pick($event)">account settings</a>
-    <a routerLink="/settings" class="nav-link" name="cells" (click)="pick($event)">cells settings</a>
-    <a routerLink="/settings" class="nav-link" name="loans" (click)="pick($event)">loans settings</a>
-    <a routerLink="/settings" class="nav-link" name="curancy" (click)="pick($event)">curancy settings</a>
+    <a routerLink="/settings" class="nav-link active" name="account" (click)="pick($event)">ACCOUNT SETTINGS</a>
+    <a routerLink="/settings" class="nav-link" name="cells" (click)="pick($event)">CELLS SETTINGS</a>
+    <a routerLink="/settings" class="nav-link" name="loans" (click)="pick($event)">LOANS SETTINGS</a>
+    <a routerLink="/settings" class="nav-link" name="curancy" (click)="pick($event)">CURRANCY SETTINGS</a>
   </nav>
-  <div id="cells" class="setting-hiden">
+  <div *ngIf="activeLink === 'cells'">
     Cell settings
   </div>
-  <div id="loans" class="setting-hiden">
+  <div *ngIf="activeLink === 'loans'">
     Loans settings
   </div>
-  <div id="account" class="setting-hiden">
+  <div *ngIf="activeLink === 'account'">
     Account settings
   </div>
-  <div id="curancy" class="setting-hiden">
+  <div *ngIf="activeLink === 'curancy'">
     <h3 class="h5">common settings</h3>
     <h4 class="h6">Curancy</h4>
       <ul>
-        <li *ngFor="let curracy of settings.activeCurancy">
-          {{curracy.name | uppercase }}
-          <input type="checkbox" checked />
+        <li *ngFor="let currancy of settings.activeCurancy">
+          {{currancy.name | uppercase }}
+          <input *ngIf="currancy.checked" type="checkbox" checked
+          name={{currancy.name}} (change)="onCheckedChange($event)"/>
+          <input *ngIf="!currancy.checked" type="checkbox"
+          name={{currancy.name}} (change)="onCheckedChange($event)"/>
         </li>
       </ul>
       <input type="button" value="add new"/>

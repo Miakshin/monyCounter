@@ -6,8 +6,8 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./short-information.component.css']
 })
 export class ShortInformationComponent implements OnInit {
-  @Input() user: string;
-  freeMony: number = 112;
+  @Input() user: string = "loading";
+  @Input() freeMony: number = 0;
   curancy: string = "usd";
 
   constructor() { }

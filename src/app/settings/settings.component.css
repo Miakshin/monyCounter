@@ -1,3 +1,4 @@
-.setting-hiden{
-  display: none;
+nav a.active{
+  border-bottom: 2px solid #7d7dc3;
+  color: #7d7dc3;
 }

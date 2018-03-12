@@ -14,28 +14,32 @@ export class CommonService {
   }
 
   getData() {
-    return this.http.get<any>("http://localhost:3043/incomes");
+    return this.http.get<any>("http://localhost:3048/incomes");
     }
 
   getCellById(id){
-    return this.http.get<any>(`http://localhost:3043/cells/${id}`)
+    return this.http.get<any>(`http://localhost:3048/cells/${id}`)
     .toPromise()
   }
 
   getReportsByType(type): Observable<any>{
-      return this.http.get<any>(`http://localhost:3043/reports/${type}`);
+      return this.http.get<any>(`http://localhost:3048/reports/${type}`);
     }
 
   postData(data, dataType) {
-    return this.http.post<any>(`http://localhost:3043/report/${dataType}`, data);
+    return this.http.post<any>(`http://localhost:3048/report/${dataType}`, data);
   }
 
   getUserByLogin(login): Observable<any>{
-      return this.http.get<any>(`http://localhost:3043/user/${login}`);
+      return this.http.get<any>(`http://localhost:3048/user/${login}`);
   }
 
   addRepotrToCell(id, repotr){
-    return this.http.post<any>(`http://localhost:3043/cells/${id}`, repotr)
+    return this.http.post<any>(`http://localhost:3048/cells/${id}`, repotr)
+  }
+
+  changeSettings(user, type, params){
+    return this.http.post<any>(`http://localhost:3048/user/${user}/settings/${type}`, params)
   }
 
 }

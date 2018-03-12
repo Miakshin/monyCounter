@@ -8,7 +8,10 @@ var UsersSchema = new Schema({
   registered: Number,
   setings:{
     activCells: Array,
-    activeCurancy: Array
+    activeCurancy: [
+      {name: String,
+      checked: Boolean}
+    ]
   }
 
 });

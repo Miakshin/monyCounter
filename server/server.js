@@ -6,7 +6,7 @@ var cors = require('cors');
 var app = express();
 
 
-var server = 3043;
+var server = 3048;
 var dbUtils = require('./utils/dbUtils');
 
 dbUtils.setUpConnection();
@@ -102,6 +102,11 @@ app.post('/report/:type', function(req, res) {
 
  app.post('/createUser/', function(req, res){
    dbUtils.createUser(req.body).then((data)=>res.send(data))
+ })
+
+ app.post('/user/:login/:settings/:part',function(req, res){
+   console.log(req.params, req.body)
+   dbUtils.changeSettingData(req.params.login, req.params.part, req.body).then((data)=>res.send(data))
  })
 
  app.delete('/incomes/:id', (req, res)=>{

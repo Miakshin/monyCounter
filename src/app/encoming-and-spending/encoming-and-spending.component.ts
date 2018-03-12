@@ -40,7 +40,9 @@ export class EncomingAndSpendingComponent implements OnInit {
       currency : form.elements.currency.value
     };
     this.commonService.postData(data, "spending")
-    .subscribe(()=>form.reset())
+    .subscribe(()=>{form.reset()
+    this.getSpendingReports()
+  })
   }
 
   sendEncomingReport() :void{
@@ -81,6 +83,7 @@ export class EncomingAndSpendingComponent implements OnInit {
           .subscribe((res)=>{
             console.log(res);
             form.reset()
+            this.getEncomingReports()
             reports.forEach((report)=>{
               let cellData = {
                 from: res._id,
@@ -94,7 +97,10 @@ export class EncomingAndSpendingComponent implements OnInit {
         })
       }else{ data.isTax = false;
           this.commonService.postData(data, "encoming")
-          .subscribe(()=>form.reset())}
+          .subscribe(()=>{
+          form.reset()
+          this.getEncomingReports()}
+        )}
   }
 
   getSpendingReports(){
