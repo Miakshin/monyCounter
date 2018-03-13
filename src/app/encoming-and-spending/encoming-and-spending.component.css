@@ -1,0 +1,5 @@
+span.item-isnt-valid{
+  font-size: 8px;
+  color:red;
+  position:relative;
+}

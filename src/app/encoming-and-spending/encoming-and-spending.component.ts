@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import {  FormGroup, FormControl, Validators }   from '@angular/forms';
 
 import { CommonService } from '../common.service';
 
@@ -13,12 +14,21 @@ export class EncomingAndSpendingComponent implements OnInit {
   spendingReports = [];
   encomingReports = [];
   activeTax = [];
-  activCells: any;
+  activCells: [string];
+  activeCurancy: [object];
 
-  encomingSum:number;
-  spendingSum:number;
+  encomingFormGroup : FormGroup;
 
-  constructor(private commonService: CommonService) { }
+  constructor(private commonService: CommonService) {
+  this.encomingFormGroup = new FormGroup({
+    "description": new FormControl("", [
+      Validators.required,
+      Validators.pattern("[a-zA-Z_]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}")
+    ]),
+    "amount": new FormControl(),
+    "currency": new FormControl(),
+});
+ }
 
   getDate(){
     let now = new Date;
@@ -53,9 +63,9 @@ export class EncomingAndSpendingComponent implements OnInit {
     let taxPromises = [];
       data = {
         date: Date.now(),
-        amount: form.elements.amount.value,
-        description : form.elements.description.value,
-        currency : form.elements.currency.value,
+        amount: this.encomingFormGroup.value.amount,
+        description : this.encomingFormGroup.value.description,
+        currency : this.encomingFormGroup.value.currency,
       };
         if(this.activeTax.length > 0){data.isTax = true; data.taxTo=this.activeTax; data.taxed = 0;
         this.activeTax.forEach((item)=>{
@@ -108,32 +118,24 @@ export class EncomingAndSpendingComponent implements OnInit {
     this.commonService.getReportsByType("spending")
     .subscribe((data)=>{
       this.spendingReports = data;
-      this.getSum(data, "spendingSum")
       });
   }
   getEncomingReports(){
     this.commonService.getReportsByType("encoming")
     .subscribe((data)=>{
       this.encomingReports = data;
-      this.getSum(data, "encomingSum")
       });
   }
 
-  getSum(data, ref):void{
-    let sum = 0;
-    for(let report of data){
-      // console.log(report);
-      sum +=report.amount;
-    }
-    // console.log(sum)
-    eval(`this.${ref} = sum`);
-  }
 
   getDataSettings(){
     this.commonService.getUserByLogin("admin")
     .subscribe((user)=>{
       this.activeTax = user.setings.activCells;
-      this.activCells = user.setings.activCells})
+      this.activCells = user.setings.activCells;
+      this.activeCurancy = user.setings.activeCurancy.filter((item)=>{
+        return item.checked === true})
+      })
   }
 
 }

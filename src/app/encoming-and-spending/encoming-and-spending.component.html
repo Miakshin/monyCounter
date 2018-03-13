@@ -2,35 +2,38 @@
   <label>Now:</label>{{getDate() | date}}
 </header>
 <div class="row">
-  <form name="encoming" class="encoming col-6 no-gutters ">
+  <form name="encoming"
+  [formGroup]="encomingFormGroup" novalidate (ngSubmit)="sendEncomingReport()"
+  class="encoming col-6 no-gutters ">
     <h3 class="border-bottom h5"> Add new incomings </h3>
     <ul class="list-group">
       <li class=" row col-12">
         <input type="text" name="description"
+        formControlName="description"
           placeholder="encoming" class="col-6"/>
+          <span class="item-isnt-valid"
+          *ngIf="encomingFormGroup.controls['description'].invalid && encomingFormGroup.controls['description'].touched">
+          descripion should be longer then 2 simbol
+        </span>
         <input name="amount"
+          formControlName="amount"
           type="number" class="col-3"/>
-        <select name="currency"
+        <select *ngIf="activeCurancy"name="currency"
+          formControlName="currency"
           class="form-control form-control-sm col-3">
-          <option value="UAH">
-            UAH
-          </option>
-          <option value="USD">
-            USD
-          </option>
-          <option value="RUB">
-            RUB
-          </option>
-          <option value="EUR">
-            EUR
+          <option *ngFor="let curancy of activeCurancy"
+          value="curancy.name">
+            {{ curancy.name | uppercase}}
           </option>
         </select>
+        <div *ngIf="!activeCurancy" class="loading col-3">
+          loading...
+        </div>
         <input type="button" value="+" class="btn btn-succes col-1"/>
       </li>
     </ul>
     <div class="row col-12 no-gutters btn-group">
-      <input type="button" (click)="sendEncomingReport()" class="col-6 btn btn-secondary"  value="Send an incoming report"/>
-      <input type="button" class="col-6 btn btn-succes" value="Add and distribute" />
+      <input type="submit" class="col-6 btn btn-secondary"  value="Send an incoming report"/>
     </div>
   </form>
   <form name="spending" class="spending col-6 no-gutters ">
@@ -41,21 +44,16 @@
           placeholder="encoming" class="col-6"/>
         <input name="amount"
           type="number" class="col-3"/>
-        <select name="currency"
-          class="form-control form-control-sm col-3">
-          <option value="UAH">
-            UAH
-          </option>
-          <option value="USD">
-            USD
-          </option>
-          <option value="RUB">
-            RUB
-          </option>
-          <option value="EUR">
-            EUR
-          </option>
-        </select>
+          <select *ngIf="activeCurancy"name="currency"
+            class="form-control form-control-sm col-3">
+            <option *ngFor="let curancy of activeCurancy"
+            value="curancy.name">
+              {{ curancy.name | uppercase}}
+            </option>
+          </select>
+          <div *ngIf="!activeCurancy" class="loading col-3">
+            loading...
+          </div>
         <input type="button" value="+" class="btn btn-succes col-1"/>
       </li>
     </ul>
@@ -90,9 +88,6 @@
           </td>
         </tr>
       </table>
-      <p>
-        {{encomingSum}}
-      </p>
     </aside>
     <aside class="container col-6">
       <h5 class="h6 col-12 text-center">Spendings</h5>
@@ -122,9 +117,6 @@
           </td>
         </tr>
       </table>
-      <p>
-        {{spendingSum}}
-      </p>
     </aside>
 
 </div>
