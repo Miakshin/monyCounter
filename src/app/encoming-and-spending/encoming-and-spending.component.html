@@ -8,32 +8,46 @@
     <h3 class="border-bottom h5"> Add new incomings </h3>
     <ul class="list-group">
       <li class=" row col-12">
-        <input type="text" name="description"
-        formControlName="description"
-          placeholder="encoming" class="col-6"/>
-          <span class="item-isnt-valid"
-          *ngIf="encomingFormGroup.controls['description'].invalid && encomingFormGroup.controls['description'].touched">
-          descripion should be longer then 2 simbol
-        </span>
-        <input name="amount"
-          formControlName="amount"
-          type="number" class="col-3"/>
-        <select *ngIf="activeCurancy"name="currency"
-          formControlName="currency"
-          class="form-control form-control-sm col-3">
-          <option *ngFor="let curancy of activeCurancy"
-          value="curancy.name">
-            {{ curancy.name | uppercase}}
-          </option>
-        </select>
-        <div *ngIf="!activeCurancy" class="loading col-3">
-          loading...
+        <div class="col-6">
+          <input type="text" name="description"
+          formControlName="description"
+            placeholder="encoming" class="col-12"/>
+            <span class="item-isnt-valid"
+            *ngIf="encomingFormGroup.controls['description'].invalid && encomingFormGroup.controls['description'].touched">
+            descripion should be longer then 2 simbol
+          </span>
         </div>
-        <input type="button" value="+" class="btn btn-succes col-1"/>
+        <div class="col-3">
+          <input name="amount"
+            formControlName="amount"
+            type="number" class="col-12"/>
+            <span class="item-isnt-valid"
+            *ngIf="encomingFormGroup.controls['amount'].invalid && encomingFormGroup.controls['amount'].touched">
+            number less than 0
+            </span>
+        </div>
+        <div class="col-3">
+          <select *ngIf="activeCurancy"name="currency"
+            formControlName="currency"
+            class="form-control form-control-sm col-12">
+            <option *ngFor="let curancy of activeCurancy"
+            value={{curancy.name}}>
+              {{ curancy.name | uppercase}}
+            </option>
+          </select>
+          <div *ngIf="!activeCurancy" class="loading col-12">
+            loading...
+          </div>
+          <span class="item-isnt-valid"
+          *ngIf="encomingFormGroup.controls['currency'].invalid && encomingFormGroup.controls['currency'].touched">
+          pick a curancy
+          </span>
+        </div>
       </li>
     </ul>
-    <div class="row col-12 no-gutters btn-group">
-      <input type="submit" class="col-6 btn btn-secondary"  value="Send an incoming report"/>
+    <div class="row col-12 no-gutters">
+      <input type="button" value="Add one more line" class="btn btn-succes col-5"/>
+      <input type="submit" class="col-5 btn btn-secondary"  value="Send an incoming report"/>
     </div>
   </form>
   <form name="spending" class="spending col-6 no-gutters ">
@@ -78,10 +92,10 @@
         </thead>
         <tr *ngFor="let report of encomingReports" class="text-muted border-bottom">
           <td class="col-4 text-center">
-            {{report.amount}} {{report.currency}}
+            {{report.amount}} {{report.currency | uppercase}}
           </td>
           <td class="col-3 text-center">
-            {{report.date}}
+            {{report.date | date: 'M/d/yy'}}
           </td>
           <td class="col-5 text-center">
             {{report.description}}
@@ -110,7 +124,7 @@
             {{report.amount}} {{report.currency}}
           </td>
           <td class="col-3 text-center">
-            {{report.date}}
+            {{report.date | date: 'M/d/yy'}}
           </td>
           <td class="col-5 text-center">
             {{report.description}}

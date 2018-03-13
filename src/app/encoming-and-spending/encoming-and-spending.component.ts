@@ -23,10 +23,13 @@ export class EncomingAndSpendingComponent implements OnInit {
   this.encomingFormGroup = new FormGroup({
     "description": new FormControl("", [
       Validators.required,
-      Validators.pattern("[a-zA-Z_]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}")
+      Validators.pattern("[^{}*<>_]{2,55}")
     ]),
-    "amount": new FormControl(),
-    "currency": new FormControl(),
+    "amount": new FormControl("",[
+      Validators.required,
+      Validators.pattern("^[0-9]{1,12}")
+    ]),
+    "currency": new FormControl("", Validators.required),
 });
  }
 

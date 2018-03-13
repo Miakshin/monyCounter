@@ -1,5 +1,18 @@
 span.item-isnt-valid{
   font-size: 8px;
   color:red;
-  position:relative;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  bottom: 8px;
 }
+div.col-3, div.col-6{
+  padding: 0px;
+}
+
+input.ng-touched.ng-invalid, select.ng-touched.ng-invalid  {
+  border-radius:3px;
+  border:solid #fd989885 1px;}
+input.ng-touched.ng-valid, select.ng-touched.ng-valid  {
+  border-radius:3px;
+  border:solid #bcf3bc 1px;}
