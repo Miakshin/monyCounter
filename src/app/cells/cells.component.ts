@@ -28,7 +28,8 @@ export class CellsComponent implements OnInit {
   getActiveCells(){
     this.commonService.getUserByLogin("admin")
     .subscribe((user)=>{
-      this.activeCells = user.setings.activCells;})
+      this.activeCells = user.setings.activCells;}
+    )
   }
 
   createCell(){
@@ -44,7 +45,8 @@ export class CellsComponent implements OnInit {
       form.reset()
     }
     this.commonService.postData(data, "cell")
-    .subscribe(()=>clearForm())
+    .subscribe(()=>{clearForm();
+      this.getActiveCells()})
   }
 
   onCheckedChange(event){

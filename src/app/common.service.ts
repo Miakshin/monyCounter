@@ -27,7 +27,8 @@ export class CommonService {
     }
 
   postData(data, dataType) {
-    return this.http.post<any>(`http://localhost:3039/report/${dataType}`, data);
+    return this.http.post<any>(`http://localhost:3039/report/${dataType}`, data)
+    // .toPromise()
   }
 
   getUserByLogin(login): Observable<any>{
