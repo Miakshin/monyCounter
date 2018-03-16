@@ -16,6 +16,7 @@ import { EntranceComponent } from './entrance/entrance.component';
 import { ShortInformationComponent } from './short-information/short-information.component';
 import { CommonService } from './common.service';
 import { CellsComponent } from './cells/cells.component';
+import { CellComponent } from './cells/cell/cell.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { CellsComponent } from './cells/cells.component';
     LoansComponent,
     EntranceComponent,
     ShortInformationComponent,
-    CellsComponent
+    CellsComponent,
+    CellComponent
   ],
   imports: [
     BrowserModule,

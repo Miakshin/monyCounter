@@ -2,3 +2,98 @@ nav a.active{
   border-bottom: 2px solid #7d7dc3;
   color: #7d7dc3;
 }
+input[type="submit"].add-before{
+  margin-left: 25.43%;
+}
+label.slider{
+  height: 20px;
+  width: 40px;
+  background: white;
+  border-radius: 10px;
+}
+ input.checkbox-slider{
+  transition: 1s;
+  position: relative;
+  top: 6px;
+  left: 10px;
+}
+input.checkbox-slider:checked::after{
+  content: " ";
+  height: 20px;
+  width: 20px;
+  border-radius: 10px;
+  border: 2px solid #a3c1a396;
+  background: #ffffff;
+  z-index: 1;
+  display: block;
+  position: relative;
+  bottom: 27px;
+  left: 11px;
+  transition: 1s;
+}
+input.checkbox-slider:checked::before{
+  content: " ";
+  height: 20px;
+  width: 40px;
+  border-radius: 10px;
+  background-color: #8aef88;
+  z-index: 1;
+  border: 2px solid #dadada;
+  display: block;
+  position: relative;
+  bottom: 7px;
+  right: 9px;
+  transition: 1s;
+}
+input.checkbox-slider::after{
+  content: " ";
+  height: 20px;
+  width: 20px;
+  border-radius: 10px;
+  background: white;
+  border: 2px solid #dadada;
+  z-index: 1;
+  display: block;
+  position: relative;
+  bottom: 27px;
+  right: 9px;
+  transition: 1s;
+}input.checkbox-slider::before{
+  border: 2px solid #dadada;
+  content: " ";
+  height: 20px;
+  width: 40px;
+  border-radius: 10px;
+  background-color: #f1f3f1;
+  z-index: 1;
+  display: block;
+  position: relative;
+  bottom: 7px;
+  right: 9px;
+  transition: 1s;
+}
+
+ul{
+  list-style: decimal;
+}
+
+.btn-close{
+  background-color: #ff6060;
+  height: 20px;
+  width: 20px;
+  color: white;
+  border-radius: 50%;
+  border: 0px;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 12px;
+}
+ul li input.btn-close{
+  margin-left: 30px;
+}
+
+form input.btn-close{
+  position: relative;
+  top: 0;
+  left: 98.5%;
+}

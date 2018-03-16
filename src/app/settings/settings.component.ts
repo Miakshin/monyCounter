@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from '../common.service';
-import { settings } from './settings';
+import {  FormGroup, FormControl, Validators }   from '@angular/forms';
+
+import { User } from '../User';
+
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -10,19 +13,56 @@ export class SettingsComponent implements OnInit {
 
   login: string = "admin";
   activeLink :string = "account";
-  settings: settings[];
+  user: User[];
+  loansFromCells: boolean ;
+  isCreateCurancyOpened: boolean = false;
 
-  constructor(private commonService: CommonService) { }
+  curancyFormGroup : FormGroup;
+  nameFormGroup : FormGroup;
+  passwordFormGroup : FormGroup;
+
+  constructor(private commonService: CommonService) {
+    this.curancyFormGroup = new FormGroup({
+      "name": new FormControl("", [
+        Validators.required,
+        Validators.pattern("[^a-zA-z]{3,4}")
+      ]),
+      "checked" : new FormControl(true)
+    })
+
+    this.nameFormGroup = new FormGroup({
+      "newName": new FormControl("", [
+        Validators.required,
+        Validators.pattern("[^{}*<>]{2,30}")
+      ])
+    })
+
+    this.passwordFormGroup = new FormGroup({
+      "newPass": new FormControl("", [
+        Validators.required,
+        Validators.pattern("[^{}*<>]{2,55}")
+      ]),
+      "currentPass": new FormControl("", [
+        Validators.required,
+        Validators.pattern("[^{}*<>]{2,55}")
+      ]),
+      "confirmPass": new FormControl("", [
+        Validators.required,
+        Validators.pattern("[^{}*<>]{2,55}")
+      ]),
+    })
+  }
 
   ngOnInit() {
     this.getSettins();
+    this.loansFromCells= true;
   }
 
   getSettins(){
     this.commonService.getUserByLogin(this.login)
       .subscribe(user=>{
-        this.settings = user.setings;
-        console.log(this.settings);
+        this.user = user;
+        console.log(this.user);
       })
   }
 
@@ -37,7 +77,50 @@ export class SettingsComponent implements OnInit {
 
   onCheckedChange(event){
     let data={value: event.target.name}
-    this.commonService.changeSettings(this.login, "activeCurancy", data).subscribe(console.log)
+    this.commonService.changeSettings(this.login, "activeCurancy", data)
+    .subscribe(console.log)
+  }
+
+  createCurancy(){
+    let data = {
+      name: this.curancyFormGroup.value.name,
+      checked: this.curancyFormGroup.value.checked
+    }
+    this.commonService.changeSettings(this.login, "createCurancy", data)
+    .subscribe(()=>{
+      this.curancyFormGroup.reset();
+      this.getSettins();
+      this.isCreateCurancyOpened = false;
+    })
+  }
+
+  deleteCurancy(name){
+    let data = { value: name };
+    this.commonService.changeSettings(this.login, "deleteCurancy", data)
+    .subscribe(()=>{
+      this.getSettins();
+    })
+  }
+
+  onChangeAllowsCell(){
+    this.commonService.changeSettings(this.login, "changeAllowsCell", "no data")
+    .subscribe(()=>console.log("value changed"))
+  }
+
+  changeName(){
+    let data = { name: this.nameFormGroup.value.newName};
+    console.log(data);
+  }
+
+  changePassword(){
+    if(this.passwordFormGroup.value.newPass
+      === this.passwordFormGroup.value.confirmPass){
+        let data = {
+          newPass : this.passwordFormGroup.value.newPass,
+          currentPass: this.passwordFormGroup.value.currentPass
+        }
+        console.log(data)
+      }
   }
 
 }

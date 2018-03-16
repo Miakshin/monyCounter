@@ -5,6 +5,7 @@ import { SettingsComponent }             from './settings/settings.component';
 import { EncomingAndSpendingComponent }      from './encoming-and-spending/encoming-and-spending.component';
 import { LoansComponent }      from './loans/loans.component';
 import { CellsComponent }      from './cells/cells.component';
+import { CellComponent }      from './cells/cell/cell.component';
 
 const routes: Routes = [
   { path: 'main', component: MainInformationComponent },
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'inandout', component: EncomingAndSpendingComponent },
   { path: 'loans', component: LoansComponent },
   { path: 'cells', component: CellsComponent },
+  { path: 'cells/:id', component: CellComponent },
   { path: '', redirectTo: '/main', pathMatch: 'full' },
 ];
 

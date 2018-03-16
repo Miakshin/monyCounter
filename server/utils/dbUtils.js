@@ -156,7 +156,7 @@ module.exports.changeSettingData = function(user, settingPart, data){
         var curancyItem = user.setings.activeCurancy.findIndex(function(el){
           return el.name === data.value ? true : false
         });
-        if(curancyItem === undefined){
+        if(curancyItem === -1){
           res.send("item isn`t find");
         }else{
           newReport = user.setings.activeCurancy[curancyItem];
@@ -164,8 +164,36 @@ module.exports.changeSettingData = function(user, settingPart, data){
           user.setings.activeCurancy[curancyItem] = newReport;
           user.save();
         }
-
+        break;
+      case "createCurancy":
+        var curancyItem = user.setings.activeCurancy.findIndex(function(el){
+        return el.name.toLowerCase() === data.name.toLowerCase() ? true : false
+      });
+      if(curancyItem === -1){
+        user.setings.activeCurancy.push(data);
+        console.log(user.setings.activeCurancy)
+        user.save();
+      }else{
+        return("Value allredy exist");
+      }
       break;
+      case "deleteCurancy":
+        var curancyItem = user.setings.activeCurancy.findIndex(function(el){
+          return el.name === data.value ? true : false
+        });
+        if(curancyItem === -1){
+          res.send("Value isn`t find");
+        }else{
+          user.setings.activeCurancy.splice(curancyItem, 1);
+          user.save()
+        }
+        break;
+      case "changeAllowsCell":
+        user.setings.loansAllowsCell = !user.setings.loansAllowsCell;
+        console.log(user.setings.loansAllowsCell);
+        user.save()
+        break
+
     default:
       res.send("it setting is undefined")
   }

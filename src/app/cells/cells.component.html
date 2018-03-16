@@ -14,7 +14,9 @@
       </tr>
       </thead>
       <tr *ngFor="let cell of cells" class="border-bottom">
-        <td class="col-3">{{cell.name}}</td>
+        <td class="col-3">{{cell.name}}<br />
+        <a routerLink="/cells/{{cell._id}}">Get detailed information</a>
+      </td>
         <td class="col-2">{{cell.createAt | date}}</td>
         <td class="col-3">{{cell.tax}}</td>
         <td class="col-3">{{cell.acamulated}}</td>

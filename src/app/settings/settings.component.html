@@ -1,30 +1,80 @@
   <h3  class="border-bottom">Settings</h3>
   <nav class="row col-12 navigation">
     <a routerLink="/settings" class="nav-link active" name="account" (click)="pick($event)">ACCOUNT SETTINGS</a>
-    <a routerLink="/settings" class="nav-link" name="cells" (click)="pick($event)">CELLS SETTINGS</a>
     <a routerLink="/settings" class="nav-link" name="loans" (click)="pick($event)">LOANS SETTINGS</a>
     <a routerLink="/settings" class="nav-link" name="curancy" (click)="pick($event)">CURRANCY SETTINGS</a>
   </nav>
-  <div *ngIf="activeLink === 'cells'">
-    Cell settings
-  </div>
   <div *ngIf="activeLink === 'loans'">
-    Loans settings
-  </div>
-  <div *ngIf="activeLink === 'account'">
-    Account settings
+    <p>
+      Allows create loans only from free mony <label for="checkbox" class="slider">
+        <input *ngIf="!user.setings.loansAllowsCell" type="checkbox"
+        (change)="onChangeAllowsCell()"class="checkbox-slider" />
+        <input *ngIf="user.setings.loansAllowsCell" type="checkbox"
+        (change)="onChangeAllowsCell()" checked class="checkbox-slider" />
+      </label>
+    </p>
+    <p *ngIf="loansFromCells===true">
+      Now you can get loans from cells and free mony
+    </p>
+    <p *ngIf="loansFromCells===false">
+      Now you can get loans only from free mony
+    </p>
+
   </div>
   <div *ngIf="activeLink === 'curancy'">
     <h3 class="h5">common settings</h3>
-    <h4 class="h6">Curancy</h4>
-      <ul>
-        <li *ngFor="let currancy of settings.activeCurancy">
-          {{currancy.name | uppercase }}
-          <input *ngIf="currancy.checked" type="checkbox" checked
-          name={{currancy.name}} (change)="onCheckedChange($event)"/>
-          <input *ngIf="!currancy.checked" type="checkbox"
-          name={{currancy.name}} (change)="onCheckedChange($event)"/>
-        </li>
-      </ul>
-      <input type="button" value="add new"/>
+    <h4 class="h6">Your curancy:</h4>
+    <ul>
+      <li *ngFor="let currancy of user.setings.activeCurancy">
+        {{currancy.name | uppercase }}
+        <input *ngIf="currancy.checked" type="checkbox" class="checkbox-slider" checked
+        name={{currancy.name}} (change)="onCheckedChange($event)"/>
+        <input *ngIf="!currancy.checked" type="checkbox" class="checkbox-slider"
+        name={{currancy.name}} (change)="onCheckedChange($event)"/>
+        <input type="button" value="x" (click)="deleteCurancy(currancy.name)"
+        class="btn-close"/>
+      </li>
+    </ul>
+    <input *ngIf="!isCreateCurancyOpened"type="button"
+      class="btn" (click)="isCreateCurancyOpened = true" value="add new"/>
+    <form *ngIf="isCreateCurancyOpened" class=" container bg-light"
+    [formGroup]="curancyFormGroup" novalidate (ngSubmit)="createCurancy()">
+      <input type="button" value="x" class="btn-close" (click)="isCreateCurancyOpened = false"/>
+      <p class="col-12">
+        You should just write curancy assigment. Assigment lengt sould be thre or four simbols"
+      </p>
+    <label>Input currancy assigment:</label><input formControlName="name" type="text" /><br />
+    <label>Currancy will be active: </label>
+    <input formControlName="checked" *ngIf="curancyFormGroup.value.checked" type="checkbox" class="checkbox-slider" checked />
+    <input formControlName="checked" *ngIf="!curancyFormGroup.value.checked" type="checkbox" class="checkbox-slider" /><br />
+      <input type="submit" value="add new currancy" class="btn">
+    </form>
+  </div>
+  <div *ngIf="activeLink === 'account'">
+    <div *ngIf="user" class="container">
+      <form [formGroup]="nameFormGroup" novalidate (ngSubmit)="changeName()">
+        <h3> Change name</h3>
+        <p>
+          Currant name : <span>{{user.name}}</span>
+        </p>
+        <label class="col-3" >Input new name :</label>
+        <input class="col-3" formControlName="newName" type="text" name="new-name"/><br />
+        <input class="col-3 btn add-before" type="submit" value="chage name" />
+      </form>
+
+      <form [formGroup]="passwordFormGroup" novalidate (ngSubmit)="changePassword()">
+        <h3> Change password</h3>
+        <label class="col-3" >input current password :</label>
+        <input class ="col-3" formControlName="currentPass" type="password"  /><br />
+        <label class="col-3" >input new password :</label>
+        <input class ="col-3" formControlName="newPass" type="password"  /><br />
+        <label class="col-3" >confirm password :</label>
+        <input class ="col-3" formControlName="confirmPass" type="password"  /><br />
+        <input class ="col-3 btn add-before" type="submit" value="change password"/>
+      </form>
+  </div>
+    <div *ngIf="!user" class="container loading">
+      Loading ...
+    </div>
+
   </div>

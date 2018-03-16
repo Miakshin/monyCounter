@@ -7,6 +7,7 @@ var UsersSchema = new Schema({
   name: String,
   registered: Number,
   setings:{
+    loansAllowsCell: Boolean,
     activCells: Array,
     activeCurancy: [
       {name: String,

@@ -41,7 +41,7 @@ export class EncomingAndSpendingComponent implements OnInit {
     this.encomingFormGroup = new FormGroup({
       "description-0": new FormControl("", [
         Validators.required,
-        Validators.pattern("[^{}*<>_]{2,55}")
+        Validators.pattern("[^{}*<>]{2,55}")
       ]),
       "amount-0": new FormControl("",[
         Validators.required,

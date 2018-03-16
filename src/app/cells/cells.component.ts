@@ -21,6 +21,7 @@ export class CellsComponent implements OnInit {
   getAllCells(){
     this.commonService.getReportsByType("cell")
     .subscribe((data)=>{this.cells = data;
+      console.log(data);
     this.getActiveCells();
     })
   }
