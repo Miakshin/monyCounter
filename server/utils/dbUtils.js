@@ -193,7 +193,17 @@ module.exports.changeSettingData = function(user, settingPart, data){
         console.log(user.setings.loansAllowsCell);
         user.save()
         break
-
+      case "changeName":
+        user.name = data.name;
+        console.log(user.name);
+        user.save()
+        break
+      case "changePassword":
+        user.password === data.currentPass ?
+          user.password = data.newPass :
+          res.sern("wrong password")
+        user.save()
+      break
     default:
       res.send("it setting is undefined")
   }

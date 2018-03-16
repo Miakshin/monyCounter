@@ -110,6 +110,11 @@ export class SettingsComponent implements OnInit {
   changeName(){
     let data = { name: this.nameFormGroup.value.newName};
     console.log(data);
+    this.commonService.changeSettings(this.login, "changeName", data)
+    .subscribe(()=>{
+      this.nameFormGroup.reset()
+      console.log("name value changed")
+      this.getSettins()})
   }
 
   changePassword(){
@@ -120,6 +125,11 @@ export class SettingsComponent implements OnInit {
           currentPass: this.passwordFormGroup.value.currentPass
         }
         console.log(data)
+        this.commonService.changeSettings(this.login, "changePassword", data)
+        .subscribe(()=>{
+          this.passwordFormGroup.reset()
+          console.log("password value changed")
+          this.getSettins()})
       }
   }
 
