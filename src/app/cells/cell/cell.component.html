@@ -1,3 +1,35 @@
-<p>
-  component works
-</p>
+
+<div *ngIf="cell">
+  <h4 class="col-12 text-center border-bottom">{{cell.name}} </h4>
+  <div>
+    acamulated: {{cell.acamulated}}
+    <input type="button" *ngIf="!spendFormOpened" value="spend part"
+    (click)="spendFormOpened = true"/>
+    <form *ngIf="spendFormOpened" class="spendFromCell">
+      <input type="button" value="x" (click)="spendFormOpened = false" class="btn-delete"/>
+      <label>Description</label><input type="text"  /><br />
+      <label>Amount</label><input type="number" /><br />
+      <input type="submit" value="accept" />
+    </form><br />
+    current Tax: {{cell.tax}}% <br />
+    created:{{cell.createAt | date}}
+    <span *ngIf=""></span>
+  </div>
+  <table *ngIf="cell !== []">
+    <thead>
+      <tr>
+        <td>Amount</td>
+        <td>Incomes description</td>
+        <td>Date</td>
+      </tr>
+    </thead>
+    <tr *ngFor="let report of cell.incomesForm">
+      <td>{{report.amount}}</td>
+      <td>{{report.description}}</td>
+      <td>{{report.date | date }}</td>
+    </tr>
+  </table>
+</div>
+<div *ngIf="!cell" class="text-center">
+  loading data...
+</div>

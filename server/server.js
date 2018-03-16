@@ -6,7 +6,7 @@ var cors = require('cors');
 var app = express();
 
 
-var server = 3041;
+var server = 3042;
 var dbUtils = require('./utils/dbUtils');
 
 dbUtils.setUpConnection();
@@ -24,6 +24,10 @@ app.get('/', function (req, res) {
 
 app.get('/incomes', function (req, res) {
   dbUtils.getAllIncomes().then(data => res.send(data))
+});
+
+app.get('/incomes/:id', function (req, res) {
+  dbUtils.getIncome(res.params.id).then(data => res.send(data))
 });
 
 app.get('/reports/:type', function (req, res) {

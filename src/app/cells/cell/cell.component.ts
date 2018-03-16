@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from '../../common.service';
+import { ActivatedRoute } from '@angular/router';
+import { Cell } from './cell';
 
 @Component({
   selector: 'app-cells-cell',
@@ -8,7 +10,19 @@ import { CommonService } from '../../common.service';
 })
 export class CellComponent implements OnInit {
 
-  constructor(private commonService: CommonService) { }
+  cellId: string;
+  cell: Cell;
+  spendFormOpened: boolean;
 
-  ngOnInit(){}
+  constructor(private commonService: CommonService,
+              private _router: ActivatedRoute) {
+  this.cellId = this._router.snapshot.paramMap.get('id');
+  this.spendFormOpened = false;
+             }
+
+  ngOnInit(){
+    this.commonService.getCellById(this.cellId)
+    .then((cell)=>this.cell = cell)
+  }
+
 }

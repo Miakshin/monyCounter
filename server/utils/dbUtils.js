@@ -15,6 +15,10 @@ module.exports.setUpConnection =  function setUpConnection() {
 module.exports.getAllIncomes =  function() {
       return Income.find()
 }
+module.exports.getIncome = function(id){
+      return Income.findById(id)
+}
+
 module.exports.getAllSpendings =  function() {
       return Spending.find()
 }

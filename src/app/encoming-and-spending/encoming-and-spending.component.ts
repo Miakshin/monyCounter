@@ -72,7 +72,7 @@ export class EncomingAndSpendingComponent implements OnInit {
         id : id,
         descriptionName: `description-${id}`,
         amountName: `amount-${id}`,
-        currencyName: `currencyName-${id}`})
+        currencyName: `currency-${id}`})
 
       this[`${type}FormGroup`].controls[`description-${id}`] = new FormControl("", [
         Validators.required,
@@ -80,7 +80,7 @@ export class EncomingAndSpendingComponent implements OnInit {
       this[`${type}FormGroup`].controls[`amount-${id}`] = new FormControl("",[
         Validators.required,
         Validators.pattern("^[0-9]{1,12}")]);
-      this[`${type}FormGroup`].controls[`currencyName-${id}`] = new FormControl("", Validators.required);
+      this[`${type}FormGroup`].controls[`currency-${id}`] = new FormControl("", Validators.required);
     }
   }
 
@@ -188,22 +188,25 @@ export class EncomingAndSpendingComponent implements OnInit {
             console.log(data);
             this.commonService.postData(data, "encoming")
             .subscribe((res)=>{
-              if(this.encomingLines.length > 1){this.removeLine("encoming", line.id)
+              if(this.encomingLines.length === 1){
+                // this.encomingFormGroup.reset();
+                console.log("last Line")
             }else{
-            delete this.encomingFormGroup.controls[`description-${line.id}`];
-            delete this.encomingFormGroup.controls[`amount-${line.id}`];
-            delete this.encomingFormGroup.controls[`currencyName-${line.id}`];
-              console.log(this.encomingFormGroup);
+              this.removeLine("encoming", line.id)
+            // delete this.encomingFormGroup.controls[`description-${line.id}`];
+            // delete this.encomingFormGroup.controls[`amount-${line.id}`];
+            // delete this.encomingFormGroup.controls[`currencyName-${line.id}`];
             }
               this.getEncomingReports()
               reports.forEach((report)=>{
                 let cellData = {
+                  description: res.description,
                   from: res._id,
                   amount: report.tax,
                   date: new Date()
                 }
                 this.commonService.addRepotrToCell(report.id, cellData)
-                .subscribe(console.log)
+                .subscribe()
               })
             })
           })
