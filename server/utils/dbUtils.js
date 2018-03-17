@@ -15,8 +15,30 @@ module.exports.setUpConnection =  function setUpConnection() {
 module.exports.getAllIncomes =  function() {
       return Income.find()
 }
-module.exports.getIncome = function(id){
-      return Income.findById(id)
+module.exports.getIncomesByFlag = function(flag, data){
+  switch (flag){
+    case "last ten":
+      return Income.find()
+      .limit(data.repeat * 10)
+      break;
+    case "by date":
+      return Income.find({date: { $gt: data.since, $lt: data.since }})
+      break;
+    }
+}
+
+module.exports.getSpendingsByFlag = function(flag,data){
+  switch (flad){
+    case "last ten":
+      return Spending.find()
+      console.log(data.repeat);
+      console.log(data.repeat * 10)
+      .limit(data.repeat * 10)
+      break;
+    case "by date":
+      return Spending.find({date: { $gt: data.since, $lt: data.since }})
+      break;
+    }
 }
 
 module.exports.getAllSpendings =  function() {

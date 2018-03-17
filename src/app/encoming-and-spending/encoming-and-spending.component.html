@@ -103,13 +103,19 @@
   </form>
     <h4 class="h5  col-12 text-center border-bottom" >Last reports</h4>
     <nav class="col-12 nav">
-      <a [class.active]="serchFlag === 'lastTen'" (click)="serchFlag = 'lastTen'"
+      <a [class.active]="serchFlag === 'last ten'" (click)="serchFlag = 'last ten'"
       routerLink="/inandout" class="col-4 nav-link text-center">Last ten</a>
-      <a [class.active]="serchFlag === 'week'" (click)="serchFlag = 'week'"
-      routerLink="/inandout" class="col-4 nav-link text-center">Last week</a>
-      <a [class.active]="serchFlag === 'byMonth'" (click)="serchFlag = 'byMonth'"
-      routerLink="/inandout" class="col-4 nav-link text-center">Get by month</a>
+      <a [class.active]="serchFlag === 'by date'" (click)="serchFlag = 'by date'"
+      routerLink="/inandout" class="col-4 nav-link text-center">Get by date</a>
+      <a [class.active]="serchFlag === 'all'" (click)="serchFlag = 'all'"
+      routerLink="/inandout" class="col-4 nav-link text-center">Get all</a>
     </nav>
+    <form *ngIf="serchFlag === 'by date'" class="col-12"
+    [formGroup]="serchFormGroup" novalidate (ngSubmit)="getData">
+      <input type="date" formControlName="since" />
+      <input type="date" formControlName="for" />
+      <input type="submit" class="button" value="get reports"/>
+    </form>
     <aside class="container col-6">
       <h5 class="h6 text-center">Encoming</h5>
       <table *ngIf="encomingReports" class="col-12">

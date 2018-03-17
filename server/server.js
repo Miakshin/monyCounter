@@ -6,7 +6,7 @@ var cors = require('cors');
 var app = express();
 
 
-var server = 3042;
+var server = 3049;
 var dbUtils = require('./utils/dbUtils');
 
 dbUtils.setUpConnection();
@@ -24,6 +24,24 @@ app.get('/', function (req, res) {
 
 app.get('/incomes', function (req, res) {
   dbUtils.getAllIncomes().then(data => res.send(data))
+});
+
+app.post('/reports/:type/:flag', function (req, res) {
+  switch (req.params.type){
+    case "encoming":
+    console.log(req.params.flag , req.body)
+      dbUtils.getIncomesByFlag(req.params.flag, req.body)
+      .then(function(data){
+          res.send(data);
+        })
+      break;
+    case "spending":
+      dbUtils.getSpendingsByFlag(req.params.flag, req.body)
+      .then(function(data){
+          res.send(data);
+        })
+      break;
+  }
 });
 
 app.get('/incomes/:id', function (req, res) {

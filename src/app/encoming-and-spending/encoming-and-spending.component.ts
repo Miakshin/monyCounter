@@ -30,14 +30,16 @@ export class EncomingAndSpendingComponent implements OnInit {
     currencyName: 'currency-0',
   }];
   serchFlag: string;
+  lastTenRepeat: number = 1;
 
   formLines: string = `<app-encoming-and-spending-form-line><app-encoming-and-spending-form-line/>`;
 
   encomingFormGroup : FormGroup;
   spendingFormGroup : FormGroup;
+  serchFormGroup: FormGroup;
 
   constructor(private commonService: CommonService) {
-    this.serchFlag = "lastTen";
+    this.serchFlag = "last ten";
     this.encomingFormGroup = new FormGroup({
       "description-0": new FormControl("", [
         Validators.required,
@@ -60,7 +62,50 @@ export class EncomingAndSpendingComponent implements OnInit {
         ]),
         "currency-0": new FormControl("", Validators.required),
         });
+
+      this.serchFormGroup = new FormGroup({
+        "since" : new FormControl("", Validators.required),
+        "for" : new FormControl("", Validators.required)
+      })
  }
+
+ ngOnInit():void{
+   this.getData();
+   this.getDataSettings();
+ }
+
+  getData(){
+    switch(this.serchFlag){
+      case "last ten":
+      this.commonService.getReportsByTypeFlag("encoming", this.serchFlag, {repeat: this.lastTenRepeat})
+      .subscribe((data)=>{
+        this.encomingReports = data;
+        })
+      this.commonService.getReportsByTypeFlag("spending", this.serchFlag, {repeat: this.lastTenRepeat})
+      .subscribe((data)=>{
+        this.spendingReports = data;
+        })
+      break;
+      case "by month":
+      let data = {
+        since: Date.parse(this.serchFormGroup.value.since),
+        for: Date.parse(this.serchFormGroup.value.for)
+      }
+      this.commonService.getReportsByTypeFlag("encoming", this.serchFlag, data)
+      .subscribe((data)=>{
+        this.encomingReports = data;
+        })
+      this.commonService.getReportsByTypeFlag("spending", this.serchFlag, data)
+      .subscribe((data)=>{
+        this.spendingReports = data;
+        })
+      break;
+      case "all":
+      this.getSpendingReports();
+      this.getEncomingReports();
+      break;
+    }
+  }
 
   addLine(type){
     let id = Date.now();
@@ -72,7 +117,7 @@ export class EncomingAndSpendingComponent implements OnInit {
         id : id,
         descriptionName: `description-${id}`,
         amountName: `amount-${id}`,
-        currencyName: `currency-${id}`})
+        currencyName: `currencyName-${id}`})
 
       this[`${type}FormGroup`].controls[`description-${id}`] = new FormControl("", [
         Validators.required,
@@ -80,7 +125,7 @@ export class EncomingAndSpendingComponent implements OnInit {
       this[`${type}FormGroup`].controls[`amount-${id}`] = new FormControl("",[
         Validators.required,
         Validators.pattern("^[0-9]{1,12}")]);
-      this[`${type}FormGroup`].controls[`currency-${id}`] = new FormControl("", Validators.required);
+      this[`${type}FormGroup`].controls[`currencyName-${id}`] = new FormControl("", Validators.required);
     }
   }
 
@@ -119,12 +164,6 @@ export class EncomingAndSpendingComponent implements OnInit {
   getDate(){
     let now = new Date;
     return now
-  }
-
-  ngOnInit():void{
-    this.getSpendingReports();
-    this.getEncomingReports();
-    this.getDataSettings();
   }
 
   sendSpendingReport():void{
@@ -188,14 +227,14 @@ export class EncomingAndSpendingComponent implements OnInit {
             console.log(data);
             this.commonService.postData(data, "encoming")
             .subscribe((res)=>{
-              if(this.encomingLines.length === 1){
-                // this.encomingFormGroup.reset();
-                console.log("last Line")
+              if(this.encomingLines.length === 1){this.encomingFormGroup.reset()
             }else{
               this.removeLine("encoming", line.id)
             // delete this.encomingFormGroup.controls[`description-${line.id}`];
             // delete this.encomingFormGroup.controls[`amount-${line.id}`];
             // delete this.encomingFormGroup.controls[`currencyName-${line.id}`];
+
+              console.log(this.encomingFormGroup);
             }
               this.getEncomingReports()
               reports.forEach((report)=>{
@@ -206,7 +245,7 @@ export class EncomingAndSpendingComponent implements OnInit {
                   date: new Date()
                 }
                 this.commonService.addRepotrToCell(report.id, cellData)
-                .subscribe()
+                .subscribe(console.log)
               })
             })
           })
@@ -247,5 +286,6 @@ export class EncomingAndSpendingComponent implements OnInit {
         return item.checked === true})
       })
   }
+
 
 }
