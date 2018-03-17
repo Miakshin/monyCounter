@@ -22,21 +22,19 @@ module.exports.getIncomesByFlag = function(flag, data){
       .limit(data.repeat * 10)
       break;
     case "by date":
-      return Income.find({date: { $gt: data.since, $lt: data.since }})
+      return Income.find({date: { $gt: data.since, $lt: data.for }})
       break;
     }
 }
 
 module.exports.getSpendingsByFlag = function(flag,data){
-  switch (flad){
+  switch (flag){
     case "last ten":
       return Spending.find()
-      console.log(data.repeat);
-      console.log(data.repeat * 10)
       .limit(data.repeat * 10)
       break;
     case "by date":
-      return Spending.find({date: { $gt: data.since, $lt: data.since }})
+      return Spending.find({date: { $gt: data.since, $lt: data.for }})
       break;
     }
 }

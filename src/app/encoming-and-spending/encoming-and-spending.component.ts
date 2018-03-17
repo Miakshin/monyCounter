@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import {  FormGroup, FormControl, Validators }   from '@angular/forms';
+import { EventEmitter } from '@angular/core';
 
 import { CommonService } from '../common.service';
 import { Line } from './line';
@@ -86,7 +87,7 @@ export class EncomingAndSpendingComponent implements OnInit {
         this.spendingReports = data;
         })
       break;
-      case "by month":
+      case "by date":
       let data = {
         since: Date.parse(this.serchFormGroup.value.since),
         for: Date.parse(this.serchFormGroup.value.for)
@@ -285,6 +286,21 @@ export class EncomingAndSpendingComponent implements OnInit {
       this.activeCurancy = user.setings.activeCurancy.filter((item)=>{
         return item.checked === true})
       })
+  }
+
+  getMoreReports(){
+    this.lastTenRepeat ++;
+    this.getData();
+  }
+
+  searchToggle(val){
+    this.serchFlag = val;
+    if(this.serchFlag === "by date"){
+      this.spendingReports = [];
+      this.encomingReports = [];
+    }else{
+      this.getData()
+    }
   }
 
 

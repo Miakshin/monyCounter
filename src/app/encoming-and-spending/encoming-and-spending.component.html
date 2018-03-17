@@ -103,22 +103,22 @@
   </form>
     <h4 class="h5  col-12 text-center border-bottom" >Last reports</h4>
     <nav class="col-12 nav">
-      <a [class.active]="serchFlag === 'last ten'" (click)="serchFlag = 'last ten'"
+      <a [class.active]="serchFlag === 'last ten'" (click)="searchToggle('last ten')"
       routerLink="/inandout" class="col-4 nav-link text-center">Last ten</a>
-      <a [class.active]="serchFlag === 'by date'" (click)="serchFlag = 'by date'"
+      <a [class.active]="serchFlag === 'by date'" (click)="searchToggle('by date')"
       routerLink="/inandout" class="col-4 nav-link text-center">Get by date</a>
-      <a [class.active]="serchFlag === 'all'" (click)="serchFlag = 'all'"
+      <a [class.active]="serchFlag === 'all'" (click)="searchToggle('all')"
       routerLink="/inandout" class="col-4 nav-link text-center">Get all</a>
     </nav>
     <form *ngIf="serchFlag === 'by date'" class="col-12"
-    [formGroup]="serchFormGroup" novalidate (ngSubmit)="getData">
+    [formGroup]="serchFormGroup" novalidate (ngSubmit)="getData()">
       <input type="date" formControlName="since" />
       <input type="date" formControlName="for" />
       <input type="submit" class="button" value="get reports"/>
     </form>
-    <aside class="container col-6">
+    <aside class="container col-6" *ngIf="encomingReports && encomingReports.length !== 0">
       <h5 class="h6 text-center">Encoming</h5>
-      <table *ngIf="encomingReports" class="col-12">
+      <table class="col-12">
         <thead>
           <tr class="text-muted border-bottom">
             <td class="col-4 text-center">
@@ -145,9 +145,9 @@
         </tr>
       </table>
     </aside>
-    <aside class="container col-6">
+    <aside class="container col-6" *ngIf="spendingReports && spendingReports.length!==0">
       <h5 class="h6 col-12 text-center">Spendings</h5>
-      <table *ngIf="spendingReports" class="col-12 ">
+      <table  class="col-12 ">
         <thead>
           <tr class="text-muted border-bottom">
             <td class="col-4 text-center">
@@ -174,5 +174,7 @@
         </tr>
       </table>
     </aside>
-
+    <input *ngIf="serchFlag === 'last ten'" type="button" value="get more"
+    (click)="getMoreReports()"
+    class="container-fluid col-3 btn"/>
 </div>
