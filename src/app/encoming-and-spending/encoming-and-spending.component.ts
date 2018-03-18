@@ -14,8 +14,8 @@ import { EncomingLine } from './Encomingline';
 })
 export class EncomingAndSpendingComponent implements OnInit {
 
-  spendingReports = [];
-  encomingReports = [];
+  spendingReports: object[];
+  encomingReports: object[];
   activeTax: [string];
   activCells: [string];
   activeCurancy: [object];

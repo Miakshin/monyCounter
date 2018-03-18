@@ -1,4 +1,4 @@
-<h2>{{user}}</h2>
+<h2 *ngIf="user">{{user.name}}</h2>
 <h3 class="border-bottom">Balance information</h3>
 <div class="information">
   <div class="sum">
@@ -11,14 +11,11 @@
       Free mony {{freeMony}}
     </p>
   </div>
-  <div class="cells">
+  <div *ngIf="cells" class="cells">
     <h4 class="border-bottom">Accumulation cells</h4>
     <ul>
-      <li>
-        <label>Investigetion</label> {{cells.investigetion}}
-      </li>
-      <li>
-        <label>for buying a house</label> {{cells.house}}
+      <li *ngFor="let cell of cells">
+        <label>{{cell.name}} acamulated: </label> {{cell.acamulated}}
       </li>
     </ul>
   </div>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
 
 import { CommonService } from '../common.service'
 
@@ -13,41 +15,35 @@ export class MainInformationComponent implements OnInit {
 
   data: any;
   freeMony:number;
+  user:object[];
 
   total: number = 500;
-  cells = {
-    investigetion : 45,
-    house: 60
-  }
+  cells: string[];
+  spendings: object[];
 
-  constructor(
-    private commonService: CommonService
-  ) { }
+  spendingCanvas : object[]
+
+  constructor(private commonService : CommonService) {
+}
 
   ngOnInit() {
-    // this.getFreeMony();
+    Promise.all([this.commonService.getUserByLogin("admin")
+      .toPromise()
+      .then(user=>this.user = user),
+      this.commonService.getReportsByType("spending")
+      .toPromise()
+      .then(data=> this.spendings = data),
+      this.commonService.getReportsByType("cell")
+      .toPromise()
+      .then(data=> this.cells = data)])
+    .then(console.log)
   }
 
-  getData(){
-    this.commonService.getData().subscribe(data => console.log("it is data:" + data),
-      error => console.log("it is error:" + error));
+  getCanvasData(){
+    let data = []
+    this.spendings.forEach((spending,i)=>{
+      
+    })
   }
-
-  // getFreeMony():void{
-  //   let spendingsSum;
-  //   let encomingSum;
-  //
-  //   this.commonService.getReportSum('spending')
-  //   .subscribe((data)=>{
-  //     spendingsSum = Number(data);
-  //     this.commonService.getReportSum('encoming')
-  //     .subscribe((data)=>{
-  //       encomingSum = Number(data);
-  //       this.freeMony = encomingSum - spendingsSum;
-  //     })
-  //   })
-  // }
-
-
 
 }
