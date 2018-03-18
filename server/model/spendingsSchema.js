@@ -6,6 +6,7 @@ var SpendingsSchema = new Schema({
   amount: Number,
   currency : String,
   description: String,
+  type: String
 });
 
 module.exports = mongoose.model('Spending',SpendingsSchema);

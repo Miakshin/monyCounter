@@ -81,6 +81,7 @@ module.exports.createSpending = function (data) {
         amount: data.amount,
         currency: data.currency,
         description: data.description,
+        type: data.type
       });
 
     return spending.save();

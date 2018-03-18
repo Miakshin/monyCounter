@@ -59,7 +59,7 @@
     <ul class="list-group">
       <li class=" row col-12"
       *ngFor="let line of spendingLines">
-        <div class="col-6">
+        <div class="col-5">
           <input type="text" name="description"
           formControlName={{line.descriptionName}}
             placeholder="encoming" class="col-12"/>
@@ -68,7 +68,7 @@
             descripion should be longer then 2 simbol
           </span>
         </div>
-        <div class="col-3">
+        <div class="col-2">
           <input name="amount"
             formControlName={{line.amountName}}
             type="number" class="col-12"/>
@@ -92,6 +92,20 @@
           <span class="item-isnt-valid"
           *ngIf="lineValidation('spending',line.currencyName)">
           pick a curancy
+          </span>
+        </div>
+        <div class="col-2">
+          <select *ngIf="spendingTypes"name="type"
+            formControlName={{line.spendingTypesName}}
+            class="form-control form-control-sm col-12">
+            <option *ngFor="let curancy of spendingTypes"
+            value={{curancy.name}}>
+              {{ curancy.name }}
+            </option>
+          </select>
+          <span class="item-isnt-valid"
+          *ngIf="lineValidation('spending',line.spendingTypesName)">
+          pick a type
           </span>
         </div>
         <input type="button" value="x" class="btn-delete" (click)="removeLine('spending',line.id)"/>

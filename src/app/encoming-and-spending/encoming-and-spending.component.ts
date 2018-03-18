@@ -4,7 +4,8 @@ import {  FormGroup, FormControl, Validators }   from '@angular/forms';
 import { EventEmitter } from '@angular/core';
 
 import { CommonService } from '../common.service';
-import { Line } from './line';
+import { SpendingLine } from './SpendingLine';
+import { EncomingLine } from './Encomingline';
 
 @Component({
   selector: 'app-encoming-and-spending',
@@ -15,25 +16,26 @@ export class EncomingAndSpendingComponent implements OnInit {
 
   spendingReports = [];
   encomingReports = [];
-  activeTax = [];
+  activeTax: [string];
   activCells: [string];
   activeCurancy: [object];
-  encomingLines: Line[] = [{
+  spendingTypes: [object]
+  encomingLines: EncomingLine[] = [{
     id : 0,
     descriptionName: 'description-0',
     amountName: 'amount-0',
     currencyName: 'currency-0',
   }];
-  spendingLines: Line[] = [{
+  spendingLines: SpendingLine[] = [{
     id : 0,
     descriptionName: 'description-0',
     amountName: 'amount-0',
     currencyName: 'currency-0',
+    spendingTypesName: 'spendingTypes-0'
   }];
   serchFlag: string;
   lastTenRepeat: number = 1;
 
-  formLines: string = `<app-encoming-and-spending-form-line><app-encoming-and-spending-form-line/>`;
 
   encomingFormGroup : FormGroup;
   spendingFormGroup : FormGroup;
@@ -41,6 +43,7 @@ export class EncomingAndSpendingComponent implements OnInit {
 
   constructor(private commonService: CommonService) {
     this.serchFlag = "last ten";
+
     this.encomingFormGroup = new FormGroup({
       "description-0": new FormControl("", [
         Validators.required,
@@ -52,6 +55,7 @@ export class EncomingAndSpendingComponent implements OnInit {
       ]),
       "currency-0": new FormControl("", Validators.required),
       });
+
       this.spendingFormGroup = new FormGroup({
         "description-0": new FormControl("", [
           Validators.required,
@@ -62,6 +66,7 @@ export class EncomingAndSpendingComponent implements OnInit {
           Validators.pattern("^[0-9]{1,12}")
         ]),
         "currency-0": new FormControl("", Validators.required),
+        "spendingTypes-0": new FormControl("", Validators.required)
         });
 
       this.serchFormGroup = new FormGroup({
@@ -127,6 +132,9 @@ export class EncomingAndSpendingComponent implements OnInit {
         Validators.required,
         Validators.pattern("^[0-9]{1,12}")]);
       this[`${type}FormGroup`].controls[`currencyName-${id}`] = new FormControl("", Validators.required);
+
+      if(type === "spending"){
+        this[`spendingFormGroup`].controls[`spendingTypes-${id}`] = new FormControl("", Validators.required);}
     }
   }
 
@@ -191,19 +199,17 @@ export class EncomingAndSpendingComponent implements OnInit {
   }
 
   sendEncomingReport() :void{
-    let form = eval(`document.forms.encoming`);
 
     this.encomingLines.forEach((line)=>{
-      let data;
       let writedTax = [];
       let taxPromises = [];
-        data = {
+      let data :any = {
           date: Date.now(),
           amount: this.encomingFormGroup.value[line.amountName],
           description : this.encomingFormGroup.value[line.descriptionName],
           currency : this.encomingFormGroup.value[line.currencyName]
         };
-          if(this.activeTax.length > 0){data.isTax = true; data.taxTo=this.activeTax; data.taxed = 0;
+      if(this.activeTax.length > 0){data.isTax = true; data.taxTo=this.activeTax; data.taxed = 0;
           this.activeTax.forEach((item)=>{
             let promise = new Promise((res,rej)=>{
               this.commonService.getCellById(item)
@@ -221,9 +227,9 @@ export class EncomingAndSpendingComponent implements OnInit {
           })
 
           Promise.all([...taxPromises])
-          .then((cellArr)=>{
-            return cellArr
-          })
+          // .then((cellArr)=>{
+          //   return cellArr
+          // })
           .then((reports)=>{
             console.log(data);
             this.commonService.postData(data, "encoming")
@@ -281,8 +287,11 @@ export class EncomingAndSpendingComponent implements OnInit {
   getDataSettings(){
     this.commonService.getUserByLogin("admin")
     .subscribe((user)=>{
+      console.log(user);
       this.activeTax = user.setings.activCells;
       this.activCells = user.setings.activCells;
+      this.spendingTypes = user.setings.spendingTypes;
+      console.log(user.setings.spendingTypes);
       this.activeCurancy = user.setings.activeCurancy.filter((item)=>{
         return item.checked === true})
       })

@@ -1,4 +1,4 @@
-export class Line {
+export class EncomingLine {
   id: number;
   descriptionName: string;
   amountName: string;

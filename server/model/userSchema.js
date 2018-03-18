@@ -12,6 +12,10 @@ var UsersSchema = new Schema({
     activeCurancy: [
       {name: String,
       checked: Boolean}
+    ],
+    spendingTypes: [
+      name: String,
+      color: String
     ]
   }
 
