@@ -80,8 +80,9 @@
     <ul>
       <li *ngFor="let types of user.setings.spendingTypes">
         {{types.name | uppercase }}
-        <input type="color" name={{types.color}} value={{types.color}}>
-        <input type="button" value="x" (click)="deleteCurancy(types.name)"
+        <input type="color" name={{types.name}} value={{types.color}}
+        (change)="onChangeTypeColor($event)">
+        <input type="button" value="x" (click)="deleteType(types.name)"
         class="btn-close"/>
       </li>
     </ul>
@@ -91,7 +92,7 @@
     [formGroup]="typeFormGroup" novalidate (ngSubmit)="createType()">
       <input type="button" value="x" class="btn-close"
         (click)="isCreateTypeOpened = false"/>
-      <label>Input currancy assigment:</label>
+      <label>Input type name:</label>
       <input formControlName="name" type="text" /><br />
       <label>Pick a color</label>
       <input formControlName="color" type="color" />

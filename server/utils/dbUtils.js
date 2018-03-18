@@ -226,9 +226,39 @@ module.exports.changeSettingData = function(user, settingPart, data){
       case "changePassword":
         user.password === data.currentPass ?
           user.password = data.newPass :
-          res.sern("wrong password")
+          res.send("wrong password");
         user.save()
       break
+      case "createSpendingType":
+        var curentIndex = user.setings.spendingTypes.findIndex(function(el){
+          return el.name === data.name ? true : false})
+        if(curentIndex === -1){
+          user.setings.spendingTypes.push(data);
+          user.save()
+        }else{
+          res.send()
+        }
+      break
+      case "changeColor":
+        var curentIndex = user.setings.spendingTypes.findIndex(function(el){
+          return el.name === data.name ? true : false})
+        if(curentIndex === -1){
+          return res.sendStatus(500);
+        }else{
+          user.setings.spendingTypes[curentIndex].color = data.color;
+          user.save()
+        }
+      break
+      case "deleteSpendingType":
+        var curentIndex = user.setings.spendingTypes.findIndex(function(el){
+          return el.name === data.name ? true : false})
+        if(curentIndex == -1){
+          res.sendStatus(500);
+        }else{
+          user.setings.spendingTypes.splice(curentIndex,1);
+          user.save()
+        }
+        break;
     default:
       res.send("it setting is undefined")
   }

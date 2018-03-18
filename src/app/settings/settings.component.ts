@@ -144,11 +144,37 @@ export class SettingsComponent implements OnInit {
   }
 
   createType(){
-
+    let data = {
+      name: this.typeFormGroup.value.name,
+      color: this.typeFormGroup.value.color
+    }
+    this.commonService.changeSettings(this.login, "createSpendingType", data)
+    .subscribe(()=>{
+      this.typeFormGroup.reset();
+      this.getSettins();
+      this.isCreateTypeOpened = false;
+    })
   }
 
-  onChangeTypeColor(){
+  onChangeTypeColor(ev){
+    let data = {
+      name: ev.target.name,
+      color: ev.target.value}
+    this.commonService.changeSettings(this.login, "changeColor", data)
+    .subscribe(()=>{
+      console.log("color changed");
+      this.getSettins();})
+  }
 
+  deleteType(name){
+    let data = {
+      name: name
+    }
+    this.commonService.changeSettings(this.login, "deleteSpendingType", data)
+    .subscribe(()=>{
+      console.log("type deleted");
+      this.getSettins();
+    })
   }
 
 }
