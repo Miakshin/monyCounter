@@ -174,7 +174,8 @@
         </tr>
       </table>
     </aside>
-    <input *ngIf="serchFlag === 'last ten'" type="button" value="get more"
+    <input *ngIf="serchFlag === 'last ten'&& spendingReports.length!==0
+     && encomingReports.length!==0" type="button" value="get more"
     (click)="getMoreReports()"
     class="container-fluid col-3 btn"/>
 </div>
