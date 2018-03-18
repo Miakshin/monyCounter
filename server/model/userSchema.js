@@ -14,8 +14,8 @@ var UsersSchema = new Schema({
       checked: Boolean}
     ],
     spendingTypes: [
-      name: String,
-      color: String
+      {name: String,
+      color: String}
     ]
   }
 

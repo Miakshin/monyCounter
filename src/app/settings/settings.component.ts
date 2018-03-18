@@ -16,10 +16,12 @@ export class SettingsComponent implements OnInit {
   user: User[];
   loansFromCells: boolean ;
   isCreateCurancyOpened: boolean = false;
+  isCreateTypeOpened: boolean = false;
 
   curancyFormGroup : FormGroup;
   nameFormGroup : FormGroup;
   passwordFormGroup : FormGroup;
+  typeFormGroup: FormGroup;
 
   constructor(private commonService: CommonService) {
     this.curancyFormGroup = new FormGroup({
@@ -50,6 +52,14 @@ export class SettingsComponent implements OnInit {
         Validators.required,
         Validators.pattern("[^{}*<>]{2,55}")
       ]),
+    })
+
+    this.typeFormGroup= new FormGroup({
+      "name": new FormControl("", [
+        Validators.required,
+        Validators.pattern("[^a-zA-z]{2,18}")
+      ]),
+      "color" : new FormControl(true)
     })
   }
 
@@ -131,6 +141,14 @@ export class SettingsComponent implements OnInit {
           console.log("password value changed")
           this.getSettins()})
       }
+  }
+
+  createType(){
+
+  }
+
+  onChangeTypeColor(){
+
   }
 
 }

@@ -113,7 +113,8 @@
     </ul>
     <input type="button" value="Add one more line"
     (click)="addLine('spending')" class="btn btn-succes col-5"/>
-    <input type="button" (click)="sendSpendingReport()" class="col-6 btn btn-secondary"  value="Send a spend report"/>
+    <input type="button" (click)="sendSpendingReport()"
+    class="col-6 btn btn-secondary"  value="Send a spend report"/>
   </form>
     <h4 class="h5  col-12 text-center border-bottom" >Last reports</h4>
     <nav class="col-12 nav">
@@ -164,25 +165,31 @@
       <table  class="col-12 ">
         <thead>
           <tr class="text-muted border-bottom">
-            <td class="col-4 text-center">
+            <td class="col-3 text-center">
               AMOUNT
             </td>
             <td class="col-3 text-center">
               DATE
             </td>
-            <td class="col-5 text-center">
+            <td class="col-3 text-center">
+              TYPE
+            </td>
+            <td class="col-3 text-center">
               DESCRIPTION
             </td>
           </tr>
         </thead>
         <tr *ngFor="let report of spendingReports" class="text-muted border-bottom">
-          <td class="col-4 text-center">
-            {{report.amount}} {{report.currency}}
+          <td class="col-3 text-center">
+            {{report.amount }} {{report.currency | uppercase }}
           </td>
           <td class="col-3 text-center">
             {{report.date | date: 'M/d/yy'}}
           </td>
-          <td class="col-5 text-center">
+          <td class="col-3 text-center">
+            {{report.type}}
+          </td>
+          <td class="col-3 text-center">
             {{report.description}}
           </td>
         </tr>

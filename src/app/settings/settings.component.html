@@ -3,6 +3,7 @@
     <a routerLink="/settings" class="nav-link active" name="account" (click)="pick($event)">ACCOUNT SETTINGS</a>
     <a routerLink="/settings" class="nav-link" name="loans" (click)="pick($event)">LOANS SETTINGS</a>
     <a routerLink="/settings" class="nav-link" name="curancy" (click)="pick($event)">CURRANCY SETTINGS</a>
+    <a routerLink="/settings" class="nav-link" name="spending" (click)="pick($event)">SPENDINGS SETTINGS</a>
   </nav>
   <div *ngIf="activeLink === 'loans'">
     <p>
@@ -72,9 +73,32 @@
         <input class ="col-3" formControlName="confirmPass" type="password"  /><br />
         <input class ="col-3 btn add-before" type="submit" value="change password"/>
       </form>
+    </div>
+  </div>
+  <div *ngIf="activeLink === 'spending'">
+    <h3> Spending types</h3>
+    <ul>
+      <li *ngFor="let types of user.setings.spendingTypes">
+        {{types.name | uppercase }}
+        <input type="color" name={{types.color}} value={{types.color}}>
+        <input type="button" value="x" (click)="deleteCurancy(types.name)"
+        class="btn-close"/>
+      </li>
+    </ul>
+    <input *ngIf="!isCreateTypeOpened"type="button"
+      class="btn" (click)="isCreateTypeOpened = true" value="add new"/>
+    <form *ngIf="isCreateTypeOpened" class=" container bg-light"
+    [formGroup]="typeFormGroup" novalidate (ngSubmit)="createType()">
+      <input type="button" value="x" class="btn-close"
+        (click)="isCreateTypeOpened = false"/>
+      <label>Input currancy assigment:</label>
+      <input formControlName="name" type="text" /><br />
+      <label>Pick a color</label>
+      <input formControlName="color" type="color" />
+
+      <input type="submit" value="add new currancy" class="btn">
+    </form>
   </div>
     <div *ngIf="!user" class="container loading">
       Loading ...
     </div>
-
-  </div>

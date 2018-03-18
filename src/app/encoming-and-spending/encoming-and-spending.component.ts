@@ -36,7 +36,6 @@ export class EncomingAndSpendingComponent implements OnInit {
   serchFlag: string;
   lastTenRepeat: number = 1;
 
-
   encomingFormGroup : FormGroup;
   spendingFormGroup : FormGroup;
   serchFormGroup: FormGroup;
@@ -148,6 +147,9 @@ export class EncomingAndSpendingComponent implements OnInit {
         delete this[`${type}FormGroup`].controls[`description-${id}`];
         delete this[`${type}FormGroup`].controls[`amount-${id}`];
         delete this[`${type}FormGroup`].controls[`currencyName-${id}`];
+
+        if(type === "spending"){
+          this[`spendingFormGroup`].controls[`spendingTypes-${id}`];}
       }else{
         this.printErr("You can`t delite all rows")
       }
@@ -183,7 +185,8 @@ export class EncomingAndSpendingComponent implements OnInit {
         date: Date.now(),
         amount: this.spendingFormGroup.value[line.amountName],
         description : this.spendingFormGroup.value[line.descriptionName],
-        currency : this.spendingFormGroup.value[line.currencyName]
+        currency : this.spendingFormGroup.value[line.currencyName],
+        type : this.spendingFormGroup.value[line.spendingTypesName]
       };
       this.commonService.postData(data, "spending")
       .subscribe(()=>{
