@@ -19,5 +19,10 @@
       </li>
     </ul>
   </div>
-  <app-main-information-canvas></app-main-information-canvas>
+  <div class="row">
+    <app-main-information-canvas *ngIf="spendingCanvasData" [id]="'spending-canvas'"
+    [title]="'Spending'" [data]="spendingCanvasData"></app-main-information-canvas>
+    <app-main-information-canvas *ngIf="encomingCanvasData" [id]="'encoming-canvas'"
+    [title]="'Encoming'" [data]="encomingCanvasData"></app-main-information-canvas>
+  </div>
 </div>

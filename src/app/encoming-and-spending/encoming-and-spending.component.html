@@ -131,7 +131,7 @@
       <input type="date" formControlName="for" />
       <input type="submit" class="button" value="get reports"/>
     </form>
-    <aside class="container col-6" *ngIf="encomingReports && encomingReports.length !== 0">
+    <aside class="container col-6" *ngIf="encomingReports">
       <h5 class="h6 text-center">Encoming</h5>
       <table class="col-12">
         <thead>
@@ -160,7 +160,7 @@
         </tr>
       </table>
     </aside>
-    <aside class="container col-6" *ngIf="spendingReports && spendingReports.length!==0">
+    <aside class="container col-6" *ngIf="spendingReports">
       <h5 class="h6 col-12 text-center">Spendings</h5>
       <table  class="col-12 ">
         <thead>
@@ -195,8 +195,8 @@
         </tr>
       </table>
     </aside>
-    <input *ngIf="serchFlag === 'last ten'&& spendingReports.length!==0
-     && encomingReports.length!==0" type="button" value="get more"
+    <input *ngIf="serchFlag === 'last ten'&& spendingReports
+     && encomingReports" type="button" value="get more"
     (click)="getMoreReports()"
     class="container-fluid col-3 btn"/>
 </div>

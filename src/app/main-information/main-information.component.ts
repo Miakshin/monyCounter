@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 
-import { CommonService } from '../common.service'
+import { CommonService } from '../common.service';
+import { Spending } from '../Spending';
+import { Encoming } from '../Encoming';
+import { User } from '../User';
+import { CanvasData } from './canvas/CanvasData';
 
 @Component({
   selector: 'app-main-information',
@@ -15,13 +19,23 @@ export class MainInformationComponent implements OnInit {
 
   data: any;
   freeMony:number;
-  user:object[];
+  user: User;
 
   total: number = 500;
   cells: string[];
-  spendings: object[];
+  spendings: Spending[];
 
-  spendingCanvas : object[]
+  spendingCanvasData : CanvasData[];
+  encomingCanvasData : CanvasData[] = [{
+     category: "free mony",
+      amount: 471.9 ,
+      color: "#16f539"
+  },
+  {
+     category: "investigation",
+      amount: 270.1 ,
+      color: "#9c27b0"
+  }];
 
   constructor(private commonService : CommonService) {
 }
@@ -36,14 +50,31 @@ export class MainInformationComponent implements OnInit {
       this.commonService.getReportsByType("cell")
       .toPromise()
       .then(data=> this.cells = data)])
-    .then(console.log)
+    .then(()=>{
+      this.getCanvasData();
+    })
   }
 
   getCanvasData(){
-    let data = []
-    this.spendings.forEach((spending,i)=>{
-      
-    })
+    let data: any[] = []
+      this.spendings.forEach((spending: any)=>{
+        let dataSlice :any = data.find((slice: any)=>{
+          return slice.category === spending.type? true : false} );
+          console.log(dataSlice)
+        dataSlice === undefined ?
+          data.push({
+          category: spending.type,
+          amount: spending.amount
+          })
+          :
+          dataSlice.amount += spending.amount;
+      })
+      data.forEach((item:any)=>{
+        item.color = this.user.setings.spendingTypes.find(
+          (type)=>{return type.name === item.category ? true : false}).color
+      })
+
+      this.spendingCanvasData = data;
   }
 
 }

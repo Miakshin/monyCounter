@@ -1,42 +1,41 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 
 import { CanvasData } from './CanvasData'
 
 @Component({
   selector: 'app-main-information-canvas',
-  template: `<h3>{{title}}</h3>
-    <canvas id="canvas"></canvas>
-    <div *ngIf="data.length > 0" class="histiry">
-    <ul>
-    <li *ngFor="let item of data">
-    {{item.category}} <input type="color" value={{item.color}} /></li>
-    </ul></div>`
+  template: `
+  <div class="container col-6">
+    <h3>{{title}}</h3>
+    <canvas id={{id}}></canvas>
+      <div *ngIf="data.length > 0" class="histiry">
+      <ul>
+        <li *ngFor="let item of data">
+          {{item.category}} <input type="color" value={{item.color}} />
+        </li>
+      </ul>
+    </div>
+  </div>`
 })
 
-export class CanvasComponent implements OnInit{
-
-  data: CanvasData[] =[
-    {category: "income",
-    amount: 50,
-    color: "#6c8bab"},
-    {category: "acamulated",
-    amount : 15,
-    color: "#79d46a"},
-    {category:"house",
-    amount : 30,
-    color:"#ffc107"}];
+export class CanvasComponent implements OnInit, AfterViewInit{
+  @Input() data: CanvasData[];
+  @Input() title: string;
+  @Input() id: string;
   context: object;
-  canvas: any;
-  titel: string = "Title"
+  canvas: any ;
 
-  constructor() {}
+  constructor() {
+  }
 
   ngOnInit() {
-    this.canvas = document.getElementById("canvas");
-    console.log(this.canvas)
+  }
+
+  ngAfterViewInit(){
+    this.canvas = document.getElementById(this.id);
     this.canvas.width = 300;
     this.canvas.height = 300;
-    this.context = eval(`canvas.getContext("2d")`);
+    this.context = eval(`this.canvas.getContext("2d")`);
     this.draw()
   }
 

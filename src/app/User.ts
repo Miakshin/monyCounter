@@ -8,6 +8,10 @@ export class User {
     activeCurancy: [
       {name: string;
       checked: boolean;}
+    ],
+    spendingTypes: [
+      {name: string,
+      color: string}
     ]
   }
 }
