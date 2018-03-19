@@ -8,7 +8,8 @@ var CellsSchema = new Schema({
   spendings: Array,
   createAt: Date,
   tax: Number,
-  acamulated: Number
+  acamulated: Number,
+  diagramColor: String
 
 });
 

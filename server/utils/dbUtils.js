@@ -103,7 +103,9 @@ module.exports.createCell = function (data) {
       var cell = new Cell({
         name: data.name,
         createAt: data.createAt,
-        tax: data.tax
+        tax: data.tax,
+        diagramColor: data.diagramColor,
+        createAt: data.createAt
       });
 
     return cell.save();

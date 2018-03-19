@@ -51,11 +51,11 @@ export class MainInformationComponent implements OnInit {
       .toPromise()
       .then(data=> this.cells = data)])
     .then(()=>{
-      this.getCanvasData();
+      this.getSpendingCanvasData();
     })
   }
 
-  getCanvasData(){
+  getSpendingCanvasData(){
     let data: any[] = []
       this.spendings.forEach((spending: any)=>{
         let dataSlice :any = data.find((slice: any)=>{
@@ -75,6 +75,13 @@ export class MainInformationComponent implements OnInit {
       })
 
       this.spendingCanvasData = data;
+  }
+
+  getEncomingCanvasData(){
+    // let data : CanvasData[] = [{category: "free mony",
+    //  amount: 471.9 ,
+    //  color: "#16f539"}]
+
   }
 
 }

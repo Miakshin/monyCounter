@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from '../common.service';
+import {  FormGroup, FormControl, Validators }   from '@angular/forms';
 
 @Component({
   selector: 'app-cells',
@@ -11,8 +12,24 @@ export class CellsComponent implements OnInit {
   login: string = "admin";
   cells: any;
   activeCells: any;
+  createCellFormGroup: FormGroup;
 
-  constructor(private commonService: CommonService) { }
+  constructor(private commonService: CommonService) {
+    this.createCellFormGroup = new FormGroup({
+      "name": new FormControl("", [
+        Validators.required,
+        Validators.pattern("[^{}*<>]{2,55}")
+      ]),
+      "tax": new FormControl("",[
+        Validators.required,
+        Validators.pattern("^[0-9]{1,3}")
+      ]),
+      "color": new FormControl("", Validators.required),
+      "acamulated": new FormControl("",[
+        Validators.required,
+        Validators.pattern("^[0-9]{1,12}")
+      ]),
+      });}
 
   ngOnInit() {
     this.getAllCells()
@@ -34,19 +51,16 @@ export class CellsComponent implements OnInit {
   }
 
   createCell(){
-    let form = eval(`document.forms.createCell`);
-    let data;
-    data = {
-      name: form.elements.name.value,
-      tax: form.elements.tax.value,
-      acamulated: form.elements.acamulated.value,
+    let data = {
+      name: this.createCellFormGroup.value.name,
+      tax: this.createCellFormGroup.value.tax,
+      acamulated: this.createCellFormGroup.value.acamulated,
+      diagramColor: this.createCellFormGroup.value.color,
       createAt: Date.now()
     }
-    let clearForm =()=>{
-      form.reset()
-    }
     this.commonService.postData(data, "cell")
-    .subscribe(()=>{clearForm();
+    .subscribe(()=>{
+      this.createCellFormGroup.reset();
       this.getActiveCells()})
   }
 
