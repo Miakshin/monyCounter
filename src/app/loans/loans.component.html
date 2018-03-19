@@ -6,21 +6,12 @@
     </ul>
   </div>
   <h4 class="row h5 border-bottom text-center">Create new loans</h4>
-  <form name="loan" class=" row col-12">
+  <form [formGroup]="createLoanFormGroup" novalidate (ngSubmit)="createLoan()" class=" row col-12">
     <input type="number"  name="amount" class="col-2"/>
     <select name="currency"
       class="form-control form-control-sm col-3">
-      <option value="UAH">
-        UAH
-      </option>
-      <option value="USD">
-        USD
-      </option>
-      <option value="RUB">
-        RUB
-      </option>
-      <option value="EUR">
-        EUR
+      <option *ngFor="let curancy of activeCurancy" value={{curancy.name}}>
+        {{curancy.name | uppercase }}
       </option>
     </select>
     <input type="text" name="description" placeholer="Loans description"
@@ -30,7 +21,7 @@
       <option value="Investigastions">Investigastions</option>
       <option value="Home">Home</option>
     </select>
-    <input type="button" name="post-loans" value="Confirm"
-    class="button" (click)="sendLoan()"/>
+    <input type="submit" name="post-loans" value="Confirm"
+    class="button"/>
   </form>
 </div>

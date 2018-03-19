@@ -105,7 +105,8 @@ module.exports.createCell = function (data) {
         createAt: data.createAt,
         tax: data.tax,
         diagramColor: data.diagramColor,
-        createAt: data.createAt
+        createAt: data.createAt,
+        acamulated: data.acamulated
       });
 
     return cell.save();

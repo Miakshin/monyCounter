@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {  FormGroup, FormControl, Validators }   from '@angular/forms';
 
-import { CommonService } from '../common.service'
+import { CommonService } from '../common.service';
 
 @Component({
   selector: 'app-loans',
@@ -11,17 +12,42 @@ export class LoansComponent implements OnInit {
 
   loans: any;
   loansSum: number;
+  createLoanFormGroup : FormGroup;
+  activeCurancy: any[];
 
-  constructor(private commonService: CommonService) { }
+  constructor (private commonService: CommonService) {
+    this.createLoanFormGroup = new FormGroup({
+      "name": new FormControl("", [
+        Validators.required,
+        Validators.pattern("[^{}*<>]{2,55}")
+      ]),
+      "tax": new FormControl("",[
+        Validators.required,
+        Validators.pattern("^[0-9]{1,3}")
+      ]),
+      "color": new FormControl("", Validators.required),
+      "acamulated": new FormControl("",[
+        Validators.required,
+        Validators.pattern("^[0-9]{1,12}")
+      ]),
+    });
+  }
+  ngOnInit() {
+      this.getEncomingReports()
+      this.commonService.getUserByLogin("admin")
+      .subscribe((user)=>{
+        this.activeCurancy=user.setings.activeCurancy
+        .filter(curancy => curancy.checked === true)})
+  }
 
-  sendLoan() :void{
+  createLoan() :void{
     let form = eval("document.forms.loan")
     let data = {
       date: Date.now(),
-      amount: form.elements.amount.value,
-      description : form.elements.description.value,
-      currency : form.elements.currency.value,
-      from: form.elements.from.value
+      amount: this.createLoanFormGroup.value.amount,
+      description : this.createLoanFormGroup.value.description,
+      currency : this.createLoanFormGroup.value.currency,
+      from: this.createLoanFormGroup.value.from
     };
     let clearForm =()=>{
       form.reset()
@@ -48,8 +74,5 @@ export class LoansComponent implements OnInit {
     this.loansSum =  sum
   }
 
-  ngOnInit() {
-    this.getEncomingReports()
-  }
 
 }
