@@ -118,11 +118,13 @@ export class EncomingAndSpendingComponent implements OnInit {
       this.printErr("The maximum number of rows is 10")
     }
     else{
-      this[`${type}Lines`].push({
+      let data = {
         id : id,
         descriptionName: `description-${id}`,
         amountName: `amount-${id}`,
-        currencyName: `currencyName-${id}`})
+        currencyName: `currency-${id}`
+      }
+
 
       this[`${type}FormGroup`].controls[`description-${id}`] = new FormControl("", [
         Validators.required,
@@ -130,10 +132,13 @@ export class EncomingAndSpendingComponent implements OnInit {
       this[`${type}FormGroup`].controls[`amount-${id}`] = new FormControl("",[
         Validators.required,
         Validators.pattern("^[0-9]{1,12}")]);
-      this[`${type}FormGroup`].controls[`currencyName-${id}`] = new FormControl("", Validators.required);
+      this[`${type}FormGroup`].controls[`currency-${id}`] = new FormControl("", Validators.required);
 
       if(type === "spending"){
-        this[`spendingFormGroup`].controls[`spendingTypes-${id}`] = new FormControl("", Validators.required);}
+        this[`spendingFormGroup`].controls[`spendingTypes-${id}`] = new FormControl("", Validators.required);
+        data["spendingTypesName"] = `spendingTypes-${id}`;
+        }
+      this[`${type}Lines`].push(data)
     }
   }
 
@@ -146,7 +151,7 @@ export class EncomingAndSpendingComponent implements OnInit {
 
         delete this[`${type}FormGroup`].controls[`description-${id}`];
         delete this[`${type}FormGroup`].controls[`amount-${id}`];
-        delete this[`${type}FormGroup`].controls[`currencyName-${id}`];
+        delete this[`${type}FormGroup`].controls[`currency-${id}`];
 
         if(type === "spending"){
           this[`spendingFormGroup`].controls[`spendingTypes-${id}`];}
@@ -179,6 +184,7 @@ export class EncomingAndSpendingComponent implements OnInit {
 
   sendSpendingReport():void{
     let form = eval(`document.forms.spending`);
+    let promiseArray: any[] = [];
     this.spendingLines.forEach((line)=>{
       let data;
       data = {
@@ -188,16 +194,21 @@ export class EncomingAndSpendingComponent implements OnInit {
         currency : this.spendingFormGroup.value[line.currencyName],
         type : this.spendingFormGroup.value[line.spendingTypesName]
       };
-      this.commonService.postData(data, "spending")
-      .subscribe(()=>{
-        this.spendingLines.length > 1?
-          this.removeLine("spending", line.id) :
-          this.spendingFormGroup.value[line.amountName] ="",
-          this.spendingFormGroup.value[line.descriptionName]="",
-          this.spendingFormGroup.value[line.currencyName]="";
-        this.getSpendingReports()
-      })
+      data.push(
+        this.commonService.postData(data, "spending")
+        .toPromise()
+        .then(()=>{
+          // this.spendingLines.length > 1?
+          //   this.removeLine("spending", line.id) :
+          //   this.spendingFormGroup.value[line.amountName] ="",
+          //   this.spendingFormGroup.value[line.descriptionName]="",
+          //   this.spendingFormGroup.value[line.currencyName]="";
+          this.getSpendingReports()
+        })
+      )
     })
+    Promise.all([...promiseArray])
+    .then(this.spendingFormGroup.reset)
 
   }
 

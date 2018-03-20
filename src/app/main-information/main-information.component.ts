@@ -84,10 +84,10 @@ export class MainInformationComponent implements OnInit {
   }
 
   getEncomingCanvasData(){
-    let data : CanvasData[] = [
-    {category: "free mony",
-     amount: this.freeMony ,
-     color: "#16f539"}]
+    let data : CanvasData[] = [{
+      category: "free mony",
+      amount: this.freeMony ,
+      color: "#16f539"}]
     for(let cell of this.cells){
       data.push({
         category: cell["name"],
