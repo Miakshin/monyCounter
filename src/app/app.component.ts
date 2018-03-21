@@ -24,12 +24,11 @@ export class AppComponent implements OnInit{
 
   ngOnInit(){
     this.initializateUser();
-    this.initializateEncoming();
     this.initializateSpending();
+    this.initializateEncoming();
     this.initializateCells();
     this.commonService.currentFreeMonyData
       .subscribe(fm => {
-        console.log(fm)
         this.freeMony = +fm})
   }
 
@@ -45,16 +44,16 @@ export class AppComponent implements OnInit{
       })
   }
 
-  initializateEncoming(){
+  initializateSpending(){
     this.commonService.getReportsByType("spending")
-      .subscribe(spendings => {
+      .subscribe((spendings:Spending[])=> {
         this.commonService.refreshSpendings(spendings);
         this.commonService.currentSpendingData
           .subscribe(spends => this.spendings = spends);
       })
   }
 
-  initializateSpending(){
+  initializateEncoming(){
     this.commonService.getReportsByType("encoming")
       .subscribe(encomings => {
         this.commonService.refreshEncomings(encomings);
@@ -67,7 +66,7 @@ export class AppComponent implements OnInit{
     this.commonService.getReportsByType("cell")
       .subscribe(cells => {
         this.commonService.refreshCells(cells);
-        this.commonService.currentEncomingData
+        this.commonService.currentCellsData
           .subscribe(cll => this.cells = cll);
       })
   }

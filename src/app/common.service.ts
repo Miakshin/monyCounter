@@ -35,7 +35,7 @@ export class CommonService {
   private spendingsSource = new BehaviorSubject<any>(this.spendings);
   currentSpendingData = this.spendingsSource.asObservable();
 
-  private cellsSource = new BehaviorSubject<any>(this.spendings);
+  private cellsSource = new BehaviorSubject<any>(this.cells);
   currentCellsData = this.cellsSource.asObservable();
 
   private loansSource = new BehaviorSubject<any>(this.loans);
@@ -43,6 +43,19 @@ export class CommonService {
 
   private freeMonySource = new BehaviorSubject<any>(this.freeMony);
   currentFreeMonyData = this.freeMonySource.asObservable();
+
+  private encomingsSumSource = new BehaviorSubject<any>(this.encomingSum);
+  currentEncomingsSumData = this.encomingsSumSource.asObservable();
+
+  private spendingsSumSource = new BehaviorSubject<any>(this.spendingSum);
+  currentSpendingsSumData = this.spendingsSumSource.asObservable();
+
+  private cellsSumSource = new BehaviorSubject<any>(this.cellsSum);
+  currentCellsSumData = this.cellsSumSource.asObservable();
+
+  private loansSumSource = new BehaviorSubject<any>(this.loansSum);
+  currentloansSumData = this.loansSumSource.asObservable();
+
 
   refreshUser(newData){
     this.userSource.next(newData)
@@ -67,7 +80,7 @@ export class CommonService {
   }
 
   refreshCells(newData){
-    this.spendingsSource.next(newData);
+    this.cellsSource.next(newData);
     this.cells = newData
     if(this.cells.length > 0){
       this.getCellsSum();
@@ -88,12 +101,29 @@ export class CommonService {
     this.freeMonySource.next(newData)
   }
 
+  refreshSpendingsSum(newData){
+    this.spendingsSumSource.next(newData)
+  }
+
+  refreshEncomingsSum(newData){
+    this.encomingsSumSource.next(newData)
+  }
+
+  refreshCellsSum(newData){
+    this.cellsSumSource.next(newData)
+  }
+
+  refreshLoansSum(newData){
+    this.loansSumSource.next(newData)
+  }
+
   getSpendingsSum(){
     let sum = 0;
     for(let spending of this.spendings){
       (sum+= spending.amount)
     }
     this.spendingSum = sum;
+    this.refreshSpendingsSum(sum)
   }
 
   getEncomingsSum(){
@@ -102,12 +132,14 @@ export class CommonService {
       sum += encoming.amount;
     }
     this.encomingSum = sum;
+    this.refreshEncomingsSum(sum)
   }
 
   getCellsSum(){
     let sum: number = 0;
     this.cells.forEach((item: any) => sum += item.acamulated);
     this.cellsSum = sum;
+    this.refreshCellsSum(sum)
   }
 
   getLoansSum(){
@@ -116,11 +148,10 @@ export class CommonService {
       sum += this.loans["amount"];
     }
     this.loansSum = sum;
+    this.refreshLoansSum(sum)
   }
 
   getFreeMony(){
-    console.log(`es : ${this.encomingSum},  ss : ${this.spendingSum},
-      cs :  ${this.cellsSum}, ls:  ${this.loansSum}`)
     let freeMony = this.encomingSum - this.spendingSum - this.cellsSum - this.loansSum;
     this.freeMonySource.next(freeMony)
   }

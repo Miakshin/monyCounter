@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentChecked } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
@@ -16,9 +16,8 @@ import { CanvasData } from './canvas/CanvasData';
 })
 
 
-export class MainInformationComponent implements OnInit {
+export class MainInformationComponent implements OnInit, AfterContentChecked {
 
-  data: any;
   freeMony: number;
   user: User;
 
@@ -29,7 +28,7 @@ export class MainInformationComponent implements OnInit {
 
   spendingSum: number;
   encomingSum: number;
-  cellAcamilation: number;
+  cellAcamulation: number;
 
   spendingCanvasData : CanvasData[];
   encomingCanvasData : CanvasData[];
@@ -38,97 +37,71 @@ export class MainInformationComponent implements OnInit {
 }
 
   ngOnInit() {
-    Promise.all([this.commonService.getUserByLogin("admin")
-      .toPromise()
-      .then(user=>this.user = user),
-      this.commonService.getReportsByType("spending")
-      .toPromise()
-      .then(data=> {
-        this.spendings = data;}),
-      this.commonService.getReportsByType("encoming")
-      .toPromise()
-      .then(data=> this.encomings = data),
-      this.commonService.getReportsByType("cell")
-      .toPromise()
-      .then(data=> this.cells = data)])
-    .then(()=>{
-      this.getAcamulation();
-      this.getEncomingSum();
-      this.getSpendingsSum()
-      this.getFreeMony();
-      this.getSpendingCanvasData();
-      this.getEncomingCanvasData();
-      this.getTotal();
-    })
+    this.commonService.currentUserData
+      .subscribe(user => this.user = user );
+    this.commonService.currentCellsData
+      .subscribe(cells => this.cells = cells)
+    this.commonService.currentEncomingData
+      .subscribe(encomings => {
+        this.encomings = encomings;
+      });
+    this.commonService.currentSpendingData
+      .subscribe(spendings => {
+        this.spendings = spendings;
+      });
+    this.commonService.currentFreeMonyData
+      .subscribe(fm => this.freeMony = fm);
+    this.commonService.currentCellsSumData
+      .subscribe(cellsSum => this.cellAcamulation = cellsSum)
+  }
+
+  ngAfterContentChecked(){
+    this.getTotal();
+    this.getSpendingCanvasData();
+    this.getEncomingCanvasData();
   }
 
   getSpendingCanvasData(){
-    let data: any[] = []
-      this.spendings.forEach((spending: any)=>{
-        let dataSlice :any = data.find((slice: any)=>{
-          return slice.category === spending.type? true : false} );
-          console.log(dataSlice)
-        dataSlice === undefined ?
-          data.push({
-          category: spending.type,
-          amount: spending.amount
-          })
-          :
-          dataSlice.amount += spending.amount;
-      })
-      data.forEach((item:any)=>{
-        item.color = this.user.setings.spendingTypes.find(
-          (type)=>{return type.name === item.category ? true : false}).color
-      })
-
-      this.spendingCanvasData = data;
+    if(this.spendings && this.user){
+      let data: any[] = [];
+        this.spendings.forEach((spending: any)=>{
+          let dataSlice :any = data.find((slice: any)=>{
+            return slice.category === spending.type? true : false} );
+          dataSlice === undefined ?
+            data.push({
+            category: spending.type,
+            amount: spending.amount
+            })
+            :
+            dataSlice.amount += spending.amount;
+        })
+        data.forEach((item:any)=>{
+          item.color = this.user.setings.spendingTypes.find(
+            (type)=>{return type.name === item.category ? true : false}).color
+        })
+        this.spendingCanvasData = data;
+    }
   }
 
   getEncomingCanvasData(){
-    let data : CanvasData[] = [{
-      category: "free mony",
-      amount: this.freeMony ,
-      color: "#16f539"}]
-    for(let cell of this.cells){
-      data.push({
-        category: cell["name"],
-        amount: cell["acamulated"] ,
-        color: cell["diagramColor"]
-      })
+    if(this.cells && this.freeMony){
+      let data : CanvasData[] = [{
+        category: "free mony",
+        amount: this.freeMony ,
+        color: "#16f539"}]
+      for(let cell of this.cells){
+        data.push({
+          category: cell["name"],
+          amount: cell["acamulated"] ,
+          color: cell["diagramColor"]
+        })
+      }
+      this.encomingCanvasData = data;
     }
-    console.log(data);
-    this.encomingCanvasData = data;
-
-  }
-
-  getAcamulation(){
-    let sum: number = 0
-    this.cells.forEach((item: any) => sum += item.acamulated);
-    this.cellAcamilation = sum;
-  }
-
-  getSpendingsSum(){
-    let sum = 0;
-    for(let spending of this.spendings){
-      (sum+= spending.amount)
-    }
-    this.spendingSum = sum;
-  }
-
-  getEncomingSum(){
-    let sum = 0;
-    for(let encoming of this.encomings){
-      sum += encoming.amount;
-    }
-    this.encomingSum = sum;
-  }
-
-  getFreeMony(){
-    this.freeMony = this.encomingSum - this.spendingSum - this.cellAcamilation;
   }
 
   getTotal(){
-    this.total = this.freeMony + this.cellAcamilation;
-    console.log(this.total)
+    if(this.freeMony && this.cellAcamulation){
+      this.total = this.freeMony + this.cellAcamulation;}
   }
 }

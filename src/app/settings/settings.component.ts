@@ -64,16 +64,9 @@ export class SettingsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getSettins();
+    this.commonService.currentUserData
+      .subscribe(user => this.user = user );
     this.loansFromCells= true;
-  }
-
-  getSettins(){
-    this.commonService.currentDataUser
-      .subscribe(user=>{
-        // this.user = user;
-        console.log(user);
-      })
   }
 
   pick(event){
@@ -99,7 +92,8 @@ export class SettingsComponent implements OnInit {
     this.commonService.changeSettings(this.login, "createCurancy", data)
     .subscribe(()=>{
       this.curancyFormGroup.reset();
-      this.getSettins();
+      this.commonService.getUserByLogin(document.cookie.slice(6))
+        .subscribe((user:User) =>this.commonService.refreshUser(user))
       this.isCreateCurancyOpened = false;
     })
   }
@@ -108,7 +102,8 @@ export class SettingsComponent implements OnInit {
     let data = { value: name };
     this.commonService.changeSettings(this.login, "deleteCurancy", data)
     .subscribe(()=>{
-      this.getSettins();
+      this.commonService.getUserByLogin(document.cookie.slice(6))
+        .subscribe((user:User) =>this.commonService.refreshUser(user))
     })
   }
 
@@ -124,7 +119,9 @@ export class SettingsComponent implements OnInit {
     .subscribe(()=>{
       this.nameFormGroup.reset()
       console.log("name value changed")
-      this.getSettins()})
+      this.commonService.getUserByLogin(document.cookie.slice(6))
+        .subscribe((user:User) =>this.commonService.refreshUser(user))
+      })
   }
 
   changePassword(){
@@ -139,7 +136,9 @@ export class SettingsComponent implements OnInit {
         .subscribe(()=>{
           this.passwordFormGroup.reset()
           console.log("password value changed")
-          this.getSettins()})
+          this.commonService.getUserByLogin(document.cookie.slice(6))
+            .subscribe((user:User) =>this.commonService.refreshUser(user))
+          })
       }
   }
 
@@ -151,7 +150,8 @@ export class SettingsComponent implements OnInit {
     this.commonService.changeSettings(this.login, "createSpendingType", data)
     .subscribe(()=>{
       this.typeFormGroup.reset();
-      this.getSettins();
+      this.commonService.getUserByLogin(document.cookie.slice(6))
+        .subscribe((user:User) =>this.commonService.refreshUser(user));
       this.isCreateTypeOpened = false;
     })
   }
@@ -163,7 +163,9 @@ export class SettingsComponent implements OnInit {
     this.commonService.changeSettings(this.login, "changeColor", data)
     .subscribe(()=>{
       console.log("color changed");
-      this.getSettins();})
+      this.commonService.getUserByLogin(document.cookie.slice(6))
+        .subscribe((user:User) =>this.commonService.refreshUser(user));
+      })
   }
 
   deleteType(name){
@@ -173,7 +175,8 @@ export class SettingsComponent implements OnInit {
     this.commonService.changeSettings(this.login, "deleteSpendingType", data)
     .subscribe(()=>{
       console.log("type deleted");
-      this.getSettins();
+      this.commonService.getUserByLogin(document.cookie.slice(6))
+        .subscribe((user:User) =>this.commonService.refreshUser(user));
     })
   }
 
