@@ -27,6 +27,7 @@ export class AppComponent implements OnInit{
     this.initializateSpending();
     this.initializateEncoming();
     this.initializateCells();
+    this.initializateLoans()
     this.commonService.currentFreeMonyData
       .subscribe(fm => {
         this.freeMony = +fm})
@@ -76,7 +77,8 @@ export class AppComponent implements OnInit{
       .subscribe(loans =>{
         this.commonService.refreshLoans(loans);
         this.commonService.currentEncomingData
-        .subscribe(ln => this.loans = ln);
+        .subscribe(ln => {this.loans = ln
+        console.log(this.loans)});
       });
   }
 

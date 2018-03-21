@@ -1,6 +1,6 @@
 <div class="loans">
   <label>All amount of loans: </label>{{loansSum}}
-  <div *ngIf="loansSum > 0" class="loans-list">
+  <div *ngIf="loans" class="loans-list">
     <ul>
       <li *ngFor="let loan of loans">Gave {{loan.amount}} {{loan.curency}} to {{loan.description}} from {{loan.cell}} mony cell</li>
     </ul>

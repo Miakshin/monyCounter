@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentChecked } from '@angular/core';
 import {  FormGroup, FormControl, Validators }   from '@angular/forms';
 
 import { CommonService } from '../common.service';
@@ -8,7 +8,7 @@ import { CommonService } from '../common.service';
   templateUrl: './loans.component.html',
   styleUrls: ['./loans.component.css']
 })
-export class LoansComponent implements OnInit {
+export class LoansComponent implements OnInit, AfterContentChecked {
 
   loans: any;
   loansSum: number;
@@ -33,15 +33,23 @@ export class LoansComponent implements OnInit {
     });
   }
   ngOnInit() {
-      this.getloansReports()
-      this.commonService.getUserByLogin("admin")
+    this.commonService.currentLoansData
+      .subscribe(loans => this.loans = loans);
+    this.commonService.currentloansSumData
+      .subscribe(sum => this.loansSum = sum)
+  }
+
+  ngAfterContentChecked(){
+    this.commonService.currentUserData
       .subscribe((user)=>{
-        this.activeCurancy=user.setings.activeCurancy
-        .filter(curancy => curancy.checked === true)})
+        if(user){
+          this.activeCurancy=user.setings.activeCurancy
+          .filter(curancy => curancy.checked === true)
+        }
+    });
   }
 
   createLoan() :void{
-    let form = eval("document.forms.loan")
     let data = {
       date: Date.now(),
       amount: this.createLoanFormGroup.value.amount,
@@ -49,29 +57,12 @@ export class LoansComponent implements OnInit {
       currency : this.createLoanFormGroup.value.currency,
       from: this.createLoanFormGroup.value.from
     };
-    let clearForm =()=>{
-      form.reset()
-    }
     this.commonService.postData(data, "loan")
-      .subscribe(()=>clearForm())
+      .subscribe(()=>{
+        this.commonService.getReportsByType("loan")
+          .subscribe(loans=>this.commonService.refreshLoans(loans))
+        this.createLoanFormGroup.reset()})
 
-  }
-
-  getloansReports(){
-    this.commonService.getReportsByType("loan")
-    .subscribe((data)=>{
-      this.loans = data;
-      this.getLoansSum();
-      });
-  }
-
-  getLoansSum():any {
-    let sum:number = 0;
-    this.loans.forEach(function(item){
-      return sum += Number(item.amount);
-    })
-    console.log(sum);
-    this.loansSum =  sum
   }
 
 

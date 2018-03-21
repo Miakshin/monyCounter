@@ -143,11 +143,11 @@ export class CommonService {
   }
 
   getLoansSum(){
-    let sum = 0;
-    for(let encoming of this.loans){
-      sum += this.loans["amount"];
-    }
-    this.loansSum = sum;
+    let sum:number = 0;
+    this.loans.forEach(function(item){
+      return sum += Number(item.amount);
+    })
+    this.loansSum =  sum;
     this.refreshLoansSum(sum)
   }
 
