@@ -33,7 +33,7 @@ export class LoansComponent implements OnInit {
     });
   }
   ngOnInit() {
-      this.getEncomingReports()
+      this.getloansReports()
       this.commonService.getUserByLogin("admin")
       .subscribe((user)=>{
         this.activeCurancy=user.setings.activeCurancy
@@ -57,7 +57,7 @@ export class LoansComponent implements OnInit {
 
   }
 
-  getEncomingReports(){
+  getloansReports(){
     this.commonService.getReportsByType("loan")
     .subscribe((data)=>{
       this.loans = data;

@@ -69,10 +69,10 @@ export class SettingsComponent implements OnInit {
   }
 
   getSettins(){
-    this.commonService.getUserByLogin(this.login)
+    this.commonService.currentDataUser
       .subscribe(user=>{
-        this.user = user;
-        console.log(this.user);
+        // this.user = user;
+        console.log(user);
       })
   }
 

@@ -1,11 +1,11 @@
 <div class="app-wrapper container-fluid">
 
   <aside class=" col-md-2 dnone d-md-block bg-light sidebar">
-      <h6 *ngIf="!currentUser || !sumItems"
+      <h6 *ngIf="!currentUser || !freeMony"
       class="sidebar-heading text-muted align-items-center px-3"
       >Loading data</h6>
-      <app-short-information *ngIf="currentUser && sumItems" [user]="currentUser.name"
-      [freeMony]="sumItems.freeMony"></app-short-information>
+      <app-short-information *ngIf="currentUser && freeMony" [user]="currentUser.name"
+      [freeMony]="freeMony"></app-short-information>
       <app-navigation></app-navigation>
   </aside>
   <main class="container-fluid col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">

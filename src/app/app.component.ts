@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from './common.service';
 
-import { User } from './User'
+import { User } from './User';
+import { Spending } from './Spending';
+import { Encoming } from './Encoming';
+import { Cell } from './cells/cell/cell';
+import { Loan } from './Loan';
 
 @Component({
   selector: 'app-root',
@@ -9,66 +13,72 @@ import { User } from './User'
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  currentUser: User;
-  sumItems={
-    encomesSum : 0,
-    spendingSum :0,
-    cellsAcamulatedsSum:0,
-    getFreeMony: function(){
-      return(this.encomesSum - this.spendingSum - this.cellsAcamulatedsSum);
-    },
-    freeMony: 0
-  }
+  currentUser : User;
+  spendings : Spending[];
+  encomings : Encoming[];
+  cells : Cell[];
+  loans : Loan[];
+  freeMony: any;
 
-  constructor(private commonService: CommonService) { }
+  constructor(private commonService: CommonService) {}
 
   ngOnInit(){
-    this.getUserData();
+    this.initializateUser();
+    this.initializateEncoming();
+    this.initializateSpending();
+    this.initializateCells();
+    this.freeMony = this.commonService.currentFreeMonyData
+      .subscribe(fm => {
+        console.log(fm)
+        this.freeMony = fm})
   }
 
-  getUserData():void{
-    this.commonService.getUserByLogin("admin")
-    .subscribe((user)=>{this.currentUser = user;
-      console.log(user)
-      let promises=[]
-      for(let cellId of this.currentUser.setings.activCells){
-        let promise = new Promise((res,rej)=>{
-           let cellAcamulated;
-           this.commonService.getCellById(cellId)
-           .then((cell)=>{
-             console.log(cell.acamulated)
-             res(cell.acamulated)
-           })
-        })
-        promises.push(promise)
-      }
-      Promise.all([...promises])
-      .then((cellsAcomulateds)=>{
-        let acamulatedSum = 0;
-        cellsAcomulateds.forEach((item)=>{
-          acamulatedSum += item;
-        })
-        this.sumItems.cellsAcamulatedsSum = acamulatedSum;
+  initializateUser(){
+    document.cookie = "login=admin"
+    this.commonService.getUserByLogin(document.cookie.slice(6))
+      .subscribe((user:User) =>{
+        this.commonService.refreshUser(user);
+        this.commonService.currentUserData
+          .subscribe( user => {
+            this.currentUser = user;
+          })
       })
-      .then(()=>{
-        this.commonService.getReportsByType("spending")
-        .subscribe((spendingData)=>{
-          let spendingSum = 0;
-          for(let report of spendingData){
-            spendingSum +=report.amount;
-          }
-          this.sumItems.spendingSum = spendingSum;
-          this.commonService.getReportsByType("encoming")
-          .subscribe((encomingData)=>{
-            let encomingSum = 0;
-            for(let report of encomingData){
-              encomingSum +=report.amount;
-            }
-            this.sumItems.encomesSum = encomingSum;
-            this.sumItems.freeMony = this.sumItems.getFreeMony();
-            });
-          });
-      })
-    })
   }
+
+  initializateEncoming(){
+    this.commonService.getReportsByType("spending")
+      .subscribe(spendings => {
+        this.commonService.refreshSpendings(spendings);
+        this.commonService.currentSpendingData
+          .subscribe(spends => this.spendings = spends);
+      })
+  }
+
+  initializateSpending(){
+    this.commonService.getReportsByType("encoming")
+      .subscribe(encomings => {
+        this.commonService.refreshEncomings(encomings);
+        this.commonService.currentEncomingData
+          .subscribe(encoms => this.encomings = encoms);
+      })
+  }
+
+  initializateCells(){
+    this.commonService.getReportsByType("cell")
+      .subscribe(cells => {
+        this.commonService.refreshCells(cells);
+        this.commonService.currentEncomingData
+          .subscribe(cll => this.cells = cll);
+      })
+  }
+
+  initializateLoans(){
+    this.commonService.getReportsByType("loan")
+      .subscribe(loans =>{
+        this.commonService.refreshLoans(loans);
+        this.commonService.currentEncomingData
+        .subscribe(ln => this.loans = ln);
+      });
+  }
+
 }
