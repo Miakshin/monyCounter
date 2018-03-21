@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import {  FormGroup, FormControl, Validators }   from '@angular/forms';
-import { EventEmitter } from '@angular/core';
+import { take } from 'rxjs/operators';
 
 import { CommonService } from '../common.service';
 import { SpendingLine } from './SpendingLine';
@@ -82,13 +82,19 @@ export class EncomingAndSpendingComponent implements OnInit {
   getData(){
     switch(this.serchFlag){
       case "last ten":
-      this.commonService.getReportsByTypeFlag("encoming", this.serchFlag, {repeat: this.lastTenRepeat})
-      .subscribe((data)=>{
-        this.encomingReports = data;
+      this.commonService.currentEncomingData
+      .pipe(take(10*this.lastTenRepeat))
+        .subscribe(encomings => {
+          if(encomings){
+            this.encomingReports = encomings
+          };
         })
-      this.commonService.getReportsByTypeFlag("spending", this.serchFlag, {repeat: this.lastTenRepeat})
-      .subscribe((data)=>{
-        this.spendingReports = data;
+      this.commonService.currentSpendingData
+      .pipe(take(10*this.lastTenRepeat))
+        .subscribe(spendings => {
+          if(spendings){
+            this.spendingReports = spendings
+          };
         })
       break;
       case "by date":
@@ -106,8 +112,16 @@ export class EncomingAndSpendingComponent implements OnInit {
         })
       break;
       case "all":
-      this.getSpendingReports();
-      this.getEncomingReports();
+      this.commonService.currentEncomingData
+        .subscribe(encomings => {
+          if(encomings){
+            this.encomingReports = encomings};
+        })
+      this.commonService.currentSpendingData
+        .subscribe(spendings => {
+          if(spendings){
+            this.spendingReports = spendings};
+        });
       break;
     }
   }
@@ -183,7 +197,6 @@ export class EncomingAndSpendingComponent implements OnInit {
   }
 
   sendSpendingReport():void{
-    let form = eval(`document.forms.spending`);
     let promiseArray: any[] = [];
     this.spendingLines.forEach((line)=>{
       let data;
@@ -203,7 +216,10 @@ export class EncomingAndSpendingComponent implements OnInit {
           //   this.spendingFormGroup.value[line.amountName] ="",
           //   this.spendingFormGroup.value[line.descriptionName]="",
           //   this.spendingFormGroup.value[line.currencyName]="";
-          this.getSpendingReports()
+          this.commonService.getReportsByType("encoming")
+            .subscribe(encomings=>{
+              this.commonService.refreshEncomings(encomings)
+            })
         })
       )
     })
@@ -223,12 +239,12 @@ export class EncomingAndSpendingComponent implements OnInit {
           description : this.encomingFormGroup.value[line.descriptionName],
           currency : this.encomingFormGroup.value[line.currencyName]
         };
-      if(this.activeTax.length > 0){data.isTax = true; data.taxTo=this.activeTax; data.taxed = 0;
+      if(this.activeTax.length > 0){
+        data.isTax = true; data.taxTo=this.activeTax; data.taxed = 0;
           this.activeTax.forEach((item)=>{
             let promise = new Promise((res,rej)=>{
               this.commonService.getCellById(item)
                 .then((cell)=>{
-                console.log(cell);
                 data.taxed = data.taxed + cell.tax * data.amount /100;
                  let report ={
                    'id': cell._id,
@@ -241,11 +257,9 @@ export class EncomingAndSpendingComponent implements OnInit {
           })
 
           Promise.all([...taxPromises])
-          // .then((cellArr)=>{
-          //   return cellArr
-          // })
           .then((reports)=>{
             console.log(data);
+            console.log(this.encomingFormGroup.value)
             this.commonService.postData(data, "encoming")
             .subscribe((res)=>{
               if(this.encomingLines.length === 1){this.encomingFormGroup.reset()
@@ -278,7 +292,11 @@ export class EncomingAndSpendingComponent implements OnInit {
                 this.encomingFormGroup.value[line.amountName] ="",
                 this.encomingFormGroup.value[line.descriptionName]="",
                 this.encomingFormGroup.value[line.currencyName]="";
-            this.getEncomingReports()}
+              this.commonService.getReportsByType("encoming")
+                .subscribe(encomings=>{
+                  this.commonService.refreshEncomings(encomings)
+              })
+            }
           )}
     })
 
@@ -299,16 +317,17 @@ export class EncomingAndSpendingComponent implements OnInit {
 
 
   getDataSettings(){
-    this.commonService.getUserByLogin("admin")
-    .subscribe((user)=>{
-      console.log(user);
-      this.activeTax = user.setings.activCells;
-      this.activCells = user.setings.activCells;
-      this.spendingTypes = user.setings.spendingTypes;
-      console.log(user.setings.spendingTypes);
-      this.activeCurancy = user.setings.activeCurancy.filter((item)=>{
-        return item.checked === true})
-      })
+    this.commonService.currentUserData
+    .subscribe(user=>{
+      if(user){
+        this.activeTax = user.setings.activCells;
+        this.activCells = user.setings.activCells;
+        this.spendingTypes = user.setings.spendingTypes;
+        this.activeCurancy = user.setings.activeCurancy.filter((item)=>{
+          return item.checked === true
+        })
+      }
+    })
   }
 
   getMoreReports(){

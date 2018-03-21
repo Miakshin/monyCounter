@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonService } from '../common.service';
 import {  FormGroup, FormControl, Validators }   from '@angular/forms';
 
+import { Cell } from './cell/cell'
+
 @Component({
   selector: 'app-cells',
   templateUrl: './cells.component.html',
@@ -9,8 +11,7 @@ import {  FormGroup, FormControl, Validators }   from '@angular/forms';
 })
 export class CellsComponent implements OnInit {
 
-  login: string = "admin";
-  cells: any;
+  cells: Cell[];
   activeCells: any;
   createCellFormGroup: FormGroup;
 
@@ -59,7 +60,7 @@ export class CellsComponent implements OnInit {
 
   onCheckedChange(event){
     let data={id: event.target.name}
-    this.commonService.changeSettings(this.login, "activCells", data)
+    this.commonService.changeSettings(document.cookie.slice(6), "activCells", data)
     .subscribe(user=>this.commonService.refreshUser(user))
   }
 
