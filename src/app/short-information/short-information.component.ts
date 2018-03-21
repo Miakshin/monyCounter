@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-short-information',
@@ -7,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ShortInformationComponent implements OnInit {
   @Input() user: string = "loading";
-  @Input() freeMony: number = 0;
+  @Input() freeMony: number;
   curancy: string = "UAH";
 
   constructor() { }

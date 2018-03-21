@@ -18,7 +18,7 @@ export class AppComponent implements OnInit{
   encomings : Encoming[];
   cells : Cell[];
   loans : Loan[];
-  freeMony: any;
+  freeMony: number;
 
   constructor(private commonService: CommonService) {}
 
@@ -27,10 +27,10 @@ export class AppComponent implements OnInit{
     this.initializateEncoming();
     this.initializateSpending();
     this.initializateCells();
-    this.freeMony = this.commonService.currentFreeMonyData
+    this.commonService.currentFreeMonyData
       .subscribe(fm => {
         console.log(fm)
-        this.freeMony = fm})
+        this.freeMony = +fm})
   }
 
   initializateUser(){
