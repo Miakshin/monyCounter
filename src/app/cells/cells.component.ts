@@ -32,22 +32,13 @@ export class CellsComponent implements OnInit {
       });}
 
   ngOnInit() {
-    this.getAllCells()
-  }
+    this.commonService.currentCellsData
+      .subscribe(cells => this.cells = cells);
+    this.commonService.currentUserData
+      .subscribe(user => {
+        if(user){this.activeCells = user.setings.activCells}
+      });
 
-  getAllCells(){
-    this.commonService.getReportsByType("cell")
-    .subscribe((data)=>{this.cells = data;
-      console.log(data);
-    this.getActiveCells();
-    })
-  }
-
-  getActiveCells(){
-    this.commonService.getUserByLogin("admin")
-    .subscribe((user)=>{
-      this.activeCells = user.setings.activCells;}
-    )
   }
 
   createCell(){
@@ -61,14 +52,15 @@ export class CellsComponent implements OnInit {
     this.commonService.postData(data, "cell")
     .subscribe(()=>{
       this.createCellFormGroup.reset();
-      this.getActiveCells()})
+      this.commonService.getReportsByType("cell")
+      .subscribe(cells => this.commonService.refreshCells(cells))
+})
   }
 
   onCheckedChange(event){
     let data={id: event.target.name}
-    this.commonService.changeSettings(this.login, "activCells", data).subscribe((user)=>{
-      this.activeCells = user.setings.activCells
-    })
+    this.commonService.changeSettings(this.login, "activCells", data)
+    .subscribe(user=>this.commonService.refreshUser(user))
   }
 
   isCellActive(id){
