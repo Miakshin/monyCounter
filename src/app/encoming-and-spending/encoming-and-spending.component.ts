@@ -6,6 +6,7 @@ import { take } from 'rxjs/operators';
 import { CommonService } from '../common.service';
 import { SpendingLine } from './SpendingLine';
 import { EncomingLine } from './Encomingline';
+import { Cell } from '../cells/cell/cell'
 
 @Component({
   selector: 'app-encoming-and-spending',
@@ -19,7 +20,8 @@ export class EncomingAndSpendingComponent implements OnInit {
   activeTax: [string];
   activCells: [string];
   activeCurancy: [object];
-  spendingTypes: [object]
+  spendingTypes: [object];
+  cells: Cell[];
   encomingLines: EncomingLine[] = [{
     id : 0,
     descriptionName: 'description-0',
@@ -77,6 +79,11 @@ export class EncomingAndSpendingComponent implements OnInit {
  ngOnInit():void{
    this.getData();
    this.getDataSettings();
+   this.commonService.currentCellsData
+    .subscribe(cells => {
+      if(cells){
+        this.cells = cells}
+   })
  }
 
   getData(){
@@ -197,7 +204,6 @@ export class EncomingAndSpendingComponent implements OnInit {
   }
 
   sendSpendingReport():void{
-    let promiseArray: any[] = [];
     this.spendingLines.forEach((line)=>{
       let data;
       data = {
@@ -209,30 +215,20 @@ export class EncomingAndSpendingComponent implements OnInit {
       };
       data.push(
         this.commonService.postData(data, "spending")
-        .toPromise()
-        .then(()=>{
-          // this.spendingLines.length > 1?
-          //   this.removeLine("spending", line.id) :
-          //   this.spendingFormGroup.value[line.amountName] ="",
-          //   this.spendingFormGroup.value[line.descriptionName]="",
-          //   this.spendingFormGroup.value[line.currencyName]="";
-          this.commonService.getReportsByType("encoming")
-            .subscribe(encomings=>{
-              this.commonService.refreshEncomings(encomings)
-            })
-        })
-      )
-    })
-    Promise.all([...promiseArray])
-    .then(this.spendingFormGroup.reset)
-
+        .subscribe(()=>{
+          this.spendingLines.length > 1?
+            this.removeLine("spending", line.id) :
+            this.spendingFormGroup.reset();
+          this.commonService.getReportsByType("spending")
+            .subscribe(spendings=>this.commonService.refreshSpendings(spendings))
+          })
+        )
+      })
   }
 
   sendEncomingReport() :void{
 
     this.encomingLines.forEach((line)=>{
-      let writedTax = [];
-      let taxPromises = [];
       let data :any = {
           date: Date.now(),
           amount: this.encomingFormGroup.value[line.amountName],
@@ -242,77 +238,48 @@ export class EncomingAndSpendingComponent implements OnInit {
       if(this.activeTax.length > 0){
         data.isTax = true; data.taxTo=this.activeTax; data.taxed = 0;
           this.activeTax.forEach((item)=>{
-            let promise = new Promise((res,rej)=>{
-              this.commonService.getCellById(item)
-                .then((cell)=>{
-                data.taxed = data.taxed + cell.tax * data.amount /100;
-                 let report ={
-                   'id': cell._id,
-                   'tax': (cell.tax * data.amount /100)
-                 }
-                 res(report);
-              })
+            let cell = this.cells.find((cell)=>cell._id === item)
+            data.taxed = data.taxed + cell.tax * data.amount /100;
+        })
+          this.commonService.postData(data, "encoming")
+          .subscribe((res)=>{
+            this.activeTax.forEach((item)=>{
+              let cell = this.cells.find((cell)=>cell._id === item)
+              let amount = cell.tax * res.amount /100;
+              let data = {
+                from: res._id,
+                amount: amount,
+                description: res.description,
+                date: new Date()
+              }
+              this.commonService.addRepotrToCell(item, data)
+                .subscribe(()=>
+                  this.commonService.getReportsByType("cell")
+                    .subscribe(cells =>this.commonService.refreshCells(cells)))
             })
-            taxPromises.push(promise);
-          })
-
-          Promise.all([...taxPromises])
-          .then((reports)=>{
-            console.log(data);
-            console.log(this.encomingFormGroup.value)
-            this.commonService.postData(data, "encoming")
-            .subscribe((res)=>{
-              if(this.encomingLines.length === 1){this.encomingFormGroup.reset()
+            if(this.encomingLines.length === 1){
+              this.encomingFormGroup.reset();
             }else{
               this.removeLine("encoming", line.id)
-            // delete this.encomingFormGroup.controls[`description-${line.id}`];
-            // delete this.encomingFormGroup.controls[`amount-${line.id}`];
-            // delete this.encomingFormGroup.controls[`currencyName-${line.id}`];
-
-              console.log(this.encomingFormGroup);
             }
-              this.getEncomingReports()
-              reports.forEach((report)=>{
-                let cellData = {
-                  description: res.description,
-                  from: res._id,
-                  amount: report.tax,
-                  date: new Date()
-                }
-                this.commonService.addRepotrToCell(report.id, cellData)
-                .subscribe(console.log)
-              })
+            this.commonService.getReportsByType("encoming")
+              .subscribe(encomings=> this.commonService.refreshEncomings(encomings))
             })
-          })
-        }else{ data.isTax = false;
-            this.commonService.postData(data, "encoming")
-            .subscribe(()=>{
-              this.encomingLines.length > 1?
-                this.removeLine("encoming", line.id) :
-                this.encomingFormGroup.value[line.amountName] ="",
-                this.encomingFormGroup.value[line.descriptionName]="",
-                this.encomingFormGroup.value[line.currencyName]="";
+
+      }else{ data.isTax = false;
+        this.commonService.postData(data, "encoming")
+          .subscribe(()=>{
+            this.encomingLines.length > 1?
+              this.removeLine("encoming", line.id) :
+              this.encomingFormGroup.value[line.amountName] ="",
+              this.encomingFormGroup.value[line.descriptionName]="",
+              this.encomingFormGroup.value[line.currencyName]="";
               this.commonService.getReportsByType("encoming")
-                .subscribe(encomings=>{
-                  this.commonService.refreshEncomings(encomings)
-              })
+                .subscribe(encomings=>this.commonService.refreshEncomings(encomings))
             }
           )}
-    })
+        })
 
-  }
-
-  getSpendingReports(){
-    this.commonService.getReportsByType("spending")
-    .subscribe((data)=>{
-      this.spendingReports = data;
-      });
-  }
-  getEncomingReports(){
-    this.commonService.getReportsByType("encoming")
-    .subscribe((data)=>{
-      this.encomingReports = data;
-      });
   }
 
 
