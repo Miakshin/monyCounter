@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from './common.service';
+import { ActivatedRoute, Router} from '@angular/router';
+import { Location } from '@angular/common';
 
 import { User } from './User';
 import { Spending } from './Spending';
@@ -14,28 +16,36 @@ import { Loan } from './Loan';
 })
 export class AppComponent implements OnInit{
   currentUser : User;
+  currentUserLogin: string;
   spendings : Spending[];
   encomings : Encoming[];
   cells : Cell[];
   loans : Loan[];
   freeMony: number;
 
-  constructor(private commonService: CommonService) {}
+  constructor(private commonService: CommonService,
+              private route:ActivatedRoute,
+              private router:Router,
+              private location: Location) {}
 
   ngOnInit(){
-    this.initializateUser();
-    this.initializateSpending();
-    this.initializateEncoming();
-    this.initializateCells();
-    this.initializateLoans()
-    this.commonService.currentFreeMonyData
-      .subscribe(fm => {
-        this.freeMony = +fm})
+    this.commonService.isLoggedIn
+    .subscribe(login=>this.currentUserLogin = login);
+    this.commonService.refreshLogegIn(document.cookie.split("login=")[1].split(";")[0]);
+    if(this.currentUserLogin){
+      this.initializateUser();
+      this.initializateSpending();
+      this.initializateEncoming();
+      this.initializateCells();
+      this.initializateLoans()
+      this.commonService.currentFreeMonyData
+        .subscribe(fm => {
+          this.freeMony = +fm})
+    }
   }
 
   initializateUser(){
-    document.cookie = "login=admin"
-    this.commonService.getUserByLogin(document.cookie.slice(6))
+    this.commonService.getUserByLogin(this.currentUserLogin)
       .subscribe((user:User) =>{
         this.commonService.refreshUser(user);
         this.commonService.currentUserData
@@ -80,6 +90,14 @@ export class AppComponent implements OnInit{
         .subscribe(ln => {this.loans = ln
         console.log(this.loans)});
       });
+  }
+
+  logOut(){
+    window.document.cookie = "";
+    console.log(document.cookie)
+    this.commonService.refreshLogegIn("");
+    // this.location.go("login");
+    this.router.navigate(["/login"])
   }
 
 }

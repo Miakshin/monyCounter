@@ -19,6 +19,8 @@ import { CellsComponent } from './cells/cells.component';
 import { CellComponent } from './cells/cell/cell.component';
 import { CanvasComponent } from './main-information/canvas/canvas.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { LoginGuard } from './guards/login.guard';
+import { AuthGuard } from './guards/auth.guard';
 
 
 @NgModule({
@@ -43,7 +45,10 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [CommonService],
+  providers: [
+    CommonService,
+    LoginGuard,
+    AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

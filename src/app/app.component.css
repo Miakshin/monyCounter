@@ -10,10 +10,15 @@ div.app-wrapper aside.navigation{
   flex-direction: row;
   width: 25%;
 }
-
 div.app-wrapper main{
     width: 75%;
 }
 aside{
   min-height: 100vh;
+  position:fixed;
+}
+.navigation__logout{
+  position: absolute;
+  bottom: 5%;
+  left: 8%;
 }

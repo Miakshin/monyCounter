@@ -24,6 +24,7 @@ export class CommonService {
   cellsSum: number = 0;
   loansSum:number = 0;
   freeMony: number = 0;
+  currentUser: string;
 
 
   private userSource = new BehaviorSubject<any>(this.user);
@@ -56,6 +57,13 @@ export class CommonService {
   private loansSumSource = new BehaviorSubject<any>(this.loansSum);
   currentloansSumData = this.loansSumSource.asObservable();
 
+  private loggedIn = new BehaviorSubject<any>("");
+  isLoggedIn = this.loggedIn.asObservable();
+
+  refreshLogegIn(newLogin){
+    this.currentUser = newLogin
+    this.loggedIn.next(newLogin);
+  }
 
   refreshUser(newData){
     this.userSource.next(newData)

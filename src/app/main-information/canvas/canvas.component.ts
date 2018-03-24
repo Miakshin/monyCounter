@@ -5,15 +5,11 @@ import { CanvasData } from './CanvasData'
 @Component({
   selector: 'app-main-information-canvas',
   template: `
-  <div class="container col-6">
-    <h3>{{title}}</h3>
-    <canvas id={{id}}></canvas>
-      <div *ngIf="data.length > 0" class="histiry">
-      <ul>
-        <li *ngFor="let item of data">
-          {{item.category}} <input type="color" value={{item.color}} />
-        </li>
-      </ul>
+  <div class="container">
+    <h3 class="text-center mb-5">{{title}}</h3>
+    <div class="row">
+      <canvas class="col-8"id={{id}}></canvas>
+      <div class="col-4"id={{historyId}}></div>
     </div>
   </div>`
 })
@@ -22,6 +18,7 @@ export class CanvasComponent implements OnInit, AfterViewInit{
   @Input() data: CanvasData[];
   @Input() title: string;
   @Input() id: string;
+  historyId: string;
   context: object;
   canvas: any ;
 
@@ -29,6 +26,7 @@ export class CanvasComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit() {
+    this.historyId = `history-${this.id}`
   }
 
   ngAfterViewInit(){
@@ -66,7 +64,19 @@ export class CanvasComponent implements OnInit, AfterViewInit{
     })
 
     this.drawDiagramSlice(this.context,this.canvas.width/2,
-    this.canvas.height/2, 80, 0, Math.PI*2, "white")
+    this.canvas.height/2, 80, 0, Math.PI*2, "white");
+
+    if (this.data.length > 0){
+      let history = document.getElementById(this.historyId)
+      var legendHTML = "";
+      for (let categ of this.data){
+        legendHTML += `
+        <div><span style='display:inline-block;width:20px;
+        background-color:${categ.color};'>&nbsp;</span>${categ.category}</div>`;
+      }
+      history.innerHTML = legendHTML;
+    }
+
   }
 
   drawDiagramSlice(ctx,centerX, centerY, radius, startAngle, endAngle, color ){
