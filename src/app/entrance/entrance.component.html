@@ -1,19 +1,19 @@
 <div class="container">
   <h2 class ="h4 text-center mb-4">Log in to your account</h2>
   <div class="row justify-content-center vertical-align-item-center">
-    <form class="form-sinin " [formGroup]="encomingFormGroup"
+    <form class="form-sinin " [formGroup]="loginFormGroup"
     novalidate (ngSubmit)="logIn()">
       <div class="row mb-1">
         <label  for="login">Login: </label>
-        <input class="form-control " type="text" name="login">
+        <input class="form-control" formControlName="login" type="text" name="login">
       </div>
       <div class="row mb-1">
         <label  for="password">Password:</label>
-        <input class="form-control " type="text" name="password">
+        <input class="form-control " formControlName="password" type="password" name="password">
       </div>
       <div class="row mb-2 justify-content-center">
         <input class="form-check align-item-center mt-2 mr-2"
-          type="checkbox" name="remember" value="remember me">
+          type="checkbox" name="remember" formControlName="isRemember">
         <label class="form-check-label" for="remember">Remember me</label>
       </div>
       <div class="row">

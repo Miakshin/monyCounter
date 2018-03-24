@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import {  FormGroup, FormControl, Validators }   from '@angular/forms';
+import { CommonService } from '../common.service';
+import { Router} from '@angular/router';
 
 @Component({
   selector: 'app-entrance',
@@ -9,7 +11,8 @@ import {  FormGroup, FormControl, Validators }   from '@angular/forms';
 export class EntranceComponent{
   loginFormGroup : FormGroup;
 
-  constructor() {
+  constructor(private commonService: CommonService,
+              private router: Router) {
   this.loginFormGroup =  new FormGroup({
     "login": new FormControl("", [
       Validators.required,
@@ -22,5 +25,19 @@ export class EntranceComponent{
     "isRemember": new FormControl("")
     });  }
 
-
+    logIn(){
+      console.log(this.loginFormGroup)
+      const login = this.loginFormGroup.value.login;
+      const password = this.loginFormGroup.value.password;
+      console.log(login,password)
+      this.loginFormGroup.reset();
+      this.commonService.getUserByLogin("admin").
+        subscribe(user=>{
+          if(user.login === login && user.password === password){
+            this.commonService.refreshLogegIn(user.login);
+            // console.log(this.commonService.currentUser)
+            this.router.navigate(["/main"])
+          }
+        })
+    }
 }

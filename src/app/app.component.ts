@@ -30,18 +30,21 @@ export class AppComponent implements OnInit{
 
   ngOnInit(){
     this.commonService.isLoggedIn
-    .subscribe(login=>this.currentUserLogin = login);
-    this.commonService.refreshLogegIn(document.cookie.split("login=")[1].split(";")[0]);
-    if(this.currentUserLogin){
-      this.initializateUser();
-      this.initializateSpending();
-      this.initializateEncoming();
-      this.initializateCells();
-      this.initializateLoans()
-      this.commonService.currentFreeMonyData
-        .subscribe(fm => {
-          this.freeMony = +fm})
-    }
+    .subscribe(login=>{
+      this.currentUserLogin = login;
+      if(this.currentUserLogin){
+        this.initializateUser();
+        this.initializateSpending();
+        this.initializateEncoming();
+        this.initializateCells();
+        this.initializateLoans()
+        this.commonService.currentFreeMonyData
+          .subscribe(fm => {
+            this.freeMony = +fm})
+      }
+    });
+    // this.commonService.refreshLogegIn(document.cookie.split("login=")[1].split(";")[0]);
+
   }
 
   initializateUser(){

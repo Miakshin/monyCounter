@@ -61,7 +61,7 @@ export class CommonService {
   isLoggedIn = this.loggedIn.asObservable();
 
   refreshLogegIn(newLogin){
-    this.currentUser = newLogin
+    this.currentUser = newLogin;
     this.loggedIn.next(newLogin);
   }
 
