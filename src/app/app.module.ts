@@ -18,6 +18,7 @@ import { CommonService } from './common.service';
 import { CellsComponent } from './cells/cells.component';
 import { CellComponent } from './cells/cell/cell.component';
 import { CanvasComponent } from './main-information/canvas/canvas.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { CanvasComponent } from './main-information/canvas/canvas.component';
     ShortInformationComponent,
     CellsComponent,
     CellComponent,
-    CanvasComponent
+    CanvasComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

@@ -6,7 +6,8 @@ import { EncomingAndSpendingComponent }      from './encoming-and-spending/encom
 import { LoansComponent }      from './loans/loans.component';
 import { CellsComponent }      from './cells/cells.component';
 import { CellComponent }      from './cells/cell/cell.component';
-import { EntranceComponent } from './entrance/entrance.component'
+import { EntranceComponent } from './entrance/entrance.component';
+import { PageNotFoundComponent} from './page-not-found/page-not-found.component'
 
 const routes: Routes = [
   { path: 'main', component: MainInformationComponent },
@@ -17,7 +18,7 @@ const routes: Routes = [
   { path: 'cells/:id', component: CellComponent },
   { path: 'login', component: EntranceComponent },
   { path: '', redirectTo: '/main', pathMatch: 'full' },
-  { path: '**', component: PageNotFound }
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
