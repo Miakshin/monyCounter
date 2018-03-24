@@ -6,6 +6,7 @@ import { EncomingAndSpendingComponent }      from './encoming-and-spending/encom
 import { LoansComponent }      from './loans/loans.component';
 import { CellsComponent }      from './cells/cells.component';
 import { CellComponent }      from './cells/cell/cell.component';
+import { EntranceComponent } from './entrance/entrance.component'
 
 const routes: Routes = [
   { path: 'main', component: MainInformationComponent },
@@ -14,7 +15,9 @@ const routes: Routes = [
   { path: 'loans', component: LoansComponent },
   { path: 'cells', component: CellsComponent },
   { path: 'cells/:id', component: CellComponent },
+  { path: 'login', component: EntranceComponent },
   { path: '', redirectTo: '/main', pathMatch: 'full' },
+  { path: '**', component: PageNotFound }
 ];
 
 @NgModule({

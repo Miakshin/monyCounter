@@ -1,7 +1,26 @@
-<form class="" action="index.html" method="post">
-  <input type="text" name="name" value="input your name">
-  <input type="text" name="password" value="input yor password">
-  <input type="button" name="singIn" value="Sing in">
-  <input type="radio" name="remember" value="remember me">
-  <p>Don't have an account?<a href=#>Create Account</a></p>
-</form>
+<div class="container">
+  <h2 class ="h4 text-center mb-4">Log in to your account</h2>
+  <div class="row justify-content-center vertical-align-item-center">
+    <form class="form-sinin " [formGroup]="encomingFormGroup"
+    novalidate (ngSubmit)="logIn()">
+      <div class="row mb-1">
+        <label  for="login">Login: </label>
+        <input class="form-control " type="text" name="login">
+      </div>
+      <div class="row mb-1">
+        <label  for="password">Password:</label>
+        <input class="form-control " type="text" name="password">
+      </div>
+      <div class="row mb-2 justify-content-center">
+        <input class="form-check align-item-center mt-2 mr-2"
+          type="checkbox" name="remember" value="remember me">
+        <label class="form-check-label" for="remember">Remember me</label>
+      </div>
+      <div class="row">
+        <input class="btn btn-primary btn-block btn-lg mb-4" type="submit"
+          name="singIn" value="Sing in">
+      </div>
+      <p>Don't have an account?<a href=#>Create Account</a></p>
+    </form>
+  </div>
+</div>
