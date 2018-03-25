@@ -29,22 +29,28 @@ export class AppComponent implements OnInit{
               private location: Location) {}
 
   ngOnInit(){
+    this.commonService.refreshLogegIn(this.currentUserLogin = window.localStorage.getItem("login"))
     this.commonService.isLoggedIn
-    .subscribe(login=>{
-      this.currentUserLogin = login;
-      if(this.currentUserLogin){
-        this.initializateUser();
-        this.initializateSpending();
-        this.initializateEncoming();
-        this.initializateCells();
-        this.initializateLoans()
-        this.commonService.currentFreeMonyData
-          .subscribe(fm => {
-            this.freeMony = +fm})
-      }
-    });
-    // this.commonService.refreshLogegIn(document.cookie.split("login=")[1].split(";")[0]);
-
+      .subscribe(login => {
+        if(login){
+          this.currentUserLogin = login;
+          this.initializateUser();
+          this.initializateSpending();
+          this.initializateEncoming();
+          this.initializateCells();
+          this.initializateLoans();
+          this.commonService.currentFreeMonyData
+            .subscribe(fm => {
+              this.freeMony = +fm})
+        }else if(!login){
+          this.commonService.deleteUserSubsribe();
+          this.commonService.deleteSpendingSubsribe();
+          this.commonService.deleteEncomingSubsribe();
+          this.commonService.deleteCellsSubsribe();
+          this.commonService.deleteloansSubsribe();
+          this.commonService.deleteFreeMonySubsribe();
+        }
+      })
   }
 
   initializateUser(){
@@ -90,16 +96,12 @@ export class AppComponent implements OnInit{
       .subscribe(loans =>{
         this.commonService.refreshLoans(loans);
         this.commonService.currentEncomingData
-        .subscribe(ln => {this.loans = ln
-        console.log(this.loans)});
+        .subscribe(ln => this.loans = ln);
       });
   }
 
   logOut(){
-    window.document.cookie = "";
-    console.log(document.cookie)
-    this.commonService.refreshLogegIn("");
-    // this.location.go("login");
+    window.localStorage.removeItem("login");
     this.router.navigate(["/login"])
   }
 

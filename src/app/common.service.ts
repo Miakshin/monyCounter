@@ -69,6 +69,10 @@ export class CommonService {
     this.userSource.next(newData)
   }
 
+  deleteUserSubsribe(){
+    this.userSource.unsubscribe()
+  }
+
   refreshEncomings(newData){
     this.encomingsSource.next(newData);
     this.encomings = newData;
@@ -76,6 +80,10 @@ export class CommonService {
       this.getEncomingsSum();
       this.getFreeMony();
     }
+  }
+
+  deleteEncomingSubsribe(){
+    this.encomingsSource.unsubscribe()
   }
 
   refreshSpendings(newData){
@@ -87,6 +95,10 @@ export class CommonService {
     }
   }
 
+  deleteSpendingSubsribe(){
+    this.spendingsSource.unsubscribe()
+  }
+
   refreshCells(newData){
     this.cellsSource.next(newData);
     this.cells = newData
@@ -94,6 +106,10 @@ export class CommonService {
       this.getCellsSum();
       this.getFreeMony();
     }
+  }
+
+  deleteCellsSubsribe(){
+    this.cellsSource.unsubscribe()
   }
 
   refreshLoans(newData){
@@ -105,24 +121,48 @@ export class CommonService {
     }
   }
 
+  deleteloansSubsribe(){
+    this.loansSource.unsubscribe()
+  }
+
   refreshFreeMony(newData){
     this.freeMonySource.next(newData)
+  }
+
+  deleteFreeMonySubsribe(){
+    this.freeMonySource.unsubscribe()
   }
 
   refreshSpendingsSum(newData){
     this.spendingsSumSource.next(newData)
   }
 
+  deleteSpendingSumSubsribe(){
+    this.spendingsSumSource.unsubscribe()
+  }
+
   refreshEncomingsSum(newData){
     this.encomingsSumSource.next(newData)
+  }
+
+  deleteEncomingSumSubsribe(){
+    this.encomingsSumSource.unsubscribe()
   }
 
   refreshCellsSum(newData){
     this.cellsSumSource.next(newData)
   }
 
+  deleteCellsSumSubsribe(){
+    this.cellsSumSource.unsubscribe()
+  }
+
   refreshLoansSum(newData){
     this.loansSumSource.next(newData)
+  }
+
+  deleteLoansSumSubsribe(){
+    this.loansSumSource.unsubscribe()
   }
 
   getSpendingsSum(){

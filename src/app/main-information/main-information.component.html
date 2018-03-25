@@ -1,25 +1,42 @@
-<h2 *ngIf="user">{{user.name}}</h2>
-<h3 class="border-bottom">Balance information</h3>
-<div class="information">
-  <div class="sum">
-    <p>
-      Your total amount is: {{total | number}}
-    </p>
+<div class="container">
+  <div class="row justify-content-center border-bottom">
+    <div *ngIf="user" class="col-lg-4 col-md-4 col-sm-12">
+        <div class="balance">
+          <h2 class="h4 balabce__title">Balance information</h2>
+          <p class=balance__amount>
+            Your total amount is: {{total | number}}
+          </p>
+          <p class=balance__free-mony>
+            Free mony {{freeMony | number}}
+          </p>
+        </div>
+    </div>
+    <div *ngIf="cells" class="col-lg-4 col-md-4 col-sm-12">
+      <div class="cells">
+        <h2 class="h4 cells__title">Accumulation cells</h2>
+        <ul class="cells__list">
+          <li *ngFor="let cell of cells" class="cells__item">
+            <label>{{cell.name}} acamulated: </label> {{cell.acamulated}}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div *ngIf="loans" class="col-lg-4 col-md-4 col-sm-12">
+      <div class="loans">
+        <h2 class="h4 loans_title">Loans information</h2>
+        <p class="loans__sum">
+        Your total loans summ is {{loansSum}}
+        </p>
+        <ul class="loans__list">
+          <li *ngFor="let loan of loans" class=loans__item>
+            {{loan.amount}} {{loan.curancy | uppercase}} was loaned from
+            {{loans.from}}. Reason:{{loan.description}}
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
-  <div class="free-mony">
-    <p>
-      Free mony {{freeMony | number}}
-    </p>
-  </div>
-  <div *ngIf="cells" class="cells">
-    <h4 class="border-bottom">Accumulation cells</h4>
-    <ul>
-      <li *ngFor="let cell of cells">
-        <label>{{cell.name}} acamulated: </label> {{cell.acamulated}}
-      </li>
-    </ul>
-  </div>
-  <div class="row">
+  <div class="row justify-content-center">
     <app-main-information-canvas *ngIf="spendingCanvasData" [id]="'spending-canvas'"
     [title]="'Spending'" [data]="spendingCanvasData"></app-main-information-canvas>
     <app-main-information-canvas *ngIf="encomingCanvasData" [id]="'encoming-canvas'"

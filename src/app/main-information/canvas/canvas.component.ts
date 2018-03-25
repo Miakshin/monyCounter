@@ -5,8 +5,8 @@ import { CanvasData } from './CanvasData'
 @Component({
   selector: 'app-main-information-canvas',
   template: `
-  <div class="container">
-    <h3 class="text-center mb-5">{{title}}</h3>
+  <div class="container mt-2">
+    <h3 class="h5 text-center mb-5">{{title}}</h3>
     <div class="row">
       <canvas class="col-8"id={{id}}></canvas>
       <div class="col-4"id={{historyId}}></div>

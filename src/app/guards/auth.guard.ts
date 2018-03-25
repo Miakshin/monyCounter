@@ -9,7 +9,7 @@ export class AuthGuard implements CanActivate {
                 private commonService: CommonService) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        if (this.commonService.currentUser) {
+        if(window.localStorage.getItem("login")){
             return true;
         }
 

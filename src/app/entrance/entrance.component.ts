@@ -34,7 +34,7 @@ export class EntranceComponent{
       this.commonService.getUserByLogin("admin").
         subscribe(user=>{
           if(user.login === login && user.password === password){
-            this.commonService.refreshLogegIn(user.login);
+            window.localStorage.setItem("login", user.login);
             // console.log(this.commonService.currentUser)
             this.router.navigate(["/main"])
           }

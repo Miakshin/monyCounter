@@ -1,6 +1,6 @@
 <div class="app-wrapper container-fluid">
 
-  <aside class=" col-md-2 dnone d-md-block bg-light sidebar">
+  <aside class=" col-md-2 col-lg-2 bg-light sidebar">
       <h6 *ngIf="!currentUser || !freeMony"
       class="sidebar-heading text-muted align-items-center px-3"
       >Loading data</h6>
@@ -9,7 +9,7 @@
       <app-navigation></app-navigation>
       <input type="button" class="navigation__logout" value="Log out" (click)="logOut()" />
   </aside>
-  <main class="container-fluid col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+  <main class="container-fluid col-md-10 ml-sm-auto col-lg-10 pt-3 px-4">
         <router-outlet></router-outlet>
   </main>
 </div>

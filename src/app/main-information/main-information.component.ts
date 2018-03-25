@@ -7,6 +7,7 @@ import { CommonService } from '../common.service';
 import { Spending } from '../Spending';
 import { Encoming } from '../Encoming';
 import { User } from '../User';
+import { Loan } from '../Loan';
 import { CanvasData } from './canvas/CanvasData';
 
 @Component({
@@ -23,11 +24,13 @@ export class MainInformationComponent implements OnInit, AfterContentChecked {
 
   total: number;
   cells: string[];
+  loans: Loan[];
   spendings: Spending[];
   encomings: Encoming[];
 
   spendingSum: number;
   encomingSum: number;
+  loansSum: number;
   cellAcamulation: number;
 
   spendingCanvasData : CanvasData[];
@@ -53,6 +56,10 @@ export class MainInformationComponent implements OnInit, AfterContentChecked {
       .subscribe(fm => this.freeMony = fm);
     this.commonService.currentCellsSumData
       .subscribe(cellsSum => this.cellAcamulation = cellsSum)
+    this.commonService.currentLoansData
+      .subscribe(loans => this.loans = loans);
+    this.commonService.currentloansSumData
+      .subscribe(sum => this.loansSum = sum)
   }
 
   ngAfterContentChecked(){
