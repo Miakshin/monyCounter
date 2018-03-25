@@ -66,7 +66,6 @@ export class SettingsComponent implements OnInit {
   ngOnInit() {
     this.commonService.currentUserData
       .subscribe(user => this.user = user );
-    this.loansFromCells= true;
   }
 
   pick(event){

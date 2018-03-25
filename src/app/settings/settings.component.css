@@ -1,6 +1,9 @@
 nav a.active{
-  border-bottom: 2px solid #7d7dc3;
-  color: #7d7dc3;
+  border-bottom: 2px solid #0056b3;
+  color: #0056b3;
+}
+nav a:hover{
+  color: #0056b3
 }
 input[type="submit"].add-before{
   margin-left: 25.43%;
@@ -76,7 +79,6 @@ input.checkbox-slider::after{
 ul{
   list-style: decimal;
 }
-
 .btn-close{
   background-color: #ff6060;
   height: 20px;
@@ -91,9 +93,14 @@ ul{
 ul li input.btn-close{
   margin-left: 30px;
 }
-
 form input.btn-close{
   position: relative;
   top: 0;
   left: 98.5%;
+}
+.btn-warning{
+  color: #ffffff;
+}
+ul.curancy_list{
+  padding: 0;
 }

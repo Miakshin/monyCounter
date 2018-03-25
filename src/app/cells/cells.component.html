@@ -1,5 +1,5 @@
 <article class="col-12">
-  <h2 class="h5 text-center">Cells</h2>
+  <h2 class="h3 text-center mb-2">Cells</h2>
   <div *ngIf="!cells || !activeCells"class="loading text-center">
     loading ...
   </div>
@@ -26,13 +26,14 @@
         </td>
       </tr>
   </table>
-  <h2 class="h5 text-center"> Create new cell</h2>
-  <form [formGroup]="createCellFormGroup" novalidate (ngSubmit)="createCell()" class="row col-12">
-    <input type="text" formControlName="name" placeholder="cell name" class="col-3"/>
-    <input type="number" formControlName="tax" class="col-2"/>
-    <input type="text" class="col-3" formControlName="acamulated" placeholder="initial saving">
-    <input type="color" formControlName="color" class="col-1"/>
-    <input type="submit" value="create cell" class="button col-3">
+  <h2 class="h4 text-center"> Create new cell</h2>
+  <form [formGroup]="createCellFormGroup" novalidate (ngSubmit)="createCell()"
+  class="row form-group mt-4 ml-1">
+    <input type="text" formControlName="name" placeholder="cell name" class="col-3 form-control"/>
+    <input type="number" formControlName="tax" class="col-2 form-control"/>
+    <input type="text" class="col-3 form-control" formControlName="acamulated" placeholder="initial saving">
+    <input type="color" formControlName="color" class="col-1 form-control color"/>
+    <input type="submit" value="create cell" class="btn btn-success col-3">
   </form>
 
 </article>

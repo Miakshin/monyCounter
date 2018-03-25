@@ -2,6 +2,8 @@ import { Component, OnInit, AfterContentChecked } from '@angular/core';
 import {  FormGroup, FormControl, Validators }   from '@angular/forms';
 
 import { CommonService } from '../common.service';
+import { Cell } from '../cells/cell/cell';
+import { User } from '../User';
 
 @Component({
   selector: 'app-loans',
@@ -14,6 +16,8 @@ export class LoansComponent implements OnInit, AfterContentChecked {
   loansSum: number;
   createLoanFormGroup : FormGroup;
   activeCurancy: any[];
+  cells: Cell[];
+  user: User[];
 
   constructor (private commonService: CommonService) {
     this.createLoanFormGroup = new FormGroup({
@@ -36,7 +40,11 @@ export class LoansComponent implements OnInit, AfterContentChecked {
     this.commonService.currentLoansData
       .subscribe(loans => this.loans = loans);
     this.commonService.currentloansSumData
-      .subscribe(sum => this.loansSum = sum)
+      .subscribe(sum => this.loansSum = sum);
+    this.commonService.currentUserData
+      .subscribe(user => this.user = user );
+    this.commonService.currentCellsData
+      .subscribe(cells => this.cells = cells);
   }
 
   ngAfterContentChecked(){

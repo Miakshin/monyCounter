@@ -1,11 +1,10 @@
-  <h3  class="border-bottom">Settings</h3>
   <nav class="row col-12 navigation">
     <a routerLink="/settings" class="nav-link active" name="account" (click)="pick($event)">ACCOUNT SETTINGS</a>
     <a routerLink="/settings" class="nav-link" name="loans" (click)="pick($event)">LOANS SETTINGS</a>
     <a routerLink="/settings" class="nav-link" name="curancy" (click)="pick($event)">CURRANCY SETTINGS</a>
     <a routerLink="/settings" class="nav-link" name="spending" (click)="pick($event)">SPENDINGS SETTINGS</a>
   </nav>
-  <div *ngIf="activeLink === 'loans'">
+  <div class="mt-3 ml-3"*ngIf="activeLink === 'loans'">
     <p>
       Allows create loans only from free mony <label for="checkbox" class="slider">
         <input *ngIf="!user.setings.loansAllowsCell" type="checkbox"
@@ -22,64 +21,75 @@
     </p>
 
   </div>
-  <div *ngIf="activeLink === 'curancy'">
-    <h3 class="h5">common settings</h3>
-    <h4 class="h6">Your curancy:</h4>
-    <ul>
-      <li *ngFor="let currancy of user.setings.activeCurancy">
-        {{currancy.name | uppercase }}
-        <input *ngIf="currancy.checked" type="checkbox" class="checkbox-slider" checked
-        name={{currancy.name}} (change)="onCheckedChange($event)"/>
-        <input *ngIf="!currancy.checked" type="checkbox" class="checkbox-slider"
-        name={{currancy.name}} (change)="onCheckedChange($event)"/>
-        <input type="button" value="x" (click)="deleteCurancy(currancy.name)"
-        class="btn-close"/>
+  <div class="ml-3 mt-3"*ngIf="activeLink === 'curancy'">
+    <h3 class="h3">Your curancy:</h3>
+    <ul class="curancy_list">
+      <li class="row" *ngFor="let currancy of user.setings.activeCurancy">
+        <div  class="col-1">
+          {{currancy.name | uppercase }}
+        </div>
+        <div>
+          <input *ngIf="currancy.checked" type="checkbox" class="checkbox-slider" checked
+          name={{currancy.name}} (change)="onCheckedChange($event)"/>
+          <input *ngIf="!currancy.checked" type="checkbox" class="checkbox-slider"
+          name={{currancy.name}} (change)="onCheckedChange($event)"/>
+          <input type="button" value="x" (click)="deleteCurancy(currancy.name)"
+          class="btn-close"/>
+        </div>
       </li>
     </ul>
     <input *ngIf="!isCreateCurancyOpened"type="button"
       class="btn" (click)="isCreateCurancyOpened = true" value="add new"/>
-    <form *ngIf="isCreateCurancyOpened" class=" container bg-light"
+    <form *ngIf="isCreateCurancyOpened" class="bg-light"
     [formGroup]="curancyFormGroup" novalidate (ngSubmit)="createCurancy()">
       <input type="button" value="x" class="btn-close" (click)="isCreateCurancyOpened = false"/>
       <p class="col-12">
         You should just write curancy assigment. Assigment lengt sould be thre or four simbols"
       </p>
-    <label>Input currancy assigment:</label><input formControlName="name" type="text" /><br />
-    <label>Currancy will be active: </label>
-    <input formControlName="checked" *ngIf="curancyFormGroup.value.checked" type="checkbox" class="checkbox-slider" checked />
-    <input formControlName="checked" *ngIf="!curancyFormGroup.value.checked" type="checkbox" class="checkbox-slider" /><br />
-      <input type="submit" value="add new currancy" class="btn">
+    <label class="ml-3">Input currancy assigment:</label><input formControlName="name"
+    class="form-control ml-3 col-md-6 col-sm-12" type="text" /><br />
+    <label class="ml-3">Currancy will be active: </label>
+    <input formControlName="checked" *ngIf="curancyFormGroup.value.checked"
+     type="checkbox" class="checkbox-slider" checked />
+    <input formControlName="checked" *ngIf="!curancyFormGroup.value.checked"
+     type="checkbox" class="checkbox-slider" /><br />
+      <input type="submit" value="add new currancy" class="btn btn-success ml-3 mb-3">
     </form>
   </div>
   <div *ngIf="activeLink === 'account'">
     <div *ngIf="user" class="container">
-      <form [formGroup]="nameFormGroup" novalidate (ngSubmit)="changeName()">
-        <h3> Change name</h3>
-        <p>
-          Currant name : <span>{{user.name}}</span>
-        </p>
-        <label class="col-3" >Input new name :</label>
-        <input class="col-3" formControlName="newName" type="text" name="new-name"/><br />
-        <input class="col-3 btn add-before" type="submit" value="chage name" />
-      </form>
-
-      <form [formGroup]="passwordFormGroup" novalidate (ngSubmit)="changePassword()">
-        <h3> Change password</h3>
-        <label class="col-3" >input current password :</label>
-        <input class ="col-3" formControlName="currentPass" type="password"  /><br />
-        <label class="col-3" >input new password :</label>
-        <input class ="col-3" formControlName="newPass" type="password"  /><br />
-        <label class="col-3" >confirm password :</label>
-        <input class ="col-3" formControlName="confirmPass" type="password"  /><br />
-        <input class ="col-3 btn add-before" type="submit" value="change password"/>
-      </form>
+      <div class="row">
+        <form [formGroup]="nameFormGroup" class="mt-3 col-lg-6 col-md-6 col-sm-12 form-group"
+         novalidate (ngSubmit)="changeName()">
+          <h3> Change name</h3>
+          <p>
+            Currant name : <span>{{user.name}}</span>
+          </p>
+          <label class="col-form-label">Input new name :</label>
+          <input class="col-6 form-control" formControlName="newName" type="text" name="new-name"/>
+          <input class="btn btn-warning col-md-4 mt-2 mt-4 ml-auto col-sm-6" type="submit" value="chage name" />
+        </form>
+        <form [formGroup]="passwordFormGroup" class="mt-3 col-lg-6 col-md-6 col-sm-12 form-group"
+         novalidate (ngSubmit)="changePassword()">
+          <h3> Change password</h3>
+          <label class="col-form-label" >Input current password :</label>
+          <input class="col-6 form-control" formControlName="currentPass" type="password"  /><br />
+          <label class="col-form-label" >Input new password :</label>
+          <input class ="col-6 form-control" formControlName="newPass" type="password"  /><br />
+          <label class="col-form-label" >Confirm password :</label>
+          <input class="col-6 form-control" formControlName="confirmPass" type="password"  /><br />
+          <input class="col-4 btn btn-warning" type="submit" value="change password"/>
+        </form>
+      </div>
     </div>
   </div>
   <div *ngIf="activeLink === 'spending'">
-    <h3> Spending types</h3>
+    <h3 class="h4 mt-3 ml-3"> Spending types</h3>
     <ul>
-      <li *ngFor="let types of user.setings.spendingTypes">
-        {{types.name | uppercase }}
+      <li class="row"*ngFor="let types of user.setings.spendingTypes">
+        <div class="col-md-3 col-cm-6">
+          {{types.name | uppercase }}
+        </div>
         <input type="color" name={{types.name}} value={{types.color}}
         (change)="onChangeTypeColor($event)">
         <input type="button" value="x" (click)="deleteType(types.name)"
@@ -87,17 +97,16 @@
       </li>
     </ul>
     <input *ngIf="!isCreateTypeOpened"type="button"
-      class="btn" (click)="isCreateTypeOpened = true" value="add new"/>
-    <form *ngIf="isCreateTypeOpened" class=" container bg-light"
+      class="btn ml-3" (click)="isCreateTypeOpened = true" value="add new"/>
+    <form *ngIf="isCreateTypeOpened" class="form-group ml-3 container bg-light"
     [formGroup]="typeFormGroup" novalidate (ngSubmit)="createType()">
       <input type="button" value="x" class="btn-close"
         (click)="isCreateTypeOpened = false"/>
-      <label>Input type name:</label>
-      <input formControlName="name" type="text" /><br />
-      <label>Pick a color</label>
-      <input formControlName="color" type="color" />
-
-      <input type="submit" value="add new currancy" class="btn">
+      <label class="col-form-label h4">Input type name:</label>
+      <input formControlName="name" class="form-control ml-3 col-6" type="text" />
+      <label class="col-form-label ml-3">Pick a color</label>
+      <input formControlName="color" type="color" /><br />
+      <input type="submit" value="add new currancy" class="btn btn-success mb-3 ml-3">
     </form>
   </div>
     <div *ngIf="!user" class="container loading">
