@@ -1,207 +1,214 @@
 <header id="header" class="text-muted">
   <label>Now:</label>{{getDate() | date}}
 </header>
-<div class="row">
   <div class=row>
-
-  </div>
-  <form name="encoming"
-  [formGroup]="encomingFormGroup" novalidate (ngSubmit)="sendEncomingReport()"
-  class="encoming col-6 mt-2 form-group">
-    <h3 class="border-bottom h5 mt-2 ml-4"> Add new incomings </h3>
-    <ul class="list-group ml-4">
-      <li class=" row ml-1"
-      *ngFor="let line of encomingLines">
-        <div class="col-6">
-          <input type="text" name="description"
-          formControlName={{line.descriptionName}}
-            placeholder="encoming" class="form-control"/>
-            <span class="item-isnt-valid"
-            *ngIf="lineValidation('encoming',line.descriptionName)">
-            descripion should be longer then 2 simbol
-          </span>
-        </div>
-        <div class="col-3">
-          <input name="amount"
-            formControlName={{line.amountName}}
-            type="number" class="form-control"/>
-            <span class="item-isnt-valid"
-            *ngIf="lineValidation('encoming',line.amountName)">
-            number less than 0
+    <form name="encoming"
+    [formGroup]="encomingFormGroup" novalidate (ngSubmit)="sendEncomingReport()"
+    class="encoming col-6 mt-2 form-group">
+      <h3 class="border-bottom h5 mt-2"> Add new incomings </h3>
+      <ul class="list-group">
+        <li class=" row ml-1"
+        *ngFor="let line of encomingLines">
+          <div class="col-6">
+            <input type="text" name="description"
+            formControlName={{line.descriptionName}}
+              placeholder="encoming" class="form-control"/>
+              <span class="item-isnt-valid"
+              *ngIf="lineValidation('encoming',line.descriptionName)">
+              descripion should be longer then 2 simbol
             </span>
-        </div>
-        <div class="col-2">
-          <select *ngIf="activeCurancy"name="currency"
-            formControlName={{line.currencyName}}
-            class="custom-select">
-            <option *ngFor="let curancy of activeCurancy"
-            value={{curancy.name}}>
-              {{ curancy.name | uppercase}}
-            </option>
-          </select>
-          <div *ngIf="!activeCurancy" class="loading">
-            loading...
           </div>
-          <span class="item-isnt-valid"
-          *ngIf="lineValidation('encoming',line.currencyName)">
-          pick a curancy
-          </span>
-        </div>
-        <input type="button" value="x" class="btn-delete ml-2 mt-2" (click)="removeLine('encoming',line.id)"/>
-      </li>
-    </ul>
-    <div class="row col-12 no-gutters ml-2 mt-2">
-      <input type="button" value="Add one more line"
-      (click)="addLine('encoming')" class="btn btn-succes col-5 ml-1"/>
-      <input type="submit" class="col-5 btn btn-secondary"  value="Send an incoming report"/>
-    </div>
-  </form>
-  <form [formGroup]="spendingFormGroup" novalidate (ngSubmit)="sendSpendingReport()"
-  class="spending col-6  mt-2 form-group" name="spending">
-    <h3 class="border-bottom h5 mt-2 ml-4"> Add new spendings </h3>
-    <ul class="list-group  ml-4">
-      <li class=" row ml-1"
-      *ngFor="let line of spendingLines">
-        <div class="col-5">
-          <input type="text" name="description"
-          formControlName={{line.descriptionName}}
-            placeholder="encoming" class="form-control"/>
+          <div class="col-3">
+            <input name="amount"
+              formControlName={{line.amountName}}
+              type="number" class="form-control"/>
+              <span class="item-isnt-valid"
+              *ngIf="lineValidation('encoming',line.amountName)">
+              number less than 0
+              </span>
+          </div>
+          <div class="col-2">
+            <select *ngIf="activeCurancy"name="currency"
+              formControlName={{line.currencyName}}
+              class="custom-select">
+              <option *ngFor="let curancy of activeCurancy"
+              value={{curancy.name}}>
+                {{ curancy.name | uppercase}}
+              </option>
+            </select>
+            <div *ngIf="!activeCurancy" class="loading">
+              loading...
+            </div>
             <span class="item-isnt-valid"
-            *ngIf="lineValidation('spending',line.descriptionName)">
-            descripion should be longer then 2 simbol
-          </span>
-        </div>
-        <div class="col-2">
-          <input name="amount"
-            formControlName={{line.amountName}}
-            type="number" class="form-control"/>
-            <span class="item-isnt-valid"
-            *ngIf="lineValidation('spending',line.amountName)">
-            number less than 0
+            *ngIf="lineValidation('encoming',line.currencyName)">
+            pick a curancy
             </span>
-        </div>
-        <div class="col-2">
-          <select *ngIf="activeCurancy"name="currency"
-            formControlName={{line.currencyName}}
-            class="custom-select">
-            <option *ngFor="let curancy of activeCurancy"
-            value={{curancy.name}}>
-              {{ curancy.name | uppercase}}
-            </option>
-          </select>
-          <div *ngIf="!activeCurancy" class="loading">
-            loading...
           </div>
-          <span class="item-isnt-valid"
-          *ngIf="lineValidation('spending',line.currencyName)">
-          pick a curancy
-          </span>
-        </div>
-        <div class="col-2">
-          <select *ngIf="spendingTypes"name="type"
-            formControlName={{line.spendingTypesName}}
-            class="custom-select">
-            <option *ngFor="let curancy of spendingTypes"
-            value={{curancy.name}}>
-              {{ curancy.name }}
-            </option>
-          </select>
-          <span class="item-isnt-valid"
-          *ngIf="lineValidation('spending',line.spendingTypesName)">
-          pick a type
-          </span>
-        </div>
-        <input type="button" value="x" class="btn-delete mt-2 ml-2" (click)="removeLine('spending',line.id)"/>
-      </li>
-    </ul>
-    <div class="row col-12 no-gutters ml-2 mt-2">
-      <input type="button" value="Add one more line"
-      (click)="addLine('spending')" class="btn btn-succes col-5 ml-1"/>
-      <input type="button" (click)="sendSpendingReport()"
-      class="col-6 btn btn-secondary"  value="Send a spend report"/>
-    </div>
-  </form>
-    <h4 class="h5  col-12 text-center border-bottom" >Last reports</h4>
-    <nav class="col-12 nav">
-      <a [class.active]="serchFlag === 'last ten'" (click)="searchToggle('last ten')"
-      routerLink="/inandout" class="col-4 nav-link text-center">Last ten</a>
-      <a [class.active]="serchFlag === 'by date'" (click)="searchToggle('by date')"
-      routerLink="/inandout" class="col-4 nav-link text-center">Get by date</a>
-      <a [class.active]="serchFlag === 'all'" (click)="searchToggle('all')"
-      routerLink="/inandout" class="col-4 nav-link text-center">Get all</a>
-    </nav>
-    <form *ngIf="serchFlag === 'by date'" class="col-12"
-    [formGroup]="serchFormGroup" novalidate (ngSubmit)="getData()">
-      <input type="date" formControlName="since" />
-      <input type="date" formControlName="for" />
-      <input type="submit" class="button" value="get reports"/>
+          <input type="button" class="btn-delete ml-2 mt-2" (click)="removeLine('encoming',line.id)"/>
+        </li>
+      </ul>
+      <div class="row mt-2 ml-1">
+        <input (click)="addLine('encoming')" class="btn btn-plus col-3" value="line"/>
+        <input type="submit" class="col-5 btn btn-success ml-auto"  value="Send an incoming report"/>
+      </div>
     </form>
-    <aside class="container col-6" *ngIf="encomingReports">
-      <h5 class="h6 text-center">Encoming</h5>
-      <table class="col-12">
-        <thead>
-          <tr class="text-muted border-bottom">
+    <form [formGroup]="spendingFormGroup" novalidate (ngSubmit)="sendSpendingReport()"
+    class="spending col-6  mt-2 form-group" name="spending">
+      <h3 class="border-bottom h5 mt-2"> Add new spendings </h3>
+      <ul class="list-group ">
+        <li class=" row ml-1"
+        *ngFor="let line of spendingLines">
+          <div class="col-5">
+            <input type="text" name="description"
+            formControlName={{line.descriptionName}}
+              placeholder="encoming" class="form-control"/>
+              <span class="item-isnt-valid"
+              *ngIf="lineValidation('spending',line.descriptionName)">
+              descripion should be longer then 2 simbol
+            </span>
+          </div>
+          <div class="col-2">
+            <input name="amount"
+              formControlName={{line.amountName}}
+              type="number" class="form-control"/>
+              <span class="item-isnt-valid"
+              *ngIf="lineValidation('spending',line.amountName)">
+              number less than 0
+              </span>
+          </div>
+          <div class="col-2">
+            <select *ngIf="activeCurancy"name="currency"
+              formControlName={{line.currencyName}}
+              class="custom-select">
+              <option *ngFor="let curancy of activeCurancy"
+              value={{curancy.name}}>
+                {{ curancy.name | uppercase}}
+              </option>
+            </select>
+            <div *ngIf="!activeCurancy" class="loading">
+              loading...
+            </div>
+            <span class="item-isnt-valid"
+            *ngIf="lineValidation('spending',line.currencyName)">
+            pick a curancy
+            </span>
+          </div>
+          <div class="col-2">
+            <select *ngIf="spendingTypes"name="type"
+              formControlName={{line.spendingTypesName}}
+              class="custom-select">
+              <option *ngFor="let curancy of spendingTypes"
+              value={{curancy.name}}>
+                {{ curancy.name }}
+              </option>
+            </select>
+            <span class="item-isnt-valid"
+            *ngIf="lineValidation('spending',line.spendingTypesName)">
+            pick a type
+            </span>
+          </div>
+          <input type="button" class="btn-delete mt-2 ml-2" (click)="removeLine('spending',line.id)"/>
+        </li>
+      </ul>
+      <div class="row ml-1 mt-2">
+        <input type="button" value="line"
+        (click)="addLine('spending')"  class="btn btn-plus col-3" />
+        <input type="button" (click)="sendSpendingReport()"
+        class="col-6 btn btn-success ml-auto"  value="Send a spend report"/>
+      </div>
+    </form>
+  </div>
+  <div class="row">
+    <h4 class="h5  col-12 text-center border-bottom" >Last reports</h4>
+    <nav class="nav col-12">
+      <a [class.active]="serchFlag === 'last ten'" (click)="searchToggle('last ten')"
+        routerLink="/inandout" class="col-4 nav-link text-center">Last ten</a>
+      <a [class.active]="serchFlag === 'by date'" (click)="searchToggle('by date')"
+        routerLink="/inandout" class="col-4 nav-link text-center">Get by date</a>
+      <a [class.active]="serchFlag === 'all'" (click)="searchToggle('all')"
+        routerLink="/inandout" class="col-4 nav-link text-center">Get all</a>
+    </nav>
+  </div>
+  <div class="row">
+    <form *ngIf="serchFlag === 'by date'" class="col-12 mt-3"
+    [formGroup]="serchFormGroup" novalidate (ngSubmit)="getData()">
+      <div class="row">
+        <input type="date" formControlName="since" class="form-control col-lg-2 col-md-3 sol-sm-6 ml-auto"/>
+        <input type="date" formControlName="for" class="form-control col-lg-2 col-md-3 sol-sm-6"/>
+        <input type="submit" class="btn btn-primary  mr-auto" value="get reports"/>
+      </div>
+    </form>
+    <aside class="col-6" *ngIf="encomingReports">
+      <div class="row">
+        <h5 class="h6 col-12 text-center mt-2 mb-2">Encoming</h5>
+        <table class="col-12">
+          <thead>
+            <tr class="text-muted border-bottom">
+              <td class="col-4 text-center">
+                AMOUNT
+              </td>
+              <td class="col-3 text-center">
+                DATE
+              </td>
+              <td class="col-5 text-center">
+                DESCRIPTION
+              </td>
+            </tr>
+          </thead>
+          <tr *ngFor="let report of encomingReports" class="text-muted border-bottom">
             <td class="col-4 text-center">
-              AMOUNT
+              {{report.amount}} {{report.currency | uppercase}}
             </td>
             <td class="col-3 text-center">
-              DATE
+              {{report.date | date: 'M/d/yy'}}
             </td>
             <td class="col-5 text-center">
-              DESCRIPTION
+              {{report.description}}
             </td>
           </tr>
-        </thead>
-        <tr *ngFor="let report of encomingReports" class="text-muted border-bottom">
-          <td class="col-4 text-center">
-            {{report.amount}} {{report.currency | uppercase}}
-          </td>
-          <td class="col-3 text-center">
-            {{report.date | date: 'M/d/yy'}}
-          </td>
-          <td class="col-5 text-center">
-            {{report.description}}
-          </td>
-        </tr>
-      </table>
+        </table>
+      </div>
     </aside>
-    <aside class="container col-6" *ngIf="spendingReports">
-      <h5 class="h6 col-12 text-center">Spendings</h5>
-      <table  class="col-12 ">
-        <thead>
-          <tr class="text-muted border-bottom">
+    <aside class="col-6" *ngIf="spendingReports">
+      <div class="row">
+        <h5 class="h6 col-12 text-center mt-2 mb-2">Spendings</h5>
+        <table  class="col-12 ">
+          <thead>
+            <tr class="text-muted border-bottom">
+              <td class="col-3 text-center">
+                AMOUNT
+              </td>
+              <td class="col-3 text-center">
+                DATE
+              </td>
+              <td class="col-3 text-center">
+                TYPE
+              </td>
+              <td class="col-3 text-center">
+                DESCRIPTION
+              </td>
+            </tr>
+          </thead>
+          <tr *ngFor="let report of spendingReports" class="text-muted border-bottom">
             <td class="col-3 text-center">
-              AMOUNT
+              {{report.amount }} {{report.currency | uppercase }}
             </td>
             <td class="col-3 text-center">
-              DATE
+              {{report.date | date: 'M/d/yy'}}
             </td>
             <td class="col-3 text-center">
-              TYPE
+              {{report.type}}
             </td>
             <td class="col-3 text-center">
-              DESCRIPTION
+              {{report.description}}
             </td>
           </tr>
-        </thead>
-        <tr *ngFor="let report of spendingReports" class="text-muted border-bottom">
-          <td class="col-3 text-center">
-            {{report.amount }} {{report.currency | uppercase }}
-          </td>
-          <td class="col-3 text-center">
-            {{report.date | date: 'M/d/yy'}}
-          </td>
-          <td class="col-3 text-center">
-            {{report.type}}
-          </td>
-          <td class="col-3 text-center">
-            {{report.description}}
-          </td>
-        </tr>
-      </table>
+        </table>
+      </div>
     </aside>
+
     <input *ngIf="serchFlag === 'last ten'&& spendingReports
      && encomingReports" type="button" value="get more"
     (click)="getMoreReports()"
     class="container-fluid col-3 btn"/>
-</div>
+  </div>

@@ -22,3 +22,8 @@ aside{
   bottom: 5%;
   left: 8%;
 }
+.nav__ico{
+  height: 20px;
+  width: 20px;
+  margin-right: 5px;
+}

@@ -7,7 +7,8 @@
       <app-short-information *ngIf="currentUser && freeMony" [user]="currentUser.name"
       [freeMony]="freeMony"></app-short-information>
       <app-navigation></app-navigation>
-      <input type="button" class="navigation__logout btn btn-link" value="Log out" (click)="logOut()" />
+      <a href="#" class="navigation__logout btn btn-link">
+        <img src="assets/icons/account-logout-4x.png" alt="graph" (click)="logOut()" class="nav__ico">Log out</a>
   </aside>
   <main class="container-fluid col-md-10 ml-sm-auto col-lg-10 pt-3 px-4">
         <router-outlet></router-outlet>
