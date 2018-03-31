@@ -14,7 +14,7 @@
             formControlName={{line.descriptionName}}
               placeholder="encoming" class="form-control"/>
               <span class="item-isnt-valid"
-              *ngIf="lineValidation('encoming',line.descriptionName)">
+              [class.hiden]="!lineValidation('encoming',line.descriptionName)">
               descripion should be longer then 2 simbol
             </span>
           </div>
@@ -23,7 +23,7 @@
               formControlName={{line.amountName}}
               type="number" class="form-control"/>
               <span class="item-isnt-valid"
-              *ngIf="lineValidation('encoming',line.amountName)">
+              [class.hiden]="!lineValidation('encoming',line.amountName)">
               number less than 0
               </span>
           </div>
@@ -40,7 +40,7 @@
               loading...
             </div>
             <span class="item-isnt-valid"
-            *ngIf="lineValidation('encoming',line.currencyName)">
+            [class.hiden]="!lineValidation('encoming',line.currencyName)">
             pick a curancy
             </span>
           </div>
@@ -49,7 +49,8 @@
       </ul>
       <div class="row mt-2 ml-1">
         <input (click)="addLine('encoming')" class="btn btn-plus col-3" value="line"/>
-        <input type="submit" class="col-5 btn btn-success ml-auto"  value="Send an incoming report"/>
+        <input type="submit" class="col-5 btn btn-success ml-auto"  value="Send an incoming report"
+          [disabled]="encomingFormGroup.valid===false"/>
       </div>
     </form>
     <form [formGroup]="spendingFormGroup" novalidate (ngSubmit)="sendSpendingReport()"
@@ -63,7 +64,7 @@
             formControlName={{line.descriptionName}}
               placeholder="encoming" class="form-control"/>
               <span class="item-isnt-valid"
-              *ngIf="lineValidation('spending',line.descriptionName)">
+              [class.hiden]="!lineValidation('spending',line.descriptionName)">
               descripion should be longer then 2 simbol
             </span>
           </div>
@@ -72,7 +73,7 @@
               formControlName={{line.amountName}}
               type="number" class="form-control"/>
               <span class="item-isnt-valid"
-              *ngIf="lineValidation('spending',line.amountName)">
+              [class.hiden]="!lineValidation('spending',line.amountName)">
               number less than 0
               </span>
           </div>
@@ -89,7 +90,7 @@
               loading...
             </div>
             <span class="item-isnt-valid"
-            *ngIf="lineValidation('spending',line.currencyName)">
+            [class.hiden]="!lineValidation('spending',line.currencyName)">
             pick a curancy
             </span>
           </div>
@@ -103,7 +104,7 @@
               </option>
             </select>
             <span class="item-isnt-valid"
-            *ngIf="lineValidation('spending',line.spendingTypesName)">
+            [class.hiden]="!lineValidation('spending',line.spendingTypesName)">
             pick a type
             </span>
           </div>

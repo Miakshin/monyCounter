@@ -77,6 +77,7 @@ export class EncomingAndSpendingComponent implements OnInit {
  }
 
  ngOnInit():void{
+   console.log(this.encomingFormGroup)
    this.getData();
    this.getDataSettings();
    this.commonService.currentCellsData

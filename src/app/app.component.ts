@@ -28,27 +28,20 @@ export class AppComponent implements OnInit{
               private router:Router,
               private location: Location) {}
 
-  ngOnInit(){
+  ngOnInit():void {
     this.commonService.refreshLogegIn(this.currentUserLogin = window.localStorage.getItem("login"))
     this.commonService.isLoggedIn
       .subscribe(login => {
-        if(login){
-          this.currentUserLogin = login;
-          this.initializateUser();
-          this.initializateSpending();
-          this.initializateEncoming();
-          this.initializateCells();
-          this.initializateLoans();
-          this.commonService.currentFreeMonyData
-            .subscribe(fm => {
-              this.freeMony = +fm})
-        }else if(!login){
-          this.commonService.deleteUserSubsribe();
-          this.commonService.deleteSpendingSubsribe();
-          this.commonService.deleteEncomingSubsribe();
-          this.commonService.deleteCellsSubsribe();
-          this.commonService.deleteloansSubsribe();
-          this.commonService.deleteFreeMonySubsribe();
+        login.length>0 ? this.currentUserLogin = login :  this.currentUserLogin = "";
+        this.initializateUser();
+        this.initializateSpending();
+        this.initializateEncoming();
+        this.initializateCells();
+        this.initializateLoans();
+        this.commonService.currentFreeMonyData
+          .subscribe(fm => this.freeMony = +fm)
+        if(this.currentUserLogin === ""){
+          this.commonService.resetData();
         }
       })
   }

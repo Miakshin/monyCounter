@@ -13,11 +13,11 @@
     class="form-group row mt-2 ml-2">
     <div class="col-2">
       <label for="amount">Amount</label>
-      <input type="number" class="form-control" name="amount"/>
+      <input type="number" class="form-control" name="amount" formControlName="amount"/>
     </div>
     <div class="col-2">
       <label for="currency">Currancy</label>
-      <select name="currency"
+      <select name="currency" formControlName="curancy"
         class="form-control">
         <option *ngFor="let curancy of activeCurancy" value={{curancy.name}}>
           {{curancy.name | uppercase }}
@@ -26,22 +26,25 @@
     </div>
     <div class="col-3">
       <label for="description">Descroption:</label>
-      <input type="text" name="description" placeholer="Loans description"
+      <input type="text" name="description" placeholer="Loans description" formControlName="description"
       class="form-control"/>
     </div>
     <div class="col-3">
       <label>From cell:</label>
-      <select *ngIf="user.setings.loansAllowsCell === true" name="from" class="form-control form-control-sm col-3">
+      <select *ngIf="user.setings.loansAllowsCell === true" name="from" class="form-control"
+        formControlName="fromCell">
         <option value="Free mony">Free mony</option>
         <option *ngFor="let cell of cells" value="cell.name">{{cell.name}}</option>
       </select>
-      <p *ngIf="user.setings.loansAllowsCell === false">
-        Free mony
-      </p>
+      <select *ngIf="user.setings.loansAllowsCell === false" name="from" class="form-control"
+        formControlName="fromCell">
+        <option selected value="Free mony">Free mony</option>
+      </select>
     </div>
     <div class="col-2 d-flex align-items-end">
-      <input type="submit" name="post-loans" value="Confirm"
-        class="btn btn-success mb-1 col-12"/>
+      <input type="submit" name="post-loans" value="Confirm" class="btn btn-success mb-1 col-12"
+      [disabled]="createLoanFormGroup.controls['amount'].invalid || createLoanFormGroup.controls['description'].invalid
+      || createLoanFormGroup.controls['fromCell'].invalid || createLoanFormGroup.controls['curancy'].invalid"/>
     </div>
   </form>
 </div>

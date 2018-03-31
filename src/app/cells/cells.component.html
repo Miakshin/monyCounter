@@ -33,7 +33,9 @@
     <input type="number" formControlName="tax" class="col-2 form-control"/>
     <input type="text" class="col-3 form-control" formControlName="acamulated" placeholder="initial saving">
     <input type="color" formControlName="color" class="col-1 form-control color"/>
-    <input type="submit" value="create cell" class="btn btn-success col-3">
+    <input type="submit" value="create cell" class="btn btn-success col-3"
+     [disabled]="createCellFormGroup.controls['name'].invalid || createCellFormGroup.controls['tax'].invalid ||
+     createCellFormGroup.controls['acamulated'].invalid">
   </form>
 
 </article>

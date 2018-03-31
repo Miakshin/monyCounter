@@ -1,14 +1,13 @@
 <div class="app-wrapper container-fluid">
 
   <aside class=" col-md-2 col-lg-2 bg-light sidebar">
-      <h6 *ngIf="!currentUser || !freeMony"
-      class="sidebar-heading text-muted align-items-center px-3"
-      >Loading data</h6>
-      <app-short-information *ngIf="currentUser && freeMony" [user]="currentUser.name"
+    <h6 *ngIf="!currentUser || !freeMony"
+      class="sidebar-heading text-muted align-items-center px-3">Loading data</h6>
+    <app-short-information *ngIf="currentUser && freeMony" [user]="currentUser.name"
       [freeMony]="freeMony"></app-short-information>
-      <app-navigation></app-navigation>
-      <a href="#" class="navigation__logout btn btn-link">
-        <img src="assets/icons/account-logout-4x.png" alt="graph" (click)="logOut()" class="nav__ico">Log out</a>
+    <app-navigation></app-navigation>
+    <a routerLink="/login" class="navigation__logout btn btn-link" (click)="logOut()">
+      <img src="assets/icons/account-logout-4x.png" alt="graph"  class="nav__ico">Log out</a>
   </aside>
   <main class="container-fluid col-md-10 ml-sm-auto col-lg-10 pt-3 px-4">
         <router-outlet></router-outlet>

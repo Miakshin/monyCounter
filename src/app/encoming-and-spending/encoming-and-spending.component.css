@@ -2,10 +2,9 @@ span.item-isnt-valid{
   font-size: 8px;
   color:red;
   width: 100%;
-  text-align: center;
   position: relative;
-  bottom: 8px;
   height: 10px;
+  display: block;
 }
 div.col-3, div.col-6, div.col-5, div.col-2{
   padding: 0px;
@@ -43,4 +42,7 @@ a.active{
   text-align: left;
   padding-left: 30px;
   background-color: #ffffff00;
+}
+.hiden{
+  visibility: hidden;
 }

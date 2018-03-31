@@ -21,18 +21,19 @@ export class LoansComponent implements OnInit, AfterContentChecked {
 
   constructor (private commonService: CommonService) {
     this.createLoanFormGroup = new FormGroup({
-      "name": new FormControl("", [
+      "description": new FormControl("", [
         Validators.required,
         Validators.pattern("[^{}*<>]{2,55}")
       ]),
-      "tax": new FormControl("",[
-        Validators.required,
-        Validators.pattern("^[0-9]{1,3}")
-      ]),
-      "color": new FormControl("", Validators.required),
-      "acamulated": new FormControl("",[
+      "amount": new FormControl("",[
         Validators.required,
         Validators.pattern("^[0-9]{1,12}")
+      ]),
+      "curancy": new FormControl("", [
+        Validators.required, Validators.pattern("[^{}*<>]{3,4}")]),
+      "fromCell": new FormControl("",[
+        Validators.required,
+        Validators.pattern("[^{}*<>]{2,55}")
       ]),
     });
   }
