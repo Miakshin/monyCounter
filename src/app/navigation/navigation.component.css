@@ -6,3 +6,6 @@ a.active{
   width: 20px;
   margin-right: 5px;
 }
+nav{
+  min-height: 248px
+}

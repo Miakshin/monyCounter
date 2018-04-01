@@ -9,7 +9,6 @@ span.item-isnt-valid{
 div.col-3, div.col-6, div.col-5, div.col-2{
   padding: 0px;
 }
-
 input.ng-touched.ng-invalid, select.ng-touched.ng-invalid  {
   border-radius:3px;
   border:solid #fd989885 1px;}

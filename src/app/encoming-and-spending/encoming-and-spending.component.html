@@ -114,8 +114,8 @@
       <div class="row ml-1 mt-2">
         <input type="button" value="line"
         (click)="addLine('spending')"  class="btn btn-plus col-3" />
-        <input type="button" (click)="sendSpendingReport()"
-        class="col-6 btn btn-success ml-auto"  value="Send a spend report"/>
+        <input type="subscribe" class="col-6 btn btn-success ml-auto"  value="Send a spend report"
+          [disabled]="spendingFormGroup.valid===false"/>
       </div>
     </form>
   </div>

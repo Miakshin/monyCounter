@@ -14,7 +14,8 @@ div.app-wrapper main{
     width: 75%;
 }
 aside{
-  min-height: 100vh;
+  height: 100vh;
+  min-height: 330px;
   position:fixed;
 }
 .navigation__logout{
