@@ -4,8 +4,6 @@ import {  FormGroup, FormControl, Validators }   from '@angular/forms';
 import { take } from 'rxjs/operators';
 
 import { CommonService } from '../common.service';
-import { SpendingLine } from './SpendingLine';
-import { EncomingLine } from './EncomingLine';
 import { Cell } from '../cells/cell/cell'
 
 @Component({
@@ -25,8 +23,6 @@ export class EncomingAndSpendingComponent implements OnInit {
   serchFlag: string;
   lastTenRepeat: number = 1;
 
-  encomingFormGroup : FormGroup;
-  spendingFormGroup : FormGroup;
   serchFormGroup: FormGroup;
 
   constructor(private commonService: CommonService) {
