@@ -1,7 +1,7 @@
-import { Component, Input} from '@angular/core';
+import { Component, Input, AfterContentChecked } from '@angular/core';
 import {  FormGroup, FormControl, Validators }   from '@angular/forms';
 
-import { EncomingLine } from './Encomingline';
+import { EncomingLine } from './EncomingLine';
 import { CommonService } from '../../common.service';
 import { Cell } from '../../cells/cell/cell'
 
@@ -15,17 +15,21 @@ export class Line{
 
 @Component({
   selector: 'encoming-inputs',
-  templateUrl: './encoming-inputs.component.html'
+  templateUrl: './encoming-inputs.component.html',
+  styleUrls: ['./encoming-inputs.component.css']
 })
-export class EncomingInputsComponent{
+export class EncomingInputsComponent implements AfterContentChecked{
 
   @Input() activeCurancy: any[];
   @Input() activeTax: string[];
   @Input() activCells: string[];
   @Input() cells: Cell[];
   encomingLines: EncomingLine[];
+  formInvalid: boolean;
 
   constructor(private commonService: CommonService){
+    this.formInvalid = true;
+    this.encomingLines = new Array(1);
     this.encomingLines.fill(new Line(Date.now(),"", 0,"uah"))
   }
 
@@ -82,7 +86,15 @@ export class EncomingInputsComponent{
             }
           )}
         })
+  // console.log(this.encomingLines)
+  }
 
+  // checkForm(){
+  //   console.log(document.forms["encoming"])
+  // }
+  //
+  ngAfterContentChecked(){
+    // this.checkForm()
   }
 
 }

@@ -1,0 +1,39 @@
+input[type="button"].btn-delete{
+  background-image: url(../../../assets/icons/x-4x.png);
+  background-position: center;
+  background-size: 100%;
+  height: 24px;
+  width: 24px;
+  border: 0px;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 12px;
+  background-color: #ffffff00;
+}
+.btn-plus{
+  color:#6c757d;
+  background-image: url(../../../assets/icons/plus-4x.png);
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: 24px;
+  text-align: left;
+  padding-left: 30px;
+  background-color: #ffffff00;
+}
+.hiden{
+  visibility: hidden;
+}
+span.item-isnt-valid{
+  font-size: 8px;
+  color:red;
+  width: 100%;
+  position: relative;
+  height: 10px;
+  display: block;
+}
+input.ng-touched.ng-invalid, select.ng-touched.ng-invalid  {
+  border-radius:3px;
+  border:solid #fd989885 1px;}
+input.ng-touched.ng-valid, select.ng-touched.ng-valid  {
+  border-radius:3px;
+  border:solid #bcf3bc 1px;}

@@ -1,8 +1,8 @@
 <ul class="list-group">
-  <li class=" row ml-1"
+  <li class=" row ml-1 no-gutters"
   *ngFor="let line of encomingLines">
     <div class="col-6">
-      <input type="text" name="description-{{line.id}}"
+      <input type="text" name="description-{{line.date}}"
         [(ngModel)]='line.description'
         placeholder="encoming" class="form-control"
         required
@@ -13,7 +13,7 @@
         </span> -->
     </div>
     <div class="col-3">
-      <input name="amount-{{line.id}}"
+      <input name="amount-{{line.date}}"
         [(ngModel)]='line.amount'
         type="number" class="form-control"
         required
@@ -24,7 +24,7 @@
         </span> -->
     </div>
     <div class="col-2">
-      <select *ngIf="activeCurancy"name="currency"
+      <select *ngIf="activeCurancy"name="currency-{{line.date}}"
         [(ngModel)]='line.currency'
         class="custom-select">
         <option *ngFor="let curancy of activeCurancy"
@@ -40,11 +40,13 @@
       pick a curancy
       </span> -->
     </div>
-    <input type="button" class="btn-delete ml-2 mt-2" (click)="removeLine(line.id)"/>
+    <input type="button" class="btn-delete ml-2 mt-2" (click)="removeLine(line.date)"/>
   </li>
 </ul>
 <div class="row mt-2 ml-1">
   <input (click)="addLine()" class="btn btn-plus col-3" value="line"/>
-  <input type="submit" class="col-5 btn btn-success ml-auto"  value="Send an incoming report"
-    [disabled]="!isntValid()"/>
+  <input type="submit"
+    class="col-5 btn btn-success ml-auto"
+    value="Send an incoming report"
+    (click)="sendEncomingreports()"/>
 </div>

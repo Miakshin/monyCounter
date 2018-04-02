@@ -1,122 +1,27 @@
 <header id="header" class="text-muted">
-  <label>Now:</label>{{getDate() | date}}
+  <!-- <label>Now:</label>{{getDate() | date}} -->
 </header>
   <div class=row>
     <form name="encoming"
-    [formGroup]="encomingFormGroup" novalidate (ngSubmit)="sendEncomingReport()"
     class="encoming col-6 mt-2 form-group">
       <h3 class="border-bottom h5 mt-2"> Add new incomings </h3>
-      <ul class="list-group">
-        <li class=" row ml-1"
-        *ngFor="let line of encomingLines">
-          <div class="col-6">
-            <input type="text" name="description"
-            formControlName={{line.descriptionName}}
-              placeholder="encoming" class="form-control"/>
-              <span class="item-isnt-valid"
-              [class.hiden]="!lineValidation('encoming',line.descriptionName)">
-              descripion should be longer then 2 simbol
-            </span>
-          </div>
-          <div class="col-3">
-            <input name="amount"
-              formControlName={{line.amountName}}
-              type="number" class="form-control"/>
-              <span class="item-isnt-valid"
-              [class.hiden]="!lineValidation('encoming',line.amountName)">
-              number less than 0
-              </span>
-          </div>
-          <div class="col-2">
-            <select *ngIf="activeCurancy"name="currency"
-              formControlName={{line.currencyName}}
-              class="custom-select">
-              <option *ngFor="let curancy of activeCurancy"
-              value={{curancy.name}}>
-                {{ curancy.name | uppercase}}
-              </option>
-            </select>
-            <div *ngIf="!activeCurancy" class="loading">
-              loading...
-            </div>
-            <span class="item-isnt-valid"
-            [class.hiden]="!lineValidation('encoming',line.currencyName)">
-            pick a curancy
-            </span>
-          </div>
-          <input type="button" class="btn-delete ml-2 mt-2" (click)="removeLine('encoming',line.id)"/>
-        </li>
-      </ul>
-      <div class="row mt-2 ml-1">
-        <input (click)="addLine('encoming')" class="btn btn-plus col-3" value="line"/>
-        <input type="submit" class="col-5 btn btn-success ml-auto"  value="Send an incoming report"
-          [disabled]="encomingFormGroup.valid===false"/>
-      </div>
+      <!-- <encoming-inputs></encoming-inputs> -->
+        <encoming-inputs
+        [activeCurancy]="activeCurancy"
+        [activeTax]="activeTax"
+        [activCells]="activCells"
+        [cells]="cells"
+        ></encoming-inputs>
     </form>
-    <form [formGroup]="spendingFormGroup" novalidate (ngSubmit)="sendSpendingReport()"
-    class="spending col-6  mt-2 form-group" name="spending">
+    <form class="spending col-6  mt-2 form-group" name="spending">
       <h3 class="border-bottom h5 mt-2"> Add new spendings </h3>
-      <ul class="list-group ">
-        <li class=" row ml-1"
-        *ngFor="let line of spendingLines">
-          <div class="col-5">
-            <input type="text" name="description"
-            formControlName={{line.descriptionName}}
-              placeholder="encoming" class="form-control"/>
-              <span class="item-isnt-valid"
-              [class.hiden]="!lineValidation('spending',line.descriptionName)">
-              descripion should be longer then 2 simbol
-            </span>
-          </div>
-          <div class="col-2">
-            <input name="amount"
-              formControlName={{line.amountName}}
-              type="number" class="form-control"/>
-              <span class="item-isnt-valid"
-              [class.hiden]="!lineValidation('spending',line.amountName)">
-              number less than 0
-              </span>
-          </div>
-          <div class="col-2">
-            <select *ngIf="activeCurancy"name="currency"
-              formControlName={{line.currencyName}}
-              class="custom-select">
-              <option *ngFor="let curancy of activeCurancy"
-              value={{curancy.name}}>
-                {{ curancy.name | uppercase}}
-              </option>
-            </select>
-            <div *ngIf="!activeCurancy" class="loading">
-              loading...
-            </div>
-            <span class="item-isnt-valid"
-            [class.hiden]="!lineValidation('spending',line.currencyName)">
-            pick a curancy
-            </span>
-          </div>
-          <div class="col-2">
-            <select *ngIf="spendingTypes"name="type"
-              formControlName={{line.spendingTypesName}}
-              class="custom-select">
-              <option *ngFor="let curancy of spendingTypes"
-              value={{curancy.name}}>
-                {{ curancy.name }}
-              </option>
-            </select>
-            <span class="item-isnt-valid"
-            [class.hiden]="!lineValidation('spending',line.spendingTypesName)">
-            pick a type
-            </span>
-          </div>
-          <input type="button" class="btn-delete mt-2 ml-2" (click)="removeLine('spending',line.id)"/>
-        </li>
-      </ul>
-      <div class="row ml-1 mt-2">
-        <input type="button" value="line"
-        (click)="addLine('spending')"  class="btn btn-plus col-3" />
-        <input type="subscribe" class="col-6 btn btn-success ml-auto"  value="Send a spend report"
-          [disabled]="spendingFormGroup.valid===false"/>
-      </div>
+      <spending-inputs
+      [activeCurancy]="activeCurancy"
+      [activeTax]="activeTax"
+      [activCells]="activCells"
+      [cells]="cells"
+      [spendingTypes]="spendingTypes"
+      ></spending-inputs>
     </form>
   </div>
   <div class="row">

@@ -5,7 +5,7 @@ import { take } from 'rxjs/operators';
 
 import { CommonService } from '../common.service';
 import { SpendingLine } from './SpendingLine';
-import { EncomingLine } from './Encomingline';
+import { EncomingLine } from './EncomingLine';
 import { Cell } from '../cells/cell/cell'
 
 @Component({
@@ -20,21 +20,8 @@ export class EncomingAndSpendingComponent implements OnInit {
   activeTax: string[];
   activCells: string[];
   activeCurancy: any[];
-  spendingTypes: [object];
+  spendingTypes: any[];
   cells: Cell[];
-  encomingLines: EncomingLine[] = [{
-    id : 0,
-    descriptionName: 'description-0',
-    amountName: 'amount-0',
-    currencyName: 'currency-0',
-  }];
-  spendingLines: SpendingLine[] = [{
-    id : 0,
-    descriptionName: 'description-0',
-    amountName: 'amount-0',
-    currencyName: 'currency-0',
-    spendingTypesName: 'spendingTypes-0'
-  }];
   serchFlag: string;
   lastTenRepeat: number = 1;
 
@@ -45,27 +32,13 @@ export class EncomingAndSpendingComponent implements OnInit {
   constructor(private commonService: CommonService) {
     this.serchFlag = "last ten";
 
-      this.spendingFormGroup = new FormGroup({
-        "description-0": new FormControl("", [
-          Validators.required,
-          Validators.pattern("[^{}*<>_]{2,55}")
-        ]),
-        "amount-0": new FormControl("",[
-          Validators.required,
-          Validators.pattern("^[0-9]{1,12}")
-        ]),
-        "currency-0": new FormControl("", Validators.required),
-        "spendingTypes-0": new FormControl("", Validators.required)
-        });
-
-      this.serchFormGroup = new FormGroup({
-        "since" : new FormControl("", Validators.required),
-        "for" : new FormControl("", Validators.required)
-      })
+    this.serchFormGroup = new FormGroup({
+      "since" : new FormControl("", Validators.required),
+      "for" : new FormControl("", Validators.required)
+    })
  }
 
  ngOnInit():void{
-   console.log(this.encomingFormGroup)
    this.getData();
    this.getDataSettings();
    this.commonService.currentCellsData
@@ -122,96 +95,9 @@ export class EncomingAndSpendingComponent implements OnInit {
     }
   }
 
-  addLine(type){
-    let id = Date.now();
-    if(this[`${type}Lines`].length>=10){
-      this.printErr("The maximum number of rows is 10")
-    }
-    else{
-      let data = {
-        id : id,
-        descriptionName: `description-${id}`,
-        amountName: `amount-${id}`,
-        currencyName: `currency-${id}`
-      }
-
-
-      this[`${type}FormGroup`].controls[`description-${id}`] = new FormControl("", [
-        Validators.required,
-        Validators.pattern("[^{}*<>_]{2,55}")]);
-      this[`${type}FormGroup`].controls[`amount-${id}`] = new FormControl("",[
-        Validators.required,
-        Validators.pattern("^[0-9]{1,12}")]);
-      this[`${type}FormGroup`].controls[`currency-${id}`] = new FormControl("", Validators.required);
-
-      if(type === "spending"){
-        this[`spendingFormGroup`].controls[`spendingTypes-${id}`] = new FormControl("", Validators.required);
-        data["spendingTypesName"] = `spendingTypes-${id}`;
-        }
-      this[`${type}Lines`].push(data)
-    }
-  }
-
-  removeLine(type,id){
-    let position = this[`${type}Lines`].findIndex((line)=>{
-      return line.id === id ? true : false})
-    if(position >= 0){
-      if(this[`${type}Lines`].length > 1){
-        this[`${type}Lines`].splice(position,1);
-
-        delete this[`${type}FormGroup`].controls[`description-${id}`];
-        delete this[`${type}FormGroup`].controls[`amount-${id}`];
-        delete this[`${type}FormGroup`].controls[`currency-${id}`];
-
-        if(type === "spending"){
-          this[`spendingFormGroup`].controls[`spendingTypes-${id}`];}
-      }else{
-        this.printErr("You can`t delite all rows")
-      }
-    }
-  }
-
-  printErr(errText){
-    let header = document.getElementById('header')
-    let errDiv = document.createElement('div');
-    errDiv.className = "errDiv hiden";
-    errDiv.innerHTML = errText;
-    header.insertBefore(errDiv, header.firstChild);
-    setTimeout(()=>{errDiv.className = "errDiv"}, 100)
-    setTimeout(()=>{errDiv.className = "errDiv hiden"}, 3000)
-    setTimeout(()=>{header.removeChild(errDiv)}, 4000);
-  }
-
-  lineValidation(type,inputName){
-  return this[`${type}FormGroup`].controls[inputName].invalid
-  && this[`${type}FormGroup`].controls[inputName].touched ? true : false
-  }
-
   getDate(){
-    return Date.now()
-  }
-
-  sendSpendingReport():void{
-    this.spendingLines.forEach((line)=>{
-      let data;
-      data = {
-        date: Date.now(),
-        amount: this.spendingFormGroup.value[line.amountName],
-        description : this.spendingFormGroup.value[line.descriptionName],
-        currency : this.spendingFormGroup.value[line.currencyName],
-        type : this.spendingFormGroup.value[line.spendingTypesName]
-      };
-      data.push(
-        this.commonService.postData(data, "spending")
-        .subscribe(()=>{
-          this.spendingLines.length > 1?
-            this.removeLine("spending", line.id) :
-            this.spendingFormGroup.reset();
-          this.commonService.getReportsByType("spending")
-            .subscribe(spendings=>this.commonService.refreshSpendings(spendings))
-          })
-        )
-      })
+    let now: number = Date.now()
+    return now
   }
 
   getDataSettings(){
