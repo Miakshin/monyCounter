@@ -21,6 +21,8 @@ import { CanvasComponent } from './main-information/canvas/canvas.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LoginGuard } from './guards/login.guard';
 import { AuthGuard } from './guards/auth.guard';
+import { EncomingInputsComponent } from './encoming-and-spending/encoming-inputs/encoming-inputs.component';
+import { SpendingInputsComponent } from './encoming-and-spending/spending-inputs/spending-inputs.component';
 
 
 @NgModule({
@@ -36,7 +38,9 @@ import { AuthGuard } from './guards/auth.guard';
     CellsComponent,
     CellComponent,
     CanvasComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    EncomingInputsComponent,
+    SpendingInputsComponent
   ],
   imports: [
     BrowserModule,
