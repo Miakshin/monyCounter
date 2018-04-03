@@ -57,6 +57,9 @@ export class SpendingInputsComponent implements AfterContentChecked{
           this.commonService.getReportsByType("spending")
             .subscribe(spendings=>this.commonService.refreshSpendings(spendings))
       })
+      this.spendingLines.length > 1 ?
+        this.removeLine(line.date):
+        this.spendingLines[0] = new Line(Date.now(),"",0,"uah","another")
     })
   }
 

@@ -74,6 +74,9 @@ export class EncomingInputsComponent implements AfterContentChecked{
             })
             this.commonService.getReportsByType("encoming")
               .subscribe(encomings=> this.commonService.refreshEncomings(encomings))
+              this.encomingLines.length > 1 ?
+                this.removeLine(line.date):
+                this.encomingLines[0] = new Line(Date.now(),"", 0,"uah")
             })
 
       // if we dont have tax active tax - just send all reports
@@ -83,8 +86,10 @@ export class EncomingInputsComponent implements AfterContentChecked{
           .subscribe(()=>{
               this.commonService.getReportsByType("encoming")
                 .subscribe(encomings=>this.commonService.refreshEncomings(encomings))
-            }
-          )}
+            })
+          this.encomingLines.length > 1 ?
+            this.removeLine(line.date):
+            this.encomingLines[0] = new Line(Date.now(),"", 0,"uah")}
         })
   }
 
