@@ -1,4 +1,4 @@
-import { Component, Input} from '@angular/core';
+import { Component, Input, AfterContentChecked} from '@angular/core';
 import {  FormGroup, FormControl, Validators }   from '@angular/forms';
 
 import { SpendingLine } from './SpendingLine';
@@ -19,7 +19,7 @@ export class Line{
   templateUrl: './spending-inputs.component.html',
   styleUrls: ['./spending-inputs.component.css']
 })
-export class SpendingInputsComponent{
+export class SpendingInputsComponent implements AfterContentChecked{
 
   @Input() activeCurancy: any[];
   @Input() activeTax: string[];
@@ -27,14 +27,16 @@ export class SpendingInputsComponent{
   @Input() cells: Cell[];
   @Input() spendingTypes: any[];
   spendingLines: SpendingLine[];
+  formInvalid: boolean;
 
   constructor(private commonService: CommonService){
+    this.formInvalid = true;
     this.spendingLines = new Array(1);
-    this.spendingLines.fill(new Line(Date.now(),"",0,"uah",""))
+    this.spendingLines.fill(new Line(Date.now(),"",0,"uah","another"))
   }
 
   addLine():void {
-    this.spendingLines.push(new Line(Date.now(),"", 0,"uah",""))
+    this.spendingLines.push(new Line(Date.now(),"", 0,"uah","another"))
   }
 
   removeLine(id):void {
@@ -54,8 +56,23 @@ export class SpendingInputsComponent{
             this.spendingLines.fill(new Line(Date.now(),"", 0,"uah",""));
           this.commonService.getReportsByType("spending")
             .subscribe(spendings=>this.commonService.refreshSpendings(spendings))
-          })
-        })
+      })
+    })
+  }
+
+  checkForm():boolean{
+    let validationArray:boolean[] = this.spendingLines.map(line =>{
+      return (line.description.length >= 3 && line.amount > 0) ?
+        true :
+        false
+    })
+    return validationArray.findIndex(ans => ans === false) === -1 ?
+      false:
+      true
+  }
+
+  ngAfterContentChecked():void{
+    this.formInvalid = this.checkForm()
   }
 
 

@@ -5,21 +5,23 @@
       <input type="text"
         name="description-{{line.date}}"
         [(ngModel)]="line.description"
+        #description="ngModel"
         placeholder="encoming" class="form-control"/>
-        <!-- <span class="item-isnt-valid"
-        [class.hiden]="!lineValidation('spending',line.descriptionName)">
+      <span class="item-isnt-valid"
+        [class.hiden]="description.valid || description.untouched">
         descripion should be longer then 2 simbol
-      </span> -->
+      </span>
     </div>
     <div class="col-2">
       <input name="amount-{{line.date}}"
         [(ngModel)]="line.amount"
+        #amount="ngModel"
         type="number"
         class="form-control"/>
-        <!-- <span class="item-isnt-valid"
-        [class.hiden]="!lineValidation('spending',line.amountName)">
+      <span class="item-isnt-valid"
+        [class.hiden]="amount.valid || amount.untouched">
         number less than 0
-        </span> -->
+      </span>
     </div>
     <div class="col-2">
       <select *ngIf="activeCurancy"
@@ -34,10 +36,6 @@
       <div *ngIf="!activeCurancy" class="loading">
         loading...
       </div>
-      <!-- <span class="item-isnt-valid"
-      [class.hiden]="!lineValidation('spending',line.currencyName)">
-      pick a curancy
-      </span> -->
     </div>
     <div class="col-2">
       <select *ngIf="spendingTypes
@@ -49,16 +47,21 @@
           {{ type.name }}
         </option>
       </select>
-      <!-- <span class="item-isnt-valid"
-      [class.hiden]="!lineValidation('spending',line.spendingTypesName)">
-      pick a type
-      </span> -->
     </div>
-    <input type="button" class="btn-delete mt-2 ml-2" (click)="removeLine(line.date)"/>
+    <input type="button"
+      class="btn-delete mt-2 ml-2"
+      (click)="removeLine(line.date)"
+      [class.hiden]="spendingLines.length <=1"/>
   </li>
 </ul>
 <div class="row ml-1 mt-2">
   <input type="button" value="line"
-  (click)="addLine('spending')"  class="btn btn-plus col-3" />
-  <input type="subscribe" class="col-6 btn btn-success ml-auto"  value="Send a spend report" (click)="sendSpendingReports()"/>
+    (click)="addLine()"
+    class="btn btn-plus col-3"
+    [class.hiden]="spendingLines.length >=10" />
+  <input type="button"
+    [disabled] = "formInvalid"
+    class="col-6 btn btn-success ml-auto"
+    value="Send a spend report"
+    (click)="sendSpendingReports()"/>
 </div>

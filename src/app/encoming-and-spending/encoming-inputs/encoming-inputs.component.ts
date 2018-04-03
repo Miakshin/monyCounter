@@ -86,15 +86,21 @@ export class EncomingInputsComponent implements AfterContentChecked{
             }
           )}
         })
-  // console.log(this.encomingLines)
   }
 
-  // checkForm(){
-  //   console.log(document.forms["encoming"])
-  // }
-  //
-  ngAfterContentChecked(){
-    // this.checkForm()
+  checkForm():boolean{
+    let validationArray:boolean[] = this.encomingLines.map(line =>{
+      return (line.description.length >= 3 && line.amount > 0) ?
+        true :
+        false
+    })
+    return validationArray.findIndex(ans => ans === false) === -1 ?
+      false:
+      true
+  }
+
+  ngAfterContentChecked():void{
+    this.formInvalid = this.checkForm()
   }
 
 }
