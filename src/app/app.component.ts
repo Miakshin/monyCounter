@@ -29,19 +29,21 @@ export class AppComponent implements OnInit{
               private location: Location) {}
 
   ngOnInit():void {
-    this.commonService.refreshLogegIn(this.currentUserLogin = window.localStorage.getItem("login"))
+    this.commonService.refreshLogegIn(window.localStorage.getItem("login"))
     this.commonService.isLoggedIn
       .subscribe(login => {
-        login.length>0 ? this.currentUserLogin = login :  this.currentUserLogin = "";
-        this.initializateUser();
-        this.initializateSpending();
-        this.initializateEncoming();
-        this.initializateCells();
-        this.initializateLoans();
-        this.commonService.currentFreeMonyData
-          .subscribe(fm => this.freeMony = +fm)
-        if(this.currentUserLogin === ""){
+        if(login){
+          this.currentUserLogin = login;
+          this.initializateUser();
+          this.initializateSpending();
+          this.initializateEncoming();
+          this.initializateCells();
+          this.initializateLoans();
+          this.commonService.currentFreeMonyData
+           .subscribe(fm => this.freeMony = +fm)
+        }else{
           this.commonService.resetData();
+          this.currentUserLogin = ""
         }
       })
   }
@@ -95,6 +97,7 @@ export class AppComponent implements OnInit{
 
   logOut(){
     window.localStorage.removeItem("login");
+    this.commonService.refreshLogegIn("")
     this.router.navigate(["/login"])
   }
 

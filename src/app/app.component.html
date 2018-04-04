@@ -1,6 +1,6 @@
 <div class="app-wrapper container-fluid">
 
-  <aside class=" col-md-2 col-lg-2 bg-light sidebar">
+  <aside *ngIf = "currentUserLogin !==''" class="col-md-2 col-lg-2 bg-light sidebar" >
     <h6 *ngIf="!currentUser || !freeMony"
       class="sidebar-heading text-muted align-items-center px-3">Loading data</h6>
     <app-short-information *ngIf="currentUser && freeMony" [user]="currentUser.name"

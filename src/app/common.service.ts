@@ -61,13 +61,11 @@ export class CommonService {
   isLoggedIn = this.loggedIn.asObservable();
 
   resetData():void{
-    this.refreshLogegIn(null);
-    this.refreshEncomings(null);
-    this.refreshSpendings(null);
-    this.refreshCells(null);
-    this.refreshLoans(null);
-    this.refreshFreeMony(null);
-
+    this.refreshEncomings("");
+    this.refreshSpendings("");
+    this.refreshCells("");
+    this.refreshLoans("");
+    this.refreshFreeMony("");
   }
 
   refreshLogegIn(newLogin):void{
