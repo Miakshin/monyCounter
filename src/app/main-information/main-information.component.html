@@ -16,7 +16,7 @@
         <h2 class="h4 cells__title">Accumulation cells</h2>
         <ul class="cells__list">
           <li *ngFor="let cell of cells" class="cells__item">
-            <label>{{cell.name}} acamulated: </label> {{cell.acamulated}}
+            <label>{{cell.name}} acamulated: </label> {{cell.acamulated | number }}
           </li>
         </ul>
       </div>
@@ -25,11 +25,11 @@
       <div class="loans">
         <h2 class="h4 loans_title">Loans information</h2>
         <p class="loans__sum">
-        Your total loans summ is {{loansSum}}
+        Your total loans summ is {{loansSum | number}}
         </p>
         <ul class="loans__list">
           <li *ngFor="let loan of loans" class=loans__item>
-            {{loan.amount}} {{loan.curancy | uppercase}} was loaned from
+            {{loan.amount | number }} {{loan.curancy | uppercase}} was loaned from
             {{loans.from}}. Reason:{{loan.description}}
           </li>
         </ul>

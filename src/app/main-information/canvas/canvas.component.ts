@@ -8,8 +8,11 @@ import { CanvasData } from './CanvasData'
   <div class="container mt-2">
     <h3 class="h5 text-center mb-5">{{title}}</h3>
     <div class="row">
-      <canvas class="col-8"id={{id}}></canvas>
-      <div class="col-4"id={{historyId}}></div>
+      <div class="col col-md-8 col-lg-8 col-xl-8">
+        <canvas class="mx-auto" id={{id}}></canvas></div>
+      <div class="col col-md-4 col-lg-4 col-xl-4">
+        <div class="mx-auto" id={{historyId}}></div>
+      </div>
     </div>
   </div>`
 })
