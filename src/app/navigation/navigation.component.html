@@ -1,12 +1,32 @@
 <nav class="nav flex-column">
-  <a routerLink="/main" [class.active]="router.url === '/main'" class="nav-item nav-link">
-    <img src="assets/icons/graph-4x.png" alt="graph" class="nav__ico">Main infirmation</a>
-  <a routerLink="/inandout" [class.active]="router.url === '/inandout'" class="nav-item nav-link">
-    <img src="assets/icons/dollar-4x.png" alt="graph" class="nav__ico">Adding incoming/spending</a>
-  <a routerLink="/loans" [class.active]="router.url === '/loans'" class="nav-item nav-link">
-    <img src="assets/icons/tag-4x.png" alt="graph" class="nav__ico">Loans</a>
-  <a routerLink="/cells" [class.active]="router.url === '/cells'" class="nav-item nav-link">
-    <img src="assets/icons/briefcase-4x.png" alt="graph" class="nav__ico">Cells</a>
-  <a routerLink="/settings" [class.active]="router.url === '/settings'" class="nav-item nav-link">
-    <img src="assets/icons/wrench-4x.png" alt="graph" class="nav__ico">Settings</a>
+  <a routerLink="/main"
+    [class.active]="router.url === '/main'"
+    class="nav-item nav-link pl-0 pl-sm-3 pl-md-3 pl-lg-3 pl-xl-3">
+    <img src="assets/icons/graph-4x.png" alt="graph" class="nav__ico">
+    <span class="d-sm-none d-none d-md-inline" >Main infirmation</span>
+  </a>
+  <a routerLink="/inandout"
+    [class.active]="router.url === '/inandout'"
+    class="nav-item nav-link pl-0 pl-sm-3 pl-md-3 pl-lg-3 pl-xl-3">
+    <img src="assets/icons/dollar-4x.png" alt="graph" class="nav__ico">
+    <span class="d-sm-none d-none d-md-inline" >Adding incoming/spending</span>
+  </a>
+  <a routerLink="/loans"
+    [class.active]="router.url === '/loans'"
+    class="nav-item nav-link pl-0 pl-sm-3 pl-md-3 pl-lg-3 pl-xl-3">
+    <img src="assets/icons/tag-4x.png" alt="graph" class="nav__ico">
+    <span class="d-sm-none d-none d-md-inline" >Loans</span>
+  </a>
+  <a routerLink="/cells"
+    [class.active]="router.url === '/cells'"
+    class="nav-item nav-link pl-0 pl-sm-3 pl-md-3 pl-lg-3 pl-xl-3">
+    <img src="assets/icons/briefcase-4x.png" alt="graph" class="nav__ico">
+    <span class="d-sm-none d-none d-md-inline" >Cells</span>
+  </a>
+  <a routerLink="/settings"
+    [class.active]="router.url === '/settings'"
+    class="nav-item nav-link pl-0 pl-sm-3 pl-md-3 pl-lg-3 pl-xl-3">
+    <img src="assets/icons/wrench-4x.png" alt="graph" class="nav__ico">
+    <span class="d-sm-none d-none d-md-inline" >Settings</span>
+  </a>
 </nav>
