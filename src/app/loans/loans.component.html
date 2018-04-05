@@ -11,11 +11,11 @@
   <h3 class="h5 border-bottom text-center ml-3 mt-3 d-flex align-items-end">Create new loans</h3>
   <form *ngIf="user && cells"[formGroup]="createLoanFormGroup" novalidate (ngSubmit)="createLoan()"
     class="form-group row mt-2 ml-2">
-    <div class="col-2">
+    <div class="col-lg-2 col-xl-2 col-md-2 col-12 px-md-0 px-lg-2 px-xl-2">
       <label for="amount">Amount</label>
       <input type="number" class="form-control" name="amount" formControlName="amount"/>
     </div>
-    <div class="col-2">
+    <div class="col-lg-2 col-xl-2 col-md-2 col-12 px-md-0 px-lg-2 px-xl-2">
       <label for="currency">Currancy</label>
       <select name="currency" formControlName="curancy"
         class="form-control">
@@ -24,12 +24,12 @@
         </option>
       </select>
     </div>
-    <div class="col-3">
+    <div class="col-lg-3 col-xl-3 col-md-3 col-12 px-md-0 px-lg-2 px-xl-2">
       <label for="description">Descroption:</label>
       <input type="text" name="description" placeholer="Loans description" formControlName="description"
       class="form-control"/>
     </div>
-    <div class="col-3">
+    <div class="col-lg-3 col-xl-3 col-md-2 col-12 px-md-0 px-lg-2 px-xl-2">
       <label>From cell:</label>
       <select *ngIf="user.setings.loansAllowsCell === true" name="from" class="form-control"
         formControlName="fromCell">
@@ -41,8 +41,8 @@
         <option selected value="Free mony">Free mony</option>
       </select>
     </div>
-    <div class="col-2 d-flex align-items-end">
-      <input type="submit" name="post-loans" value="Confirm" class="btn btn-success mb-1 col-12"
+    <div class="col-lg-2 col-xl-2 col-md-3 col-6 mt-2 d-flex pl-mg-0 align-items-end px-lg-2 px-xl-2">
+      <input type="submit" name="post-loans" value="Confirm" class="btn btn-success col-12"
       [disabled]="createLoanFormGroup.controls['amount'].invalid || createLoanFormGroup.controls['description'].invalid
       || createLoanFormGroup.controls['fromCell'].invalid || createLoanFormGroup.controls['curancy'].invalid"/>
     </div>
