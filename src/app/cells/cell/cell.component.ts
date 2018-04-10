@@ -6,7 +6,7 @@ import { Cell } from './cell';
 @Component({
   selector: 'app-cells-cell',
   templateUrl: './cell.component.html',
-  // styleUrls: ['./cells.component.css']
+  styleUrls: ['./cell.component.css']
 })
 export class CellComponent implements OnInit {
 

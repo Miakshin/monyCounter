@@ -2,34 +2,45 @@
 <div *ngIf="cell">
   <h4 class="col-12 text-center border-bottom">{{cell.name}} </h4>
   <div>
-    acamulated: {{cell.acamulated}}
-    <input type="button" *ngIf="!spendFormOpened" value="spend part"
-    (click)="spendFormOpened = true"/>
-    <form *ngIf="spendFormOpened" class="spendFromCell">
-      <input type="button" value="x" (click)="spendFormOpened = false" class="btn-delete"/>
-      <label>Description</label><input type="text"  /><br />
-      <label>Amount</label><input type="number" /><br />
-      <input type="submit" value="accept" />
+    acamulated: {{cell.acamulated | number }}
+    <input type="button"
+      *ngIf="!spendFormOpened"
+      class="btn btn-warning"
+      value="spend part"
+      (click)="spendFormOpened = true"/>
+    <form *ngIf="spendFormOpened" class="spendFromCell form-group bg-light p-2">
+      <input type="button" value="x" (click)="spendFormOpened = false" class="btn-close"/>
+      <div class="col-xs-12 col-md-6">
+        <label>Description</label>
+        <input type="text"  class="form-control"/>
+      </div>
+      <div class="col-xs-12 col-md-6">
+        <label>Amount</label><input type="number" class="form-control"/>
+      </div>
+      <input type="submit" value="accept" class="btn btn-warning ml-2 mt-2"/>
     </form><br />
     current Tax: {{cell.tax}}% <br />
     created:{{cell.createAt | date}}
     <span *ngIf=""></span>
   </div>
-  <table *ngIf="cell !== []">
-    <thead>
-      <tr>
-        <td>Amount</td>
-        <td>Incomes description</td>
-        <td>Date</td>
+  <div class="container-fluid">
+    <h3 class="h5 text-center w-100">Incomes</h3>
+    <table *ngIf="cell !== []" class="w-100">
+      <thead>
+        <tr class="border-bottom row">
+          <td class="col-2">Amount</td>
+          <td class="col-5">Incomes description</td>
+          <td class="col-5">Date</td>
+        </tr>
+      </thead>
+      <tr *ngFor="let report of cell.incomesForm" class="border-bottom row">
+        <td class="col-2">{{report.amount}}</td>
+        <td class="col-5">{{report.description}}</td>
+        <td class="col-5">{{report.date | date }}</td>
       </tr>
-    </thead>
-    <tr *ngFor="let report of cell.incomesForm">
-      <td>{{report.amount}}</td>
-      <td>{{report.description}}</td>
-      <td>{{report.date | date }}</td>
-    </tr>
-  </table>
-  <a routerLink="/cells" class="button">back</a>
+    </table>
+  </div>
+  <a routerLink="/cells" class="btn btn-info mt-2">back</a>
 </div>
 <div *ngIf="!cell" class="text-center">
   loading data...

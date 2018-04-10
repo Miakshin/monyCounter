@@ -88,7 +88,7 @@ ul{
   border: 0px;
   vertical-align: middle;
   text-align: center;
-  font-size: 12px;
+  font-size: 10px;
 }
 ul li input.btn-close{
   margin-left: 30px;
@@ -112,5 +112,11 @@ ul.curancy_list{
   nav a{
     padding: 5px;
     font-size: 10px;
+  }
+  .curancy__names{
+    font-size: 10px;
+  }
+  ul li input.btn-close{
+    margin-left: 25px;
   }
 }
