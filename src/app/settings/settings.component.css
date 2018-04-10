@@ -104,3 +104,13 @@ form input.btn-close{
 ul.curancy_list{
   padding: 0;
 }
+@media (max-width: 577px) {
+  nav{
+    margin: 0;
+    padding: 10px;
+  }
+  nav a{
+    padding: 5px;
+    font-size: 10px;
+  }
+}

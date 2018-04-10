@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from '../common.service';
 import {  FormGroup, FormControl, Validators }   from '@angular/forms';
+import { DecimalPipe } from '@angular/common';
 
 import { Cell } from './cell/cell'
 

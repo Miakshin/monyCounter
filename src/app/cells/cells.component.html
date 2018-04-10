@@ -14,12 +14,12 @@
       </tr>
       </thead>
       <tr *ngFor="let cell of cells" class="border-bottom">
-        <td class="col-3">{{cell.name}}<br />
+        <td class="col-4">{{cell.name}}<br />
         <a routerLink="/cells/{{cell._id}}">Get detailed information</a>
       </td>
         <td class="col-2">{{cell.createAt | date}}</td>
-        <td class="col-3">{{cell.tax}}</td>
-        <td class="col-3">{{cell.acamulated}}</td>
+        <td class="col-3">{{cell.tax | number}}</td>
+        <td class="col-2">{{cell.acamulated | number}}</td>
         <td class="col-1 text-center">
           <input *ngIf="isCellActive(cell._id) === true" type="checkbox" name="{{cell._id}}"(change)="onCheckedChange($event)" checked/>
           <input *ngIf="isCellActive(cell._id) === false" type="checkbox" name="{{cell._id}}"(change)="onCheckedChange($event)" />
@@ -29,11 +29,11 @@
   <h2 class="h4 text-center"> Create new cell</h2>
   <form [formGroup]="createCellFormGroup" novalidate (ngSubmit)="createCell()"
   class="row form-group mt-4 ml-1">
-    <input type="text" formControlName="name" placeholder="cell name" class="col-3 form-control"/>
-    <input type="number" formControlName="tax" class="col-2 form-control"/>
-    <input type="text" class="col-3 form-control" formControlName="acamulated" placeholder="initial saving">
-    <input type="color" formControlName="color" class="col-1 form-control color"/>
-    <input type="submit" value="create cell" class="btn btn-success col-3"
+    <input type="text" formControlName="name" placeholder="cell name" class="col-4 col-lg-3 col-xl-3 mt-2 form-control"/>
+    <input type="number" formControlName="tax" class="col-3  col-md-2 col-xl-2 col-lg-2 mt-2 form-control"/>
+    <input type="text" class="col-3 col-sm-3 col-md-2 col-lg-3 col-xl-3 mt-2 form-control" formControlName="acamulated" placeholder="initial saving">
+    <input type="color" formControlName="color" class="col-2 col-lg-1 col-xl-1 col-md-1 mt-2 form-control color"/>
+    <input type="submit" value="create cell" class="btn btn-success col-5 col-sm-3 col-md-3 col-lg-3 col-xl-3 mt-2 ml-auto"
      [disabled]="createCellFormGroup.controls['name'].invalid || createCellFormGroup.controls['tax'].invalid ||
      createCellFormGroup.controls['acamulated'].invalid">
   </form>

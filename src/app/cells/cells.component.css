@@ -1,3 +1,19 @@
 .color{
   height: 40px;
 }
+@media (min-width: 576px) and (max-width: 993px) {
+  table thead{
+    font-size: 14px;
+  }
+}
+@media (max-width: 577px) {
+  table{
+    font-size: 12px;
+  }
+  table thead{
+    font-size: 8px;
+  }
+  article .col-12{
+    padding: 10px;
+  }
+}
