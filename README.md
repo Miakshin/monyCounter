@@ -11,5 +11,8 @@ To start the application:
 
 Run `npm start` for a dev server.Application will launched in new browser tab at `http://localhost:3000/`.
 
+# Authorization
 
-This aplication can help to sort out with your mony. 
+>use login: admin ; pass: admin
+
+This aplication can help to sort out with your mony.
