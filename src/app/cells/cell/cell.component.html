@@ -8,16 +8,32 @@
       class="btn btn-warning"
       value="spend part"
       (click)="spendFormOpened = true"/>
-    <form *ngIf="spendFormOpened" class="spendFromCell form-group bg-light p-2">
+    <form
+      *ngIf="spendFormOpened"
+      class="spendFromCell form-group bg-light p-2"
+      [formGroup]="borrowFromCellFormGroup" novalidate (ngSubmit)="createBorrowFromCell()"
+      >
       <input type="button" value="x" (click)="spendFormOpened = false" class="btn-close"/>
       <div class="col-xs-12 col-md-6">
         <label>Description</label>
-        <input type="text"  class="form-control"/>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="description"/>
       </div>
       <div class="col-xs-12 col-md-6">
-        <label>Amount</label><input type="number" class="form-control"/>
+        <label>Amount</label>
+        <input
+          type="number"
+          class="form-control"
+          formControlName="amount"/>
       </div>
-      <input type="submit" value="accept" class="btn btn-warning ml-2 mt-2"/>
+      <input
+        type="submit"
+        value="accept"
+        class="btn btn-warning ml-2 mt-2"
+        [disabled] ="borrowFromCellFormGroup.controls['description'].invalid ||
+          borrowFromCellFormGroup.controls['amount'].invalid" />
     </form><br />
     current Tax: {{cell.tax}}% <br />
     created:{{cell.createAt | date}}

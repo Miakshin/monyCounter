@@ -119,7 +119,13 @@ app.post('/report/:type', function(req, res) {
 
  app.post('/cells/:id',function(req, res){
    console.log(req.body);
-   dbUtils.addReportToCell(req.params.id, req.body).then((data)=>res.send(data))
+   dbUtils.addReportToCell(req.params.id, req.body).then((data)=>res.send(data));
+ })
+
+ app.post('/cells/borrow/:id',function(req, res){
+   dbUtils.createBorrowFromCell(req.params.id, req.body)
+    .then(()=>res.sendStatus(200))
+    .catch(()=>res.sendStatus(500))
  })
 
  app.post('/createUser/', function(req, res){

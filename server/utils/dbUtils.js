@@ -267,3 +267,17 @@ module.exports.changeSettingData = function(user, settingPart, data){
   }
 })
 }
+
+module.exports.createBorrowFromCell = function(id, data){
+  return Cell.findById(id, function(err, cell){
+    if(err){
+      return false
+    }
+    var newData = cell.spendings.slice(0);
+    var newAmount = cell.amount - data.amount;
+    newData.push(data);
+    cell.spendings = newData;
+    cell.amount = newAmount;
+    cell.save()
+  })
+}

@@ -31,7 +31,8 @@ export class CellsComponent implements OnInit {
         Validators.required,
         Validators.pattern("^[0-9]{1,12}")
       ]),
-      });}
+      });
+    }
 
   ngOnInit() {
     this.commonService.currentCellsData

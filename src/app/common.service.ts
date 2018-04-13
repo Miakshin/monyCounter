@@ -200,6 +200,10 @@ export class CommonService {
     return this.http.post<any>(`http://localhost:3046/cells/${id}`, repotr)
   }
 
+  addSpendingToCell(id, spendingData){
+    return this.http.post<any>(`http://localhost:3046/cells/borrow/${id}`, spendingData)
+  }
+
   changeSettings(user, type, params){
     return this.http.post<any>(`http://localhost:3046/user/${user}/settings/${type}`, params)
   }
