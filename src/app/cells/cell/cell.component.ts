@@ -42,7 +42,6 @@ export class CellComponent implements OnInit {
 
   createBorrowFromCell():void{
     let data = this.borrowFromCellFormGroup.value;
-    console.log(data)
     this.commonService.addSpendingToCell(this.cellId, data)
       .subscribe(()=>{
         this.borrowFromCellFormGroup.reset()

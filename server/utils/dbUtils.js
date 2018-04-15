@@ -274,10 +274,10 @@ module.exports.createBorrowFromCell = function(id, data){
       return false
     }
     var newData = cell.spendings.slice(0);
-    var newAmount = cell.amount - data.amount;
+    var newAmount = cell.acamulated - data.amount;
     newData.push(data);
     cell.spendings = newData;
-    cell.amount = newAmount;
+    cell.acamulated = newAmount;
     cell.save()
   })
 }
