@@ -22,6 +22,7 @@ export class EncomingAndSpendingComponent implements OnInit {
   cells: Cell[];
   serchFlag: string;
   lastTenRepeat: number = 1;
+  now: number;
 
   serchFormGroup: FormGroup;
 
@@ -35,6 +36,7 @@ export class EncomingAndSpendingComponent implements OnInit {
  }
 
  ngOnInit():void{
+   this.getDate();
    this.getData();
    this.getDataSettings();
    this.commonService.currentCellsData
@@ -93,7 +95,7 @@ export class EncomingAndSpendingComponent implements OnInit {
 
   getDate(){
     let now: number = Date.now()
-    return now
+    return this.now = now;
   }
 
   getDataSettings(){

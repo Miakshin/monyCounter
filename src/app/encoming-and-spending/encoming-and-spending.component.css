@@ -45,3 +45,23 @@ a.active{
 .hiden{
   visibility: hidden;
 }
+
+.carousel-control-prev,
+.carousel-control-next{
+  width: 20px;
+  align-items: baseline;
+}
+.carousel-control-next-icon,
+.carousel-control-prev-icon{
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-top: 275px;
+  background-image: url(../../assets/icons/arrow.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+.carousel-control-prev-icon{
+  transform: rotate(180deg);
+}

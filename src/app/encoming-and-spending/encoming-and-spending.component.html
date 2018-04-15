@@ -1,120 +1,223 @@
 <header id="header" class="text-muted">
-  <!-- <label>Now:</label>{{getDate() | date}} -->
+  <label>Now:</label>{{now | date}}
 </header>
-  <div class=row>
-    <form name="encoming"
-    class="encoming col-6 mt-2 form-group">
-      <h3 class="border-bottom h5 mt-2"> Add new incomings </h3>
-      <!-- <encoming-inputs></encoming-inputs> -->
-        <encoming-inputs
+
+<!-- for large screans -->
+
+  <div class="d-none d-md-block">
+    <div class=row>
+      <form name="encoming"
+      class="encoming col-6 mt-2 form-group">
+        <h3 class="border-bottom h5 mt-2"> Add new incomings </h3>
+          <encoming-inputs
+          [activeCurancy]="activeCurancy"
+          [activeTax]="activeTax"
+          [activCells]="activCells"
+          [cells]="cells"
+          ></encoming-inputs>
+      </form>
+      <form class="spending col-6  mt-2 form-group" name="spending">
+        <h3 class="border-bottom h5 mt-2"> Add new spendings </h3>
+        <spending-inputs
         [activeCurancy]="activeCurancy"
         [activeTax]="activeTax"
         [activCells]="activCells"
         [cells]="cells"
-        ></encoming-inputs>
-    </form>
-    <form class="spending col-6  mt-2 form-group" name="spending">
-      <h3 class="border-bottom h5 mt-2"> Add new spendings </h3>
-      <spending-inputs
-      [activeCurancy]="activeCurancy"
-      [activeTax]="activeTax"
-      [activCells]="activCells"
-      [cells]="cells"
-      [spendingTypes]="spendingTypes"
-      ></spending-inputs>
-    </form>
-  </div>
-  <div class="row">
-    <h4 class="h5  col-12 text-center border-bottom" >Last reports</h4>
-    <nav class="nav col-12">
-      <a [class.active]="serchFlag === 'last ten'" (click)="searchToggle('last ten')"
-        routerLink="/inandout" class="col-4 nav-link text-center">Last ten</a>
-      <a [class.active]="serchFlag === 'by date'" (click)="searchToggle('by date')"
-        routerLink="/inandout" class="col-4 nav-link text-center">Get by date</a>
-      <a [class.active]="serchFlag === 'all'" (click)="searchToggle('all')"
-        routerLink="/inandout" class="col-4 nav-link text-center">Get all</a>
-    </nav>
-  </div>
-  <div class="row">
-    <form *ngIf="serchFlag === 'by date'" class="col-12 mt-3"
-    [formGroup]="serchFormGroup" novalidate (ngSubmit)="getData()">
-      <div class="row">
-        <input type="date" formControlName="since" class="form-control col-lg-2 col-md-3 sol-sm-6 ml-auto"/>
-        <input type="date" formControlName="for" class="form-control col-lg-2 col-md-3 sol-sm-6"/>
-        <input type="submit" class="btn btn-primary  mr-auto" value="get reports"/>
-      </div>
-    </form>
-    <aside class="col-6" *ngIf="encomingReports">
-      <div class="row">
-        <h5 class="h6 col-12 text-center mt-2 mb-2">Encoming</h5>
-        <table class="col-12">
-          <thead>
-            <tr class="text-muted border-bottom">
+        [spendingTypes]="spendingTypes"
+        ></spending-inputs>
+      </form>
+    </div>
+    <div class="row">
+      <h4 class="h5  col-12 text-center border-bottom" >Last reports</h4>
+      <nav class="nav col-12">
+        <a [class.active]="serchFlag === 'last ten'" (click)="searchToggle('last ten')"
+          routerLink="/inandout" class="col-4 nav-link text-center">Last ten</a>
+        <a [class.active]="serchFlag === 'by date'" (click)="searchToggle('by date')"
+          routerLink="/inandout" class="col-4 nav-link text-center">Get by date</a>
+        <a [class.active]="serchFlag === 'all'" (click)="searchToggle('all')"
+          routerLink="/inandout" class="col-4 nav-link text-center">Get all</a>
+      </nav>
+    </div>
+    <div class="row">
+      <form *ngIf="serchFlag === 'by date'" class="col-12 mt-3"
+        [formGroup]="serchFormGroup" novalidate (ngSubmit)="getData()">
+        <div class="row">
+          <input type="date" formControlName="since" class="form-control col-lg-2 col-md-3 sol-sm-6 ml-auto"/>
+          <input type="date" formControlName="for" class="form-control col-lg-2 col-md-3 sol-sm-6"/>
+          <input type="submit" class="btn btn-primary  mr-auto" value="get reports"/>
+        </div>
+      </form>
+      <aside class="col-6" *ngIf="encomingReports">
+        <div class="row">
+          <h5 class="h6 col-12 text-center mt-2 mb-2">Encoming</h5>
+          <table class="col-12">
+            <thead>
+              <tr class="text-muted border-bottom">
+                <td class="col-4 text-center">
+                  AMOUNT
+                </td>
+                <td class="col-3 text-center">
+                  DATE
+                </td>
+                <td class="col-5 text-center">
+                  DESCRIPTION
+                </td>
+              </tr>
+            </thead>
+            <tr *ngFor="let report of encomingReports" class="text-muted border-bottom">
               <td class="col-4 text-center">
-                AMOUNT
+                {{report.amount}} {{report.currency | uppercase}}
               </td>
               <td class="col-3 text-center">
-                DATE
+                {{report.date | date: 'M/d/yy'}}
               </td>
               <td class="col-5 text-center">
-                DESCRIPTION
+                {{report.description}}
               </td>
             </tr>
-          </thead>
-          <tr *ngFor="let report of encomingReports" class="text-muted border-bottom">
-            <td class="col-4 text-center">
-              {{report.amount}} {{report.currency | uppercase}}
-            </td>
-            <td class="col-3 text-center">
-              {{report.date | date: 'M/d/yy'}}
-            </td>
-            <td class="col-5 text-center">
-              {{report.description}}
-            </td>
-          </tr>
-        </table>
-      </div>
-    </aside>
-    <aside class="col-6" *ngIf="spendingReports">
-      <div class="row">
-        <h5 class="h6 col-12 text-center mt-2 mb-2">Spendings</h5>
-        <table  class="col-12 ">
-          <thead>
-            <tr class="text-muted border-bottom">
+          </table>
+        </div>
+      </aside>
+      <aside class="col-6" *ngIf="spendingReports">
+        <div class="row">
+          <h5 class="h6 col-12 text-center mt-2 mb-2">Spendings</h5>
+          <table  class="col-12 ">
+            <thead>
+              <tr class="text-muted border-bottom">
+                <td class="col-3 text-center">
+                  AMOUNT
+                </td>
+                <td class="col-3 text-center">
+                  DATE
+                </td>
+                <td class="col-3 text-center">
+                  TYPE
+                </td>
+                <td class="col-3 text-center">
+                  DESCRIPTION
+                </td>
+              </tr>
+            </thead>
+            <tr *ngFor="let report of spendingReports" class="text-muted border-bottom">
               <td class="col-3 text-center">
-                AMOUNT
+                {{report.amount }} {{report.currency | uppercase }}
               </td>
               <td class="col-3 text-center">
-                DATE
+                {{report.date | date: 'M/d/yy'}}
               </td>
               <td class="col-3 text-center">
-                TYPE
+                {{report.type}}
               </td>
               <td class="col-3 text-center">
-                DESCRIPTION
+                {{report.description}}
               </td>
             </tr>
-          </thead>
-          <tr *ngFor="let report of spendingReports" class="text-muted border-bottom">
-            <td class="col-3 text-center">
-              {{report.amount }} {{report.currency | uppercase }}
-            </td>
-            <td class="col-3 text-center">
-              {{report.date | date: 'M/d/yy'}}
-            </td>
-            <td class="col-3 text-center">
-              {{report.type}}
-            </td>
-            <td class="col-3 text-center">
-              {{report.description}}
-            </td>
-          </tr>
-        </table>
-      </div>
-    </aside>
+          </table>
+        </div>
+      </aside>
 
-    <input *ngIf="serchFlag === 'last ten'&& spendingReports
-     && encomingReports" type="button" value="get more"
-    (click)="getMoreReports()"
-    class="container-fluid col-3 btn"/>
+      <input *ngIf="serchFlag === 'last ten'&& spendingReports
+       && encomingReports" type="button" value="get more"
+      (click)="getMoreReports()"
+      class="container-fluid col-3 btn"/>
+    </div>
+  </div>
+
+  <!-- for small screans -->
+
+  <div class="d-block d-md-none">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <form name="encoming"
+          class="encoming col-12 mt-2 form-group">
+            <h3 class="border-bottom h5 mt-2"> Add new incomings </h3>
+            <encoming-inputs
+              [activeCurancy]="activeCurancy"
+              [activeTax]="activeTax"
+              [activCells]="activCells"
+              [cells]="cells">
+            </encoming-inputs>
+          </form>
+          <table class="col-12">
+            <thead>
+              <tr class="text-muted border-bottom">
+                <td class="col-4 text-center">
+                  AMOUNT
+                </td>
+                <td class="col-3 text-center">
+                  DATE
+                </td>
+                <td class="col-5 text-center">
+                  DESCRIPTION
+                </td>
+              </tr>
+            </thead>
+            <tr *ngFor="let report of encomingReports" class="text-muted border-bottom">
+              <td class="col-4 text-center">
+                {{report.amount}} {{report.currency | uppercase}}
+              </td>
+              <td class="col-3 text-center">
+                {{report.date | date: 'M/d/yy'}}
+              </td>
+              <td class="col-5 text-center">
+                {{report.description}}
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="carousel-item">
+          <form class="spending col-12  mt-2 form-group" name="spending">
+            <h3 class="border-bottom h5 mt-2"> Add new spendings </h3>
+            <spending-inputs
+              [activeCurancy]="activeCurancy"
+              [activeTax]="activeTax"
+              [activCells]="activCells"
+              [cells]="cells"
+              [spendingTypes]="spendingTypes">
+            </spending-inputs>
+          </form>
+          <table  class="col-12 ">
+            <thead>
+              <tr class="text-muted border-bottom">
+                <td class="col-3 text-center">
+                  AMOUNT
+                </td>
+                <td class="col-3 text-center">
+                  DATE
+                </td>
+                <td class="col-3 text-center">
+                  TYPE
+                </td>
+                <td class="col-3 text-center">
+                  DESCRIPTION
+                </td>
+              </tr>
+            </thead>
+            <tr *ngFor="let report of spendingReports" class="text-muted border-bottom">
+              <td class="col-3 text-center">
+                {{report.amount }} {{report.currency | uppercase }}
+              </td>
+              <td class="col-3 text-center">
+                {{report.date | date: 'M/d/yy'}}
+              </td>
+              <td class="col-3 text-center">
+                {{report.type}}
+              </td>
+              <td class="col-3 text-center">
+                {{report.description}}
+              </td>
+            </tr>
+          </table>
+        </div>
+        </div>
+        <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+    </div>
   </div>
