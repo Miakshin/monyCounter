@@ -6,10 +6,12 @@ To start the application:
 
     git clone https://github.com/Miakshin/monyCounter.git
     npm install create-react-app    (optional)  
-    cd get-weather-app
-    npm i  
+    cd monyCounter
+    npm i
 
-Run `npm start` for a dev server.Application will launched in new browser tab at `http://localhost:3000/`.
+Run ng serve -o for a dev server.Application will launched in new browser tab at http://localhost:4200/.
+
+Run ng build to build the project. The build artifacts will be stored in the dist/ directory. Use the -prod flag for a production build.
 
 # Authorization
 
