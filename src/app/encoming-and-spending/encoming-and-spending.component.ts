@@ -46,7 +46,7 @@ export class EncomingAndSpendingComponent implements OnInit {
    })
  }
 
-  getData(){
+  getData():void{
     switch(this.serchFlag){
       case "last ten":
       this.commonService.currentEncomingData
@@ -93,12 +93,12 @@ export class EncomingAndSpendingComponent implements OnInit {
     }
   }
 
-  getDate(){
+  getDate():number{
     let now: number = Date.now()
     return this.now = now;
   }
 
-  getDataSettings(){
+  getDataSettings():void{
     this.commonService.currentUserData
     .subscribe(user=>{
       if(user){
@@ -112,12 +112,12 @@ export class EncomingAndSpendingComponent implements OnInit {
     })
   }
 
-  getMoreReports(){
+  getMoreReports():void{
     this.lastTenRepeat ++;
     this.getData();
   }
 
-  searchToggle(val){
+  searchToggle(val):void{
     this.serchFlag = val;
     if(this.serchFlag === "by date"){
       this.spendingReports = [];

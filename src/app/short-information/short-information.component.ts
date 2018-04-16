@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 
 @Component({
@@ -6,14 +6,11 @@ import { DecimalPipe } from '@angular/common';
   templateUrl: './short-information.component.html',
   styleUrls: ['./short-information.component.css']
 })
-export class ShortInformationComponent implements OnInit {
+export class ShortInformationComponent {
   @Input() user: string = "loading";
   @Input() freeMony: number;
   curancy: string = "UAH";
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
 }

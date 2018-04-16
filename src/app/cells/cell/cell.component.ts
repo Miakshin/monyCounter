@@ -35,7 +35,6 @@ export class CellComponent implements OnInit {
   }
 
   ngOnInit():void{
-    console.log(this.borrowFromCellFormGroup)
     this.commonService.getCellById(this.cellId)
     .then((cell)=>this.cell = cell)
   }

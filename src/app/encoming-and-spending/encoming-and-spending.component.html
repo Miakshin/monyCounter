@@ -1,4 +1,4 @@
-<header id="header" class="text-muted">
+<header id="header" class="text-muted ml-3">
   <label>Now:</label>{{now | date}}
 </header>
 
@@ -117,7 +117,8 @@
       </aside>
 
       <input *ngIf="serchFlag === 'last ten'&& spendingReports
-       && encomingReports" type="button" value="get more"
+       && encomingReports && spendingReports.length> 10
+       && encomingReports.length> 10 " type="button" value="get more"
       (click)="getMoreReports()"
       class="container-fluid col-3 btn"/>
     </div>
@@ -126,7 +127,7 @@
   <!-- for small screans -->
 
   <div class="d-block d-md-none">
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
       <div class="carousel-inner">
         <div class="carousel-item active">
           <form name="encoming"
@@ -183,13 +184,13 @@
                 <td class="col-3 text-center">
                   AMOUNT
                 </td>
-                <td class="col-3 text-center">
+                <td class="col-2 text-center">
                   DATE
                 </td>
                 <td class="col-3 text-center">
                   TYPE
                 </td>
-                <td class="col-3 text-center">
+                <td class="col-4 text-center">
                   DESCRIPTION
                 </td>
               </tr>
@@ -198,13 +199,13 @@
               <td class="col-3 text-center">
                 {{report.amount }} {{report.currency | uppercase }}
               </td>
-              <td class="col-3 text-center">
+              <td class="col-2 text-center">
                 {{report.date | date: 'M/d/yy'}}
               </td>
               <td class="col-3 text-center">
                 {{report.type}}
               </td>
-              <td class="col-3 text-center">
+              <td class="col-4 text-center">
                 {{report.description}}
               </td>
             </tr>

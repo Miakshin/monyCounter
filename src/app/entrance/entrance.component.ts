@@ -25,16 +25,14 @@ export class EntranceComponent{
     "isRemember": new FormControl("")
     });  }
 
-    logIn(){
+    logIn():void{
       const login = this.loginFormGroup.value.login;
       const password = this.loginFormGroup.value.password;
       this.loginFormGroup.reset();
       this.commonService.getUserByLogin("admin").
         subscribe(user=>{
-          console.log(user)
           if(user.login === login && user.password === password){
             window.localStorage.setItem("login", user.login);
-            console.log(window.localStorage.getItem("login"))
             this.commonService.refreshLogegIn(window.localStorage.getItem("login"))
             this.router.navigate(["/main"])
           }

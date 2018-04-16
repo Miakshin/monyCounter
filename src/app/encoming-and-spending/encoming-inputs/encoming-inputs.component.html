@@ -46,12 +46,12 @@
 </ul>
 <div class="row mt-2 ml-1">
   <input (click)="addLine()"
-  class="btn btn-plus col-3"
+  class="btn btn-plus col-6 col-md-3"
   value="line"
   [class.hiden]="encomingLines.length >=10"/>
   <input type="button"
     [disabled] = "formInvalid"
-    class="col-5 btn btn-success ml-auto"
+    class="col-6 col-md-5 btn btn-success ml-auto"
     value="Send an incoming report"
     (click)="sendEncomingreports()"/>
 </div>

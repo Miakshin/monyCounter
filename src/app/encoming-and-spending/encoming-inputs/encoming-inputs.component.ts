@@ -44,7 +44,7 @@ export class EncomingInputsComponent implements AfterContentChecked{
     }
   }
 
-  sendEncomingreports(){
+  sendEncomingreports():void{
     this.encomingLines.forEach((line)=>{
       let data:any = Object.assign({}, line);
 

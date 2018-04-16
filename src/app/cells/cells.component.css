@@ -10,6 +10,9 @@
   table{
     font-size: 12px;
   }
+  table.col-12 td {
+    padding: 2px 7px;
+  }
   table thead{
     font-size: 8px;
   }

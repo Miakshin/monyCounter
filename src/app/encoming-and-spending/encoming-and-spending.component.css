@@ -65,3 +65,19 @@ a.active{
 .carousel-control-prev-icon{
   transform: rotate(180deg);
 }
+@media (min-width: 576px) and (max-width: 993px) {
+  .carousel-item{
+    font-size: 14px;
+  }
+  table.col-12 td{
+    padding: 1px 5px;
+  }
+}
+@media (max-width: 577px) {
+  .carousel-item{
+    font-size: 10px;
+  }
+  table.col-12 td {
+    padding: 1px 5px;
+  }
+}

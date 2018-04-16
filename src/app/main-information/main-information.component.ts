@@ -90,7 +90,7 @@ export class MainInformationComponent implements OnInit, AfterContentChecked {
     }
   }
 
-  getEncomingCanvasData(){
+  getEncomingCanvasData():void{
     if(this.cells && this.freeMony){
       let data : CanvasData[] = [{
         category: "free mony",
@@ -107,7 +107,7 @@ export class MainInformationComponent implements OnInit, AfterContentChecked {
     }
   }
 
-  getTotal(){
+  getTotal():void{
     if(this.freeMony && this.cellAcamulation){
       this.total = this.freeMony + this.cellAcamulation;}
   }

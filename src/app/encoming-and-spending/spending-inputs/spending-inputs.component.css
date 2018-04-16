@@ -36,4 +36,17 @@ input.ng-touched.ng-invalid, select.ng-touched.ng-invalid  {
   border:solid #fd989885 1px;}
 input.ng-touched.ng-valid, select.ng-touched.ng-valid  {
   border-radius:3px;
-  border:solid #bcf3bc 1px;}
+  border:solid #bcf3bc 1px;
+}
+
+@media (max-width: 577px) {
+  .btn.btn-success{
+    font-size: 11px;
+  }
+  .btn-delete.mt-2{
+    height: 16px!important;
+    width: 16px!important;
+    margin-left: 4px!important;
+    margin-top: 12px!important;
+  }
+}

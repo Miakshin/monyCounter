@@ -63,12 +63,12 @@ export class SettingsComponent implements OnInit {
     })
   }
 
-  ngOnInit() {
+  ngOnInit():void{
     this.commonService.currentUserData
       .subscribe(user => this.user = user );
   }
 
-  pick(event){
+  pick(event):void{
     this.activeLink = event.target.name;
     let aNavs = document.querySelectorAll("[class ^= nav-link]");
     for(let i=0; i<aNavs.length; i++){
@@ -77,13 +77,13 @@ export class SettingsComponent implements OnInit {
     event.target.className = "nav-link active"
   }
 
-  onCheckedChange(event){
+  onCheckedChange(event):void{
     let data={value: event.target.name}
     this.commonService.changeSettings(this.login, "activeCurancy", data)
-    .subscribe(console.log)
+    .subscribe()
   }
 
-  createCurancy(){
+  createCurancy():void{
     let data = {
       name: this.curancyFormGroup.value.name,
       checked: this.curancyFormGroup.value.checked
@@ -97,7 +97,7 @@ export class SettingsComponent implements OnInit {
     })
   }
 
-  deleteCurancy(name){
+  deleteCurancy(name):void{
     let data = { value: name };
     this.commonService.changeSettings(this.login, "deleteCurancy", data)
     .subscribe(()=>{
@@ -106,42 +106,38 @@ export class SettingsComponent implements OnInit {
     })
   }
 
-  onChangeAllowsCell(){
+  onChangeAllowsCell():void{
     this.commonService.changeSettings(this.login, "changeAllowsCell", "no data")
-    .subscribe(()=>console.log("value changed"))
+    .subscribe()
   }
 
-  changeName(){
+  changeName():void{
     let data = { name: this.nameFormGroup.value.newName};
-    console.log(data);
     this.commonService.changeSettings(this.login, "changeName", data)
     .subscribe(()=>{
       this.nameFormGroup.reset()
-      console.log("name value changed")
       this.commonService.getUserByLogin(document.cookie.slice(6))
         .subscribe((user:User) =>this.commonService.refreshUser(user))
       })
   }
 
-  changePassword(){
+  changePassword():void{
     if(this.passwordFormGroup.value.newPass
       === this.passwordFormGroup.value.confirmPass){
         let data = {
           newPass : this.passwordFormGroup.value.newPass,
           currentPass: this.passwordFormGroup.value.currentPass
         }
-        console.log(data)
         this.commonService.changeSettings(this.login, "changePassword", data)
         .subscribe(()=>{
-          this.passwordFormGroup.reset()
-          console.log("password value changed")
+          this.passwordFormGroup.reset();
           this.commonService.getUserByLogin(document.cookie.slice(6))
             .subscribe((user:User) =>this.commonService.refreshUser(user))
           })
       }
   }
 
-  createType(){
+  createType():void{
     let data = {
       name: this.typeFormGroup.value.name,
       color: this.typeFormGroup.value.color
@@ -155,25 +151,23 @@ export class SettingsComponent implements OnInit {
     })
   }
 
-  onChangeTypeColor(ev){
+  onChangeTypeColor(ev):void{
     let data = {
       name: ev.target.name,
       color: ev.target.value}
     this.commonService.changeSettings(this.login, "changeColor", data)
     .subscribe(()=>{
-      console.log("color changed");
       this.commonService.getUserByLogin(document.cookie.slice(6))
         .subscribe((user:User) =>this.commonService.refreshUser(user));
       })
   }
 
-  deleteType(name){
+  deleteType(name):void{
     let data = {
       name: name
     }
     this.commonService.changeSettings(this.login, "deleteSpendingType", data)
     .subscribe(()=>{
-      console.log("type deleted");
       this.commonService.getUserByLogin(document.cookie.slice(6))
         .subscribe((user:User) =>this.commonService.refreshUser(user));
     })

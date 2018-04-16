@@ -57,11 +57,11 @@
 <div class="row ml-1 mt-2">
   <input type="button" value="line"
     (click)="addLine()"
-    class="btn btn-plus col-3"
+    class="btn btn-plus col-6 col-md-3"
     [class.hiden]="spendingLines.length >=10" />
   <input type="button"
     [disabled] = "formInvalid"
-    class="col-6 btn btn-success ml-auto"
+    class="col-6 col-md-5 btn btn-success ml-auto"
     value="Send a spend report"
     (click)="sendSpendingReports()"/>
 </div>

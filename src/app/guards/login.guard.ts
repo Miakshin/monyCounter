@@ -8,7 +8,7 @@ export class LoginGuard implements CanActivate {
     constructor(private router: Router,
                 private commonService: CommonService) { }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):boolean{
         if ((window.localStorage.getItem("login"))) {
           this.router.navigate(['/main'], { queryParams: { returnUrl: state.url }});
           return false;

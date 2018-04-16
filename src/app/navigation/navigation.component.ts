@@ -1,18 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { Router} from '@angular/router';
-import {Observable} from 'rxjs/Observable';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import {Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.css']
 })
-export class NavigationComponent implements OnInit {
+export class NavigationComponent {
 
   constructor(private router : Router){}
-
-  ngOnInit() {
-  }
 
 
 }

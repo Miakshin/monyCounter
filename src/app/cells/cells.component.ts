@@ -34,7 +34,7 @@ export class CellsComponent implements OnInit {
       });
     }
 
-  ngOnInit() {
+  ngOnInit():void {
     this.commonService.currentCellsData
       .subscribe(cells => this.cells = cells);
     this.commonService.currentUserData
@@ -44,7 +44,7 @@ export class CellsComponent implements OnInit {
 
   }
 
-  createCell(){
+  createCell():void{
     let data = {
       name: this.createCellFormGroup.value.name,
       tax: this.createCellFormGroup.value.tax,
@@ -60,13 +60,13 @@ export class CellsComponent implements OnInit {
 })
   }
 
-  onCheckedChange(event){
+  onCheckedChange(event):void{
     let data={id: event.target.name}
     this.commonService.changeSettings(document.cookie.slice(6), "activCells", data)
     .subscribe(user=>this.commonService.refreshUser(user))
   }
 
-  isCellActive(id){
+  isCellActive(id):boolean{
      return(this.activeCells.indexOf(id) === -1 ? false : true)
   }
 }

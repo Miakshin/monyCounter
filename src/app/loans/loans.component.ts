@@ -37,7 +37,7 @@ export class LoansComponent implements OnInit, AfterContentChecked {
       ]),
     });
   }
-  ngOnInit() {
+  ngOnInit():void{
     this.commonService.currentLoansData
       .subscribe(loans => this.loans = loans);
     this.commonService.currentloansSumData
@@ -48,7 +48,7 @@ export class LoansComponent implements OnInit, AfterContentChecked {
       .subscribe(cells => this.cells = cells);
   }
 
-  ngAfterContentChecked(){
+  ngAfterContentChecked():void{
     this.commonService.currentUserData
       .subscribe((user)=>{
         if(user){

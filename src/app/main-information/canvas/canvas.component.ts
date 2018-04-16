@@ -28,7 +28,7 @@ export class CanvasComponent implements OnInit, AfterViewInit{
   constructor() {
   }
 
-  ngOnInit() {
+  ngOnInit():void{
     this.historyId = `history-${this.id}`
   }
 
@@ -40,7 +40,7 @@ export class CanvasComponent implements OnInit, AfterViewInit{
     this.draw()
   }
 
-  draw(){
+  draw():void{
     let totalValue = 0;
     let colorIndex = 0;
     let startAngle = 0;
@@ -49,7 +49,6 @@ export class CanvasComponent implements OnInit, AfterViewInit{
             let val = categ.amount;
             totalValue += val;
         })
-        console.log(totalValue);
     this.data.forEach((categ)=>{
       let val = categ.amount;
       let sliceAngle = 2 * Math.PI * val / totalValue;
