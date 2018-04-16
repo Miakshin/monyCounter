@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import {Observable } from 'rxjs/Observable';
+import { Router} from '@angular/router';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-navigation',
@@ -9,7 +9,6 @@ import {Observable } from 'rxjs/Observable';
 })
 export class NavigationComponent {
 
-  constructor(private router : Router){}
-
+  constructor(public router : Router){}
 
 }
