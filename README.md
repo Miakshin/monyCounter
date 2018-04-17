@@ -12,6 +12,7 @@ To start the application:
 Run ng serve -o for a dev server.Application will launched in new browser tab at http://localhost:4200/.
 
 Run ng build to build the project. The build artifacts will be stored in the dist/ directory. Use the -prod flag for a production build.
+And run in another terminal  window 'npm run server' for starting back-end server. 
 
 # Authorization
 
